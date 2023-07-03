@@ -1,7 +1,4 @@
-$(document).on('click','.close_pop_up',function(){
-    $('.details_open').removeAttr("open");
-});
-$(document).on('click','.pop_up_cancel',function(){
+$(document).on('click','.close_pop_up,.close_submit',function(){
     $('.details_open').removeAttr("open");
 });
 $('.bar').click(function(){

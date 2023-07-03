@@ -65,12 +65,80 @@
                         <td>".date('d-m-Y',strtotime($rw_vehicle['ag_vehicle_date']))."</td>
                         <td style='text-align:center'>
                             <details class='details_open' style='display:inline-block'>
-                                <summary class='pop_up_open pop_up_summary vehicle_open' data-id='".encrypt_decrypt('encrypt', $rw_vehicle['ag_vehicle_no'])."'><i class='fa-solid fa-pen-to-square'></i> Edit</summary>
+                                <summary class='pop_up_open pop_up_summary up_open' data-id='".encrypt_decrypt('encrypt', $rw_vehicle['ag_vehicle_no'])."'><i class='fa-solid fa-pen-to-square'></i> Edit</summary>
                                 <div class='pop_up vehicle_open_table'></div>
                             </details>
                         </td>
                     </tr>";
             endwhile;
         }
+    }
+    if(isset($_POST['vehicle_up_open'])){
+        $ag_vehicle_no=encrypt_decrypt('decrypt',check_data($_POST['vehicle_up_open']));
+        $get_vehicle="select * from ag_vehicle where ag_vehicle_no=:ag_vehicle_no";
+        $vehicle_get=$con->prepare($get_vehicle,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $vehicle_get->bindParam(':ag_vehicle_no',$ag_vehicle_no);
+        $vehicle_get->setFetchMode(PDO::FETCH_ASSOC);
+        $vehicle_get->execute();
+        $rw_vehicle=$vehicle_get->fetch();
+        echo"<form class='form small_width_form' id='subs_up'>
+                <h2>Edit ".$rw_vehicle['ag_vehicle_model_name']." <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                <div class='form_container'>
+                    <p>Select Brand</p>
+                    <div class='input'>
+                        <i class='fa-solid fa-user'></i>
+                        <select name='vehicle_brand'>
+                            <option value=''>Select Brand</option>
+                            <?php echo get_brand(); ?>
+                        </select>
+                    </div>
+                    <p>Enter Model Name</p>
+                    <div class='input'>
+                        <i class='fa-solid fa-user'></i>
+                        <input type='text' name='up_vh_model_name' value='".$rw_vehicle['ag_vehicle_model_name']."' placeholder='Enter Model Name' title='Enter Your Name' />
+                    </div>
+                    <div class='input_container'>
+                                <p>Select Model Type</p>
+                                <div class='input'>
+                                    <i class='fa-solid fa-user'></i>
+                                    <select name='vehicle_type' value='".$rw_vehicle['ag_vehicle_model_type']."'>
+                                        <option value=''>Scooter</option>
+                                        <option value=''>Bike</option>
+                                    </select>
+                                </div>
+                            </div>
+                    <input type='hidden' name='up_vehicle' value='".encrypt_decrypt('encrypt', $rw_vehicle['ag_vehicle_no'])."' />
+                    <div class='input_container'>
+                    <p>Enter Vehicle Menufecture Year</p>
+                    <div class='input'>
+                        <i class='fa-solid fa-user'></i>
+                        <input type='text' name='mg_yr' value='".$rw_vehicle['ag_vehicle_mg_year']."' />
+                    </div>
+                </div>
+                <div class='input_container'>
+                    <p>Enter Vehicle CC</p>
+                    <div class='input'>
+                        <i class='fa-solid fa-user'></i>
+                        <input type='text' name='vh_cc' value='".$rw_vehicle['ag_vehicle_cc']."'/>
+                    </div>
+                </div>
+                <div class='input_container'>
+                    <p>Select Fuel</p>
+                    <div class='input'>
+                        <i class='fa-solid fa-user'></i>
+                        <select name='vh_fuel' value='".$rw_vehicle['ag_vehicle_fuel']."'>
+                            <option value=''>Petrol</option>
+                            <option value=''>Diesel</option>
+                            <option value=''>Electric</option>
+                            <option value=''>CNG</option>
+                        </select>
+                    </div>
+                </div>
+                    <center>
+                        <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
+                        <button class='pop_up_submit vehicle_up' name='vehicle_up' type='submit'><i class='fa-solid fa-save'></i> Update</button>
+                    </center>
+                </div>
+            </form>";
     }
 ?>

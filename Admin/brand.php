@@ -25,11 +25,7 @@
                         <form class='form small_width_form' id='add_brand'>
                             <h2>Add Brand <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                             <div class='form_container'>
-                                <p>Enter Brand Code</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-code"></i>
-                                    <input type='text' name='brand_code' placeholder='* your Brand code' />
-                                </div>
+                                
                                 <p>Enter Brand Name</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-copyright"></i>
@@ -40,9 +36,9 @@
                                 <div class='input'>
                                     <i class="fa-solid fa-list"></i>
                                     <select name='brand_category'>
-                                        <option value=''>Bike</option>
-                                        <option value=''>Car</option>
-                                    <option>Auto Rikshaw</option>
+                                        <option value='Bike'>Bike</option>
+                                        <option value='Car'>Car</option>
+                                        <option value='Auto Rikshaw'>Auto Rikshaw</option>
                                     </select>
                                 </div>
                                 <p>Select Image</p>
@@ -54,14 +50,14 @@
                                 <div class='input'>
                                     <i class="fa-sharp fa-solid fa-battery-full"></i>
                                     <select name='brand_Status'>
-                                        <option value=''>Active</option>
-                                        <option value=''>In Active</option>
+                                        <option value='Active'>Active</option>
+                                        <option value='In Active'>In Active</option>
                                     </select>
                                 </div>
                                 <center>
                                     <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                                     <button class='pop_up_submit add_brand' type='submit' name='add_brand'><i class='fa-solid fa-save'></i> Save</button>
-                                    <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right pop_up_cancel'></i> Cancel</button>
+                                    <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
                                 </center>
                             </div>
                         </form>
@@ -128,7 +124,7 @@
     $(document).on('click','.brand_open',function(){
         var brand_open_table=$(this).attr("data-id");
         $.ajax({
-            url:'assets/brand_jscript.php',
+            url:'assets/company_jscript.php',
             method:'post',
             data:{brand_open_table:brand_open_table},
             success:function(data){
@@ -136,25 +132,25 @@
             }
         });
     });
-    // $(document).on('submit','#subs_up',function(e){
-    //         e.preventDefault();
-    //         $.ajax({
-    //             url:'assets/subs_jscript.php',
-    //             type:'post',
-    //             dataType:'json',
-    //             cache: false,
-    //             contentType: false,
-    //             processData: false,
-    //             data:new FormData(this),
-    //             beforeSend:function(){
-    //                 $('.subs_up').attr('disabled','disabled');
-    //             },
-    //             success:function(data){
-    //                 alert(data);
-    //                 $('.subs_up').removeAttr('disabled');
-    //                 $('.details_open').removeAttr("open");
-    //                 get_subs();
-    //             }
-    //         });
-    //     });            
+    $(document).on('submit','#brand_up',function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'assets/company_jscript.php',
+                type:'post',
+                dataType:'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data:new FormData(this),
+                beforeSend:function(){
+                    $('.brand_up').attr('disabled','disabled');
+                },
+                success:function(data){
+                    alert(data);
+                    $('.brand_up').removeAttr('disabled');
+                    $('.details_open').removeAttr("open");
+                    get_brand();
+                }
+            });
+        });            
 </script>

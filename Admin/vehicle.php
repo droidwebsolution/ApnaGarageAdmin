@@ -40,63 +40,61 @@
                                 <p>Enter Vehicle Model Name</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='model_name'  />
+                                    <input type='text' name='model_name' placeholder="Model Name" />
                                 </div>
                             </div>
                             <div class='input_container'>
-                                <p>Enter Vehicle Model Type</p>
+                                <p>Select Model Type</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='model_type'/>
+                                    <select name='vehicle_type'>
+                                        <option value="">Scooter</option>
+                                        <option value="">Bike</option>
+                                    </select>
                                 </div>
                             </div>
+                            
                             <div class='input_container'>
                                 <p>Enter Vehicle Menufecture Year</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='mg_yr' />
+                                    <input type='text' name='mg_yr' placeholder="Menufecture Year" />
                                 </div>
                             </div>
                             <div class='input_container'>
                                 <p>Enter Vehicle CC</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='vh_cc'/>
+                                    <input type='text' name='vh_cc' placeholder="Model CC"/>
                                 </div>
                             </div>
                             <div class='input_container'>
-                                <p>Enter Vehicle Fuel</p>
+                                <p>Select Fuel</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='vh_fuel' />
+                                    <select name='vh_fuel'>
+                                        <option value="">Petrol</option>
+                                        <option value="">Diesel</option>
+                                        <option value="">Electric</option>
+                                        <option value="">CNG</option>
+                                    </select>
                                 </div>
                             </div>
                             <input type='hidden' name='vehicle_add' />
-                            <div class='input_container'>
+                            <!-- <div class='input_container'>
                                 <p>Choose Vehicle Image</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
                                     <input type='file' name='vh_img' />
                                 </div>
-                            </div>
-                            <div class='input_container'>
+                            </div> -->
+                            <!-- <div class='input_container'>
                                 <p>Enter Date</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
                                     <input type='date' name='vh_date' />
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Select Status</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
-                                    <select name='vehicle_status'>
-                                        <option value="">Select Status</option>
-                                        <option value='Active'>Active</option>
-                                        <option value='InActive'>InActive</option>
-                                    </select>
-                                </div>
-                            </div><br clear="all">                            
+                            </div> --><br clear="all">                            
                             <center>
                                 <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                                 <button class='pop_up_submit add_vehicle' type='submit' name='add_vehicle'><i class='fa-solid fa-save'></i> Save</button>
@@ -167,53 +165,17 @@
             }
         });
     });
-    // $(document).on('submit','#subs_up',function(e){
-    //         e.preventDefault();
-    //         $.ajax({
-    //             url:'assets/subs_jscript.php',
-    //             type:'post',
-    //             dataType:'json',
-    //             cache: false,
-    //             contentType: false,
-    //             processData: false,
-    //             data:new FormData(this),
-    //             beforeSend:function(){
-    //                 $('.subs_up').attr('disabled','disabled');
-    //             },
-    //             success:function(data){
-    //                 alert(data);
-    //                 $('.subs_up').removeAttr('disabled');
-    //                 $('.details_open').removeAttr("open");
-                
-    //                 get_subs();
-    //             }
-    //         });
-    //     });
-    // $(document).on('click','.subs_delete',function(){
-    //         var subs_delete=$(this).attr("data-id");
-    //         if(confirm('Are You Sure?')){
-    //         $.ajax({
-    //             url:'assets/subs_jscript.php',
-    //             method:'post',
-    //             data:{subs_delete:subs_delete},
-    //             success:function(data){
-    //                 get_subs();
-    //             }
-    //         });
-    //         }else{
-    //                 return false;
-    //             }
-    //     });
-    // $(document).on('click','.up_open',function(){
-    //     var subs_up_open=$(this).attr("data-id");
-    //     $.ajax({
-    //         url:'assets/subs_jscript.php',
-    //         method:'post',
-    //         data:{subs_up_open:subs_up_open},
-    //         success:function(data){
-    //             $('.up_open_table').html(data);
-    //         }
-    //     });
-    // });
+
+    $(document).on('click','.up_open',function(){
+        var vehicle_up_open=$(this).attr("data-id");
+        $.ajax({
+            url:'assets/vehicle_jscript.php',
+            method:'post',
+            data:{vehicle_up_open:vehicle_up_open},
+            success:function(data){
+                $('.vehicle_open_table').html(data);
+            }
+        });
+    });
                 
 </script>
