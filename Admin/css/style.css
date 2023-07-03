@@ -1,0 +1,119 @@
+*{margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans', sans-serif;list-style: none; text-decoration: none;}
+body{background: #dee4ec;}
+::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-top-right-radius: 7px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ef7d19; 
+    border-top-right-radius: 7px;
+    height:5px;
+  }
+
+.tost{position: fixed; top:80px; right: 20px; transition: right 0.3s; background: #253347; z-index: 5; padding: 10px; border-radius: 5px;}
+.tost p{font-size: 12px; color: #fff}
+
+.sidebar{z-index: 4; background:#253347; width:225px; height: 100vh; padding:20px 0; transition: all 0.3s; position: fixed; left: -225px; }
+.menu_close{background:#fff; color:#ef7d19; position: absolute; right:10px; top:10px; cursor: pointer; border-radius: 100%; width:40px; height: 40px; line-height: 40px !important; text-align: center;}
+.sidebar .profile{ margin-bottom: 30px; text-align: center;}
+.sidebar .profile img {display: block; width: 100px; height: 100px; border-radius: 50%; margin: 0 auto;}
+.sidebar .profile h4{color:#fff; margin: 10px 0 5px;}
+.sidebar .profile p{color:#a2b9bc;font-size: 14px;padding-bottom: 5px;}
+.sidebar ul li{text-align: left;padding: 13px 30px;border-bottom: 1px solid #647a7c; }
+.sidebar ul li a{color:#dee4ec; font-size: 14px;display: block; }
+.sidebar ul li a .icon {width: 30px;}
+.sidebar ul li a .item{padding-left: 10px;}
+.sidebar ul li:hover{background-color:#fff;}
+.sidebar ul li:hover a{color:#253347}
+.sidebar ul li:hover a i{color:#ef7d19}
+
+header{z-index: 3; padding-right: 20px; background:#ef7d19; width:100%; height:60px;position: fixed; }
+.bar{background:#fff; color:#253347; margin:10px 0px 0px 10px; cursor: pointer; border-radius: 100%; width:40px; height: 40px; line-height: 40px !important; text-align: center;}
+header ul {float: right;}
+header ul li{width:100px; height:40px; line-height: 40px; float: left; margin:10px 0px; text-align: center;}
+header ul li a{color:#fff;}
+
+#container{transition: all 0.3s; height: 100vh; padding:80px 20px 20px 20px;}
+
+.search_filter{background:#fff; height: 40px; border-radius: 7px; padding: 0px 5px;}
+.search_filter .pop_up_summary{text-align: center; font-size: 13px; width:120px; font-weight: 600;}
+.search_input{width:180px; height: 30px; margin-top:5px; border-radius: 7px; border:1px solid rgb(0,0,0,0.2); outline:none; padding:0px 5px}
+
+.pop_up_open{width:80px; height: 30px; background:#2e2e2e; color: #fff; cursor:pointer; border-radius: 5px;}
+.pop_up_summary{line-height: 30px; list-style: none;}
+
+.pop_up{width:100%; height: 100vh; position: fixed; top:0px; left: 0px; z-index: 4 !important; background: rgb(0,0,0,0.8);}
+.form{background:#fff; margin: auto;}
+.form h2{width:100%;  font-size: 16px; position: relative; height: 60px; background:#ef7d19; text-align: center; line-height: 60px;}
+.close_pop_up{position: absolute; right:20px; top:20px; cursor: pointer;}
+
+.small_width_form{width:500px;}
+.min_width_form{width:900px;}
+.xl_width_form{width:100%;}
+
+.min_width_form .input_container{width:31%; margin: 0px 1%; float: left;} 
+
+.form_container{padding: 20px;}
+.form_container p{text-align: left; margin-bottom: 5px; font-size: 13px;}
+.input{border-radius: 5px; width:100%; margin: 0px 0px 20px 0px; position: relative; height: 35px; background:#e6e6e6; text-align:left}
+.input i{font-size: 12px; width:40px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; height: 100%; position: absolute; left:0; background: #ef7d19; text-align:center; line-height: 35px;}
+.input input,.input select{font-size: 12px; width:100%; height: 100%; background:none; border:none; outline: none; padding:0px 10px 0px 50px;}
+.input input[type='file']{padding-top: 8px;}
+.input input[type='radio']{padding-top: 40px;}
+
+.pop_up_submit{width:100px; cursor: pointer; height: 35px; background: #ef7d19; font-weight: 700; border:none; outline: none; border-radius: 5px;}
+
+.table_container{ background:#fff; height: 75vh; overflow: auto; margin-top: 10px;border-radius: 7px;}
+.item_table{width:100%; position: relative; border:1px solid rgb(0,0,0,0.2) }
+.item_table thead tr th{background: #ef7d19; color:#253347;position: sticky; top: 0; }
+.item_table thead tr th,.item_table tbody tr td{height:35px; font-size: 12px; text-align: left; padding: 0px 10px;}
+.item_table tbody tr:nth-child(2n+2){background-color: #e6e6e6;}
+.item_table tbody tr td a i{color: #253347;}
+
+.pagination{padding:10px 0px 0px 260px;}
+
+.dashboard_container{width:100%;padding:80px 20px 20px 20px;}
+.card_box{float: left; margin-right: 10px; margin-top: 20px; margin-bottom: 10px;width:23%; height:120px; background: #fff; border-radius: 10px;}
+.card_box:hover{background: #6b5b95;}
+.card_box h3{margin: 10px 10px 0px 10px;}
+.card_box p{margin: 2px 10px 0px 10px;font-size: 14px;}
+.card_box:hover h3{color:#fff}
+.card_box:hover p{color:#fff}
+.progress {float: left; width:80%; height:10px; background: #253347;margin: 40px 5px 5px 5px ;}
+.percentage p{float: left;margin: 39 0px 5px 0px ;font-size: 12px;}
+.card_box:hover.percentage{color:#fff}
+#menus{background: #daf3e0; width:50%; height:10px;}
+#order{ background: #e7b8f0; width:70%; height:10px;}
+#customer{ background: #f477f2; width:40%; height:10px;}
+#revenue{ background: #aaaaff; width:90%; height:10px;}
+.chart_box{margin:10px 10px 10px 0px;float: left;width:100%}
+#chart{float: left;width:40%;background: #fff; border-radius: 10px;height:250px}
+#steward{ margin-left:10px;float: left;width:55%;background: #fff; border-radius: 10px;}
+
+.ind_progress{width:100%; margin:10px 10px 10px 5px;}
+#plateform{float:left; width:40%;background: #fff; border-radius: 10px;height:300px}
+#plateform h4{margin: 10px;font-weight: bold;}
+.plateform_data{width:95%;height:20%;margin: 20px 10px;}
+.progress_dinein{width:75%; height:15px; background: #253347;margin:  30px 10px 10px 100px;border-radius: 10px;}
+#dinein{background: #daf3e0; width:50%; height:15px;border-top-left-radius:10px;border-bottom-left-radius:10px;}
+#takeaway{background: #f477f2; width:70%; height:15px;border-top-left-radius:10px;border-bottom-left-radius:10px;}
+#online{background: #aaaaff; width:90%; height:15px;border-top-left-radius:10px;border-bottom-left-radius:10px;}
+.plateform_data img{width:20%;height:100%;float:left;margin:10px 20px 0px 0px ;}
+.plateform_data h5{font-size: 14px;float:left;margin:  20px 10px; }
+.plateform_data p{font-size: 14px; float:right; margin: 20px 10px }
+
+.trend_dish{float:left; width:55%;; height:300px; background: #fff; border-radius: 10px; margin-left: 10px;}
+.trend_dish img{width:15%; height:15%; margin: 10px;float:left;}
+.trend_dish h4{margin: 10px 0px 20px 10px;font-weight: bold;}
+.trend_dish a{font-size: 12px;float: right;margin: 10px; color:#253347}
+.trend_dish a i{margin-left: 5px;}
+.trend_dish h5{font-size: 14px;margin:  20px 10px 2px 5px;float:left;}
+.trend_dish p{font-size: 14px;margin:  10px 10px 2px 70px;width:20%}
+.trend_dish ul li{float: left; width:50%}
