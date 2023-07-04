@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="retailer.php">
                     <span class="icon"><i class="fa-solid fa-person"></i></span>
                     <span class="item">New Retailer</span>
                 </a>

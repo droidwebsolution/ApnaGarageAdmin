@@ -23,75 +23,79 @@
                 <details class='details_open' style='display:inline-block'>
                     <summary class='pop_up_open pop_up_summary'><i class="fa-solid fa-circle-plus"></i> Add New</summary>
                     <div class='pop_up'>
-                        <form class='form min_width_form' id='add_vehicle' enctype='multipart/form-data'>
-                            <h2>Add Vehicle <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                        <form class='form min_width_form' id='add_part' enctype='multipart/form-data'>
+                            <h2>Add Parts <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                             <div class='form_container'>
                                 <div class='input_container'>
                                     <p>Select Brand</p>
                                     <div class='input'>
                                         <i class='fa-solid fa-user'></i>
-                                        <select name='vehicle_brand'>
+                                        <select name='part_brand'>
                                             <option value="">Select Brand</option>
                                             <?php echo get_brand(); ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class='input_container'>
-                                    <p>Enter Vehicle Model Name</p>
+                                    <p>Enter Part Name</p>
                                     <div class='input'>
                                         <i class='fa-solid fa-user'></i>
-                                        <input type='text' name='model_name'  />
+                                        <input type='text' name='part_name' placeholder="Part Name eg.foot rest"  />
                                     </div>
                                 </div>
                                 <div class='input_container'>
-                                    <p>Enter Vehicle Model Type</p>
+                                    <p>Enter Purchase Price</p>
                                     <div class='input'>
                                         <i class='fa-solid fa-user'></i>
-                                        <input type='text' name='model_type'/>
+                                        <input type='text' name='purchase price' placeholder="Only Digit Allowed"/>
                                     </div>
                                 </div>
                                 <div class='input_container'>
-                                    <p>Enter Vehicle Menufecture Year</p>
+                                    <p>Enter Sale Price</p>
                                     <div class='input'>
                                         <i class='fa-solid fa-user'></i>
-                                        <input type='text' name='mg_yr' />
+                                        <input type='text' name='sale_price' placeholder="Only Digit Allowed" />
                                     </div>
                                 </div>
                                 <div class='input_container'>
-                                    <p>Enter Vehicle CC</p>
+                                    <p>Enter Quantity</p>
                                     <div class='input'>
                                         <i class='fa-solid fa-user'></i>
-                                        <input type='text' name='vh_cc'/>
+                                        <input type='text' name='part_qty' placeholder="*Eg. 50"/>
                                     </div>
                                 </div>
                                 <div class='input_container'>
-                                    <p>Enter Vehicle Fuel</p>
+                                    <p>Enter Category</p>
                                     <div class='input'>
                                         <i class='fa-solid fa-user'></i>
-                                        <input type='text' name='vh_fuel' />
+                                        <select name='part_cat' >
+                                            <option value='Oil'>Oil</option>
+                                            <option value='Spare'>Spare</option>
+                                            <option value='Accessories'>Accessories</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <input type='hidden' name='item_add' />
+                                <input type='hidden' name='part_add' />
                                 <div class='input_container'>
-                                    <p>Choose Vehicle Image</p>
+                                    <p>Enter HSN</p>
                                     <div class='input'>
                                         <i class='fa-solid fa-user'></i>
-                                        <input type='file' name='vh_img' />
+                                        <input type='text' name='part_hsn' placeholder="Only Digits Allowed" />
                                     </div>
                                 </div>
                                 <div class='input_container'>
-                                    <p>Enter Date</p>
+                                    <p>Choose Part Image</p>
                                     <div class='input'>
                                         <i class='fa-solid fa-user'></i>
-                                        <input type='date' name='vh_date' />
+                                        <input type='file' name='part_img' />
                                     </div>
                                 </div>
+                                
                                 <div class='input_container'>
                                     <p>Select Status</p>
                                     <div class='input'>
                                         <i class='fa-solid fa-user'></i>
-                                        <select name='vehicle_status'>
-                                            <option value="">Select Status</option>
+                                        <select name='part_status'>
                                             <option value='Active'>Active</option>
                                             <option value='InActive'>InActive</option>
                                         </select>
@@ -99,7 +103,7 @@
                                 </div><br clear="all">                            
                                 <center>
                                     <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
-                                    <button class='pop_up_submit add_vehicle' type='submit' name='add_vehicle'><i class='fa-solid fa-save'></i> Save</button>
+                                    <button class='pop_up_submit add_part' type='submit' name='add_part'><i class='fa-solid fa-save'></i> Save</button>
                                 </center>
                             </div>
                         </form>
@@ -112,8 +116,6 @@
                     <thead>
                         <tr>
                             <th>Sr No.</th>
-                            <th style='text-align:center'>Edit</th>
-                            <th>Status</th>
                             <th>Part Code</th>
                             <th>Part HSN</th>
                             <th>Part Name</th>
@@ -122,8 +124,10 @@
                             <th>Part Qty</th>
                             <th>Purchase Price</th>
                             <th>Sale Price</th>
-                            <th style='text-align:center'>Category</th>
+                            <th>Category</th>
                             <th>Added Date</th>
+                            <th>Status</th>
+                            <th style='text-align:center'>Edit</th>
                         </tr>
                     </thead>
                     <tbody class='get_parts_table'></tbody>
@@ -147,75 +151,61 @@
             }
         });
     }
-    $(document).on('submit','#add_vehicle',function(e){
+    $(document).on('submit','#add_part',function(e){
         e.preventDefault();
         $.ajax({
-            url:'assets/vehicle_jscript.php',
+            url:'assets/parts_jscript.php',
             method:'post',
             cache:false,
             contentType:false,
             processData:false,
             dataType:'json',
             beforeSend:function(){
-                $('.add_vehicle').attr('disabled','disabled');
+                $('.add_part').attr('disabled','disabled');
             },
             data:new FormData(this),
             success:function(data){
                 alert(data);
                 $('.details_open').removeAttr("open");
-                $('.add_vehicle').removeAttr('disabled');
+                $('.add_part').removeAttr('disabled');
                 $('.form').find('input').val('');
-                get_vehicle();
+                get_parts();
             }
         });
     });
-    // $(document).on('submit','#subs_up',function(e){
-    //         e.preventDefault();
-    //         $.ajax({
-    //             url:'assets/subs_jscript.php',
-    //             type:'post',
-    //             dataType:'json',
-    //             cache: false,
-    //             contentType: false,
-    //             processData: false,
-    //             data:new FormData(this),
-    //             beforeSend:function(){
-    //                 $('.subs_up').attr('disabled','disabled');
-    //             },
-    //             success:function(data){
-    //                 alert(data);
-    //                 $('.subs_up').removeAttr('disabled');
-    //                 $('.details_open').removeAttr("open");
+    $(document).on('submit','#part_up',function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'assets/parts_jscript.php',
+                type:'post',
+                dataType:'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data:new FormData(this),
+                beforeSend:function(){
+                    $('.part_up').attr('disabled','disabled');
+                },
+                success:function(data){
+                    alert(data);
+                    $('.part_up').removeAttr('disabled');
+                    $('.details_open').removeAttr("open");
                 
-    //                 get_subs();
-    //             }
-    //         });
-    //     });
-    // $(document).on('click','.subs_delete',function(){
-    //         var subs_delete=$(this).attr("data-id");
-    //         if(confirm('Are You Sure?')){
-    //         $.ajax({
-    //             url:'assets/subs_jscript.php',
-    //             method:'post',
-    //             data:{subs_delete:subs_delete},
-    //             success:function(data){
-    //                 get_subs();
-    //             }
-    //         });
-    //         }else{
-    //                 return false;
-    //             }
-    //     });
-    // $(document).on('click','.up_open',function(){
-    //     var subs_up_open=$(this).attr("data-id");
-    //     $.ajax({
-    //         url:'assets/subs_jscript.php',
-    //         method:'post',
-    //         data:{subs_up_open:subs_up_open},
-    //         success:function(data){
-    //             $('.up_open_table').html(data);
-    //         }
-    //     });
-    // });
+                    get_parts();
+                }
+            });
+        });
+    
+    $(document).on('click','.up_open',function(){
+        var part_up_open=$(this).attr("data-id");
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{part_up_open:part_up_open},
+            success:function(data){
+                $('.part_open_table').html(data);
+            }
+        });
+    });
                 
 </script>
