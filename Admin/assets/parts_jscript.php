@@ -9,7 +9,7 @@
         $part_get->execute();
         $count_part=$part_get->rowCount();
         if($count_part == 0){
-            $ag_part_code="AG_01";
+            $ag_part_code="AGP_01";
         }else{
             $rw_part=$part_get->fetch();
             $code=$rw_part['ag_part_code'];

@@ -40,7 +40,7 @@
         $data_add->bindParam(':ag_brand_status',$ag_brand_status);
         
         if($data_add->execute()){
-            $path="../images/$invimg";
+            $path="../images/Brand/$invimg";
             move_uploaded_file($_FILES['brand_img']['tmp_name'],$path);
             $msg="Data Added Successfully";
         }else{
@@ -173,10 +173,10 @@
                     $brand_up->bindParam(':ag_brand_status',$ag_brand_status);
                     if($brand_up->execute()){
                         if($rwinv['ag_brand_img'] == ''){}else{
-                            $old_img="../images/".$rwinv['ag_brand_img']."";
+                            $old_img="../images/Brand/".$rwinv['ag_brand_img']."";
                             unlink($old_img);
                         }
-                        $fpath="../images/$invimg";
+                        $fpath="../images/Brand/$invimg";
                         move_uploaded_file($_FILES['brand_img']['tmp_name'],$fpath);
                         $msg="Brand Has Been Updated Successfully";
                         echo json_encode($msg);

@@ -36,6 +36,18 @@
                 </a>
             </li>
             <li>
+                <a href="state.php">
+                    <span class="icon"><i class="fa-solid fa-list"></i></span>
+                    <span class="item">All State</span>
+                </a>
+            </li>
+            <li>
+                <a href="city.php">
+                    <span class="icon"><i class="fa-solid fa-list"></i></span>
+                    <span class="item">All City</span>
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <span class="icon"><i class="fa-solid fa-person"></i></span>
                     <span class="item">Add Labour</span>

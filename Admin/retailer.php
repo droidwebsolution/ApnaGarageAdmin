@@ -48,6 +48,13 @@
                                 </div>
                             </div>
                             <div class='input_container'>
+                                <p>Enter Company Alternate Phone No</p>
+                                <div class='input'>
+                                    <i class='fa-solid fa-user'></i>
+                                    <input type='tel' name='r_company_alt_phone' placeholder="Enter Digits Only" />
+                                </div>
+                            </div>
+                            <div class='input_container'>
                                 <p>Enter Company Email Id</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
@@ -90,14 +97,12 @@
                                 </div>
                             </div>
                             <div class='input_container'>
-                                <p>Select State</p>
+                                <p>Select state</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
                                     <select name='r_state'>
-                                        <option value="Guajarat">Guajarat</option>
-                                        <option value="UP">UP</option>
-                                        <option value="Maharastra">Maharastra</option>
-                                        <option value="Panjab">Panjab</option>
+                                        <option value="">Select State</option>
+                                        <?php echo get_state(); ?>
                                     </select>
                                 </div>
                             </div>
@@ -105,24 +110,17 @@
                                 <p>Select City</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <select name='r_state'>
-                                        <option value="Bharuch">Bharuch</option>
-                                        <option value="Surat">Surat</option>
-                                        <option value="Ankleshwar">Ankleshwar</option>
-                                        <option value="Hariyana">Hariyana</option>
+                                    <select name='r_city'>
+                                        <option value="">Select City</option>
+                                        <?php echo get_city(); ?>
                                     </select>
                                 </div>
                             </div>
                             <div class='input_container'>
-                                <p>Select Area</p>
+                                <p>Enter Area</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <select name='r_state'>
-                                        <option value="Guajarat">Guajarat</option>
-                                        <option value="UP">UP</option>
-                                        <option value="Maharastra">Maharastra</option>
-                                        <option value="Panjab">Panjab</option>
-                                    </select>
+                                    <input type='text' name='r_area' placeholder="Enter Area"/>
                                 </div>
                             </div>
                             <input type='hidden' name='retailer_add' />
@@ -130,7 +128,7 @@
                                 <p>Enter House/Street No</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='r_house' placeholder="Enter House/Street No"/>
+                                    <input type='text' name='r_house_no' placeholder="Enter House/Street No"/>
                                 </div>
                             </div>
                             <div class='input_container'>
@@ -138,6 +136,13 @@
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
                                     <input type='text' name='r_pincode' placeholder="Enter Pin-code"/>
+                                </div>
+                            </div>
+                            <div class='input_container'>
+                                <p>Enter Registration Date</p>
+                                <div class='input'>
+                                    <i class='fa-solid fa-user'></i>
+                                    <input type='date' name='r_register_date' placeholder="Enter Date"/>
                                 </div>
                             </div>
                              <br clear="all">                            
@@ -162,9 +167,12 @@
                             <th>Owner Name</th>
                             <th>Company Mobile No</th>
                             <th>Company Email Id</th>
+                            <th>Company Website</th>
+                            <th>Company GST No</th>
+                            <th>Company TIN No</th>
                             <th>Contact Person Name</th>
                             <th>Contact Person Phone</th>
-                            <th>Status</th>
+                            <th>registration Date</th>
                             
                             <th style='text-align:center'>Action</th>
                         </tr>

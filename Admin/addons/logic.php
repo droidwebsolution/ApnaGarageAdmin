@@ -35,4 +35,34 @@
             echo"<option value='".$rw_brand['ag_brand_no']."'>".$rw_brand['ag_brand_name']."</option>";
         endwhile;
     }
+    function get_state(){
+        global $con;
+        $get_state="select * from ag_state";
+        $state_get=$con->prepare($get_state,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $state_get->setFetchMode(PDO::FETCH_ASSOC);
+        $state_get->execute();
+        while($rw_state=$state_get->fetch()):
+            echo"<option value='".$rw_state['ag_state_no']."'>".$rw_state['ag_state_name']."</option>";
+        endwhile;
+    }
+    function get_city(){
+        global $con;
+        $get_city="select * from ag_city";
+        $city_get=$con->prepare($get_city,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $city_get->setFetchMode(PDO::FETCH_ASSOC);
+        $city_get->execute();
+        while($rw_city=$city_get->fetch()):
+            echo"<option value='".$rw_city['ag_city_no']."'>".$rw_city['ag_city_name']."</option>";
+        endwhile;
+    }
+    function get_parts(){
+        global $con;
+        $get_part="select * from ag_part";
+        $part_get=$con->prepare($get_part,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $part_get->setFetchMode(PDO::FETCH_ASSOC);
+        $part_get->execute();
+        while($rw_part=$part_get->fetch()):
+            echo"<option value='".$rw_part['ag_part_no']."'>".$rw_part['ag_part_name']."</option>";
+        endwhile;
+    }
 ?>

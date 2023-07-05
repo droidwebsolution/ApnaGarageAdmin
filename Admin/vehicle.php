@@ -81,13 +81,22 @@
                                 </div>
                             </div>
                             <input type='hidden' name='vehicle_add' />
-                            <!-- <div class='input_container'>
-                                <p>Choose Vehicle Image</p>
+                            <div class='input_container'>
+                                <p>Select Part</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <input type='file' name='vh_img' />
+                                    <select name='part'>
+                                        <option value="">Select Part</option>
+                                        <?php echo get_parts(); ?>
+                                    </select>
                                 </div>
-                            </div> -->
+                            </div> 
+                            <div class="input_container">
+                                <details class='details_open' style='display:inline-block;margin-top:22px'>
+                                    <summary class='pop_up_open pop_up_summary part_add_open'><i class='fa-solid fa-pen-to-square'></i> Add Parts</summary>
+                                    <div class='pop_up Part_add_open_table'></div>
+                                </details>
+                            </div>
                             <!-- <div class='input_container'>
                                 <p>Enter Date</p>
                                 <div class='input'>
@@ -174,6 +183,17 @@
             data:{vehicle_up_open:vehicle_up_open},
             success:function(data){
                 $('.vehicle_open_table').html(data);
+            }
+        });
+    });
+    $(document).on('click','.part_add_open',function(){
+        var part_add_open=$(this).attr("data-id");
+        $.ajax({
+            url:'assets/vehicle_jscript.php',
+            method:'post',
+            data:{part_add_open:part_add_open},
+            success:function(data){
+                $('.part_add_open_table').html(data);
             }
         });
     });
