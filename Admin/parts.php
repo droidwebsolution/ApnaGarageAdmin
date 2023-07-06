@@ -26,10 +26,11 @@
                         <form class='form min_width_form' id='add_part' enctype='multipart/form-data'>
                             <h2>Add Parts <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                             <div class='form_container'>
+                               
                                 <div class='input_container'>
                                     <p>Select Brand</p>
                                     <div class='input'>
-                                        <i class='fa-solid fa-user'></i>
+                                        <i class="fa-solid fa-copyright"></i>
                                         <select name='part_brand'>
                                             <option value="">Select Brand</option>
                                             <?php echo get_brand(); ?>
@@ -37,37 +38,19 @@
                                     </div>
                                 </div>
                                 <div class='input_container'>
-                                    <p>Enter Part Name</p>
+                                    <p>Select Model</p>
                                     <div class='input'>
-                                        <i class='fa-solid fa-user'></i>
-                                        <input type='text' name='part_name' placeholder="Part Name eg.foot rest"  />
+                                        <i class="fa-sharp fa-regular fa-motorcycle"></i>
+                                        <select name='part_model'>
+                                            <option value="">Select Model</option>
+                                            <?php echo get_vehicle(); ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class='input_container'>
-                                    <p>Enter Purchase Price</p>
+                                    <p>Select Category</p>
                                     <div class='input'>
-                                        <i class='fa-solid fa-user'></i>
-                                        <input type='text' name='purchase price' placeholder="Only Digit Allowed"/>
-                                    </div>
-                                </div>
-                                <div class='input_container'>
-                                    <p>Enter Sale Price</p>
-                                    <div class='input'>
-                                        <i class='fa-solid fa-user'></i>
-                                        <input type='text' name='sale_price' placeholder="Only Digit Allowed" />
-                                    </div>
-                                </div>
-                                <div class='input_container'>
-                                    <p>Enter Quantity</p>
-                                    <div class='input'>
-                                        <i class='fa-solid fa-user'></i>
-                                        <input type='text' name='part_qty' placeholder="*Eg. 50"/>
-                                    </div>
-                                </div>
-                                <div class='input_container'>
-                                    <p>Enter Category</p>
-                                    <div class='input'>
-                                        <i class='fa-solid fa-user'></i>
+                                        <i class="fa-solid fa-list"></i>
                                         <select name='part_cat' >
                                             <option value='Oil'>Oil</option>
                                             <option value='Spare'>Spare</option>
@@ -75,35 +58,46 @@
                                         </select>
                                     </div>
                                 </div>
+                                
+                                <div class='input_container'>
+                                    <p>Enter Part Name</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                                        <input type='text' name='part_name' placeholder="Part Name eg.foot rest"  />
+                                    </div>
+                                </div>
+                                
                                 <input type='hidden' name='part_add' />
                                 <div class='input_container'>
                                     <p>Enter HSN</p>
                                     <div class='input'>
-                                        <i class='fa-solid fa-user'></i>
+                                        <i class="fa-brands fa-digital-ocean"></i>
                                         <input type='text' name='part_hsn' placeholder="Only Digits Allowed" />
                                     </div>
                                 </div>
                                 <div class='input_container'>
                                     <p>Choose Part Image</p>
                                     <div class='input'>
-                                        <i class='fa-solid fa-user'></i>
+                                        <i class="fa-solid fa-image"></i>
                                         <input type='file' name='part_img' />
                                     </div>
                                 </div>
-                                
                                 <div class='input_container'>
                                     <p>Select Status</p>
                                     <div class='input'>
-                                        <i class='fa-solid fa-user'></i>
-                                        <select name='part_status'>
+                                        <i class="fa-solid fa-battery-full"></i>
+                                        <select name='part_status' value='".$rw_part['ag_part_status']."'>
                                             <option value='Active'>Active</option>
                                             <option value='InActive'>InActive</option>
                                         </select>
                                     </div>
-                                </div><br clear="all">                            
+                                </div>    
+                                <br clear="all">                            
                                 <center>
                                     <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                                     <button class='pop_up_submit add_part' type='submit' name='add_part'><i class='fa-solid fa-save'></i> Save</button>
+                                    <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
+
                                 </center>
                             </div>
                         </form>
@@ -117,14 +111,12 @@
                         <tr>
                             <th>Sr No.</th>
                             <th>Part Code</th>
-                            <th>Part HSN</th>
-                            <th>Part Name</th>
-                            <th>Image</th>
                             <th>Brand Name</th>
-                            <th>Part Qty</th>
-                            <th>Purchase Price</th>
-                            <th>Sale Price</th>
+                            <th>Model Name</th>
                             <th>Category</th>
+                            <th>Part Name</th>
+                            <th>Part HSN</th>
+                            <th>Image</th>
                             <th>Added Date</th>
                             <th>Status</th>
                             <th style='text-align:center'>Edit</th>

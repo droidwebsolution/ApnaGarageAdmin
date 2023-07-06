@@ -9,7 +9,7 @@
         $retailer_get->execute();
         $count_retailer=$retailer_get->rowCount();
         if($count_retailer == 0){
-            $ag_retailer_code="AGR_1";
+            $ag_retailer_code="RT_1";
         }else{
             $rw_retailer=$retailer_get->fetch();
             $code=$rw_retailer['ag_retailer_code'];
@@ -77,6 +77,7 @@
             while($rw_retailer=$retailer_get->fetch()):
                 echo"<tr>
                         <td>".$i++."</td>
+                        <td>".$rw_retailer['ag_retailer_code']."</td> 
                         <td>".$rw_retailer['ag_retailer_company_name']."</td> 
                         <td>".$rw_retailer['ag_retailer_owner_name']."</td>
                         <td>".$rw_retailer['ag_retailer_comapny_phone']."</td>

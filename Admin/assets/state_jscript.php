@@ -34,7 +34,6 @@
                 echo"<tr>
                         <td>".$i++."</td>
                         <td>".$rw_state['ag_state_name']."</td>
-                      
                         <td style='text-align:center'>
                             <details class='details_open' style='display:inline-block'>
                                 <summary class='pop_up_open pop_up_summary state_open' data-id='".encrypt_decrypt('encrypt', $rw_state['ag_state_no'])."'><i class='fa-solid fa-pen-to-square'></i> Edit</summary>
@@ -66,7 +65,9 @@
                     <center>
                         <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                         <button class='pop_up_submit state_up' type='submit' name='state_up'><i class='fa-solid fa-save'></i> Update</button>
-                    </center>
+                        <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
+
+                        </center>
                 </div>
             </form>";
     }

@@ -18,9 +18,6 @@
         }
         $ag_brand_name=check_data($_POST['brand_name']);
         $ag_brand_category=check_data($_POST['brand_category']);
-        //get img info
-       // $fileName=basename($_FILES['brand_img']['name']);
-        // $fileType=pathinfo($fileName,PATHINFO_EXTENSION);
         $ag_brand_img=$_FILES['brand_img']['tmp_name'];
         $ag_brand_status=$_POST['brand_Status'];
         if($ag_brand_status == "Active"){
@@ -40,7 +37,7 @@
         $data_add->bindParam(':ag_brand_status',$ag_brand_status);
         
         if($data_add->execute()){
-            $path="../images/Brand/$invimg";
+            $path="../images/brand/$invimg";
             move_uploaded_file($_FILES['brand_img']['tmp_name'],$path);
             $msg="Data Added Successfully";
         }else{
@@ -64,7 +61,7 @@
                         <td>".$rw_brand['ag_brand_code']."</td> 
                         <td>".$rw_brand['ag_brand_name']."</td>
                         <td>".$rw_brand['ag_brand_category']."</td>
-                        <td><img src= 'images/".$rw_brand['ag_brand_img']."' style='width:40px;height:40px'></td>
+                        <td><img src= 'images/brand/".$rw_brand['ag_brand_img']."' style='width:40px;height:40px'></td>
                         <td>";
                         if($rw_brand['ag_brand_status'] == 1){
                             echo 'Active';
@@ -94,27 +91,26 @@
         echo"<form class='form small_width_form' id='brand_up' enctype='multipart/form-data'>
                 <h2>Edit ".$rw_brand['ag_brand_name']." <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                 <div class='form_container'>
-                    <p>Update Brand Name</p>
+                    <p>Update brand Name</p>
                     <div class='input'>
                         <i class='fa-solid fa-copyright'></i>
-                        <input type='text' name='brand_name' value='".$rw_brand['ag_brand_name']."' placeholder='* Only Characters Allowed' title='Enter Brand Name' />
+                        <input type='text' name='brand_name' value='".$rw_brand['ag_brand_name']."' placeholder='* Only Characters Allowed' title='Enter brand Name' />
                     </div>
                     <input type='hidden' name='up_brands' value='".encrypt_decrypt('encrypt', $rw_brand['ag_brand_no'])."' />
-                    <p>Update Brand Category</p>
+                    <p>Update brand Category</p>
                     <div class='input'>
                         <i class='fa-solid fa-list'></i>
                         <select name='brand_category' value='".$rw_brand['ag_brand_category']."' >
                             <option>Bike</option>
-                            <option value=''>Car</option>
-                            <option value=''>Auto Rikshaw</option>
+                            
                         </select>
                     </div>
-                    <p>Update Brand Image</p>
+                    <p>Update brand Image</p>
                     <div class='input'>
                         <i class='fa-solid fa-image'></i>
                         <input type='file' name='brand_img' />
                     </div>
-                    <p>Update Brand Status</p>
+                    <p>Update brand Status</p>
                     <div class='input'>
                         <i class='fa-sharp fa-solid fa-battery-full'></i>
                         <select name='brand_status' value='".$rw_brand['ag_brand_status']."'>
@@ -125,7 +121,8 @@
                     <center>
                         <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                         <button class='pop_up_submit brand_up' type='submit' name='brand_up'><i class='fa-solid fa-save'></i> Update</button>
-                    </center>
+                        <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
+                        </center>
                 </div>
             </form>";
     }
@@ -173,12 +170,12 @@
                     $brand_up->bindParam(':ag_brand_status',$ag_brand_status);
                     if($brand_up->execute()){
                         if($rwinv['ag_brand_img'] == ''){}else{
-                            $old_img="../images/Brand/".$rwinv['ag_brand_img']."";
+                            $old_img="../images/brand/".$rwinv['ag_brand_img']."";
                             unlink($old_img);
                         }
-                        $fpath="../images/Brand/$invimg";
+                        $fpath="../images/brand/$invimg";
                         move_uploaded_file($_FILES['brand_img']['tmp_name'],$fpath);
-                        $msg="Brand Has Been Updated Successfully";
+                        $msg="brand Has Been Updated Successfully";
                         echo json_encode($msg);
                     }else{
                         $msg="Something Went Wrong Try Again";

@@ -163,6 +163,7 @@
                     <thead>
                         <tr>
                             <th>Sr No.</th>
+                            <th>Retailer Code</th>
                             <th>Company Name</th>
                             <th>Owner Name</th>
                             <th>Company Mobile No</th>

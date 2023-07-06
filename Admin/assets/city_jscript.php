@@ -50,7 +50,7 @@
     }
     if(isset($_POST['city_open_table'])){
         $ag_city_no=encrypt_decrypt('decrypt', $_POST['city_open_table']);
-        $get_city="select * from ag_city where ag_city_no=:ag_city_no";
+        $get_city="select ct.*,st.ag_state_name from ag_city ct left join ag_state st on ct.ag_state_no=st.ag_state_no where ct.ag_city_no=:ag_city_no";
         $city_get=$con->prepare($get_city,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $city_get->bindParam(':ag_city_no',$ag_city_no);
         $city_get->setFetchMode(PDO::FETCH_ASSOC);
@@ -63,7 +63,7 @@
                     <div class='input'>
                         <i class='fa-solid fa-user'></i>
                         <select name='state'>
-                            <option value=''>Select State</option>";
+                            <option value='". $rw_city['ag_state_no']."'>".$rw_city['ag_state_name']."</option>";
                             echo get_state(); 
                         echo"</select>
                     </div>
@@ -77,18 +77,20 @@
                     <center>
                         <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                         <button class='pop_up_submit city_up' type='submit' name='city_up'><i class='fa-solid fa-save'></i> Update</button>
-                    </center>
+                        <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
+                        </center>
                 </div>
             </form>";
     }
     if(isset($_POST['up_cities'])){
         $ag_city_no=encrypt_decrypt('decrypt', check_data($_POST['up_cities']));
+        $ag_state_no=check_data($_POST['state']);
         $ag_city_name=check_data($_POST['up_city_name']);
        // $ag_city_price=check_data($_POST['up_subs_price']);
-       
         
-        $up_city="update ag_city set ag_city_name=:ag_city_name where ag_city_no=:ag_city_no";
+        $up_city="update ag_city set ag_state_no=:ag_state_no,ag_city_name=:ag_city_name where ag_city_no=:ag_city_no";
         $city_up=$con->prepare($up_city);
+        $city_up->bindParam(':ag_state_no',$ag_state_no);
         $city_up->bindParam(':ag_city_no',$ag_city_no);
         $city_up->bindParam(':ag_city_name',$ag_city_name);
    

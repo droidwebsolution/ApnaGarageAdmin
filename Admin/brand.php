@@ -37,8 +37,8 @@
                                     <i class="fa-solid fa-list"></i>
                                     <select name='brand_category'>
                                         <option value='Bike'>Bike</option>
-                                        <option value='Car'>Car</option>
-                                        <option value='Auto Rikshaw'>Auto Rikshaw</option>
+                                        <!-- <option value='Car'>Car</option>
+                                        <option value='Auto Rikshaw'>Auto Rikshaw</option> -->
                                     </select>
                                 </div>
                                 <p>Select Image</p>

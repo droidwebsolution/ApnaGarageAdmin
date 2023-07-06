@@ -21,7 +21,7 @@
         <div id='container'>
             <div class='search_filter'>
                 <details class='details_open' style='display:inline-block'>
-                <summary class='pop_up_open pop_up_summary'><i class="fa-solid fa-circle-plus"></i> Add New</summary>
+                <summary class='pop_up_open pop_up_summary' onclick="get_vehicle_part()"><i class="fa-solid fa-circle-plus"></i> Add New</summary>
                 <div class='pop_up'>
                     <form class='form min_width_form' id='add_vehicle' enctype='multipart/form-data'>
                         <h2>Add Vehicle <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
@@ -29,7 +29,7 @@
                             <div class='input_container'>
                                 <p>Select Brand</p>
                                 <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
+                                    <i class="fa-solid fa-copyright"></i>
                                     <select name='vehicle_brand'>
                                         <option value="">Select Brand</option>
                                         <?php echo get_brand(); ?>
@@ -39,17 +39,17 @@
                             <div class='input_container'>
                                 <p>Enter Vehicle Model Name</p>
                                 <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
+                                    <i class="fa-solid fa-bicycle"></i>
                                     <input type='text' name='model_name' placeholder="Model Name" />
                                 </div>
                             </div>
                             <div class='input_container'>
                                 <p>Select Model Type</p>
                                 <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
-                                    <select name='vehicle_type'>
-                                        <option value="">Scooter</option>
-                                        <option value="">Bike</option>
+                                    <i class="fa-solid fa-t"></i>
+                                    <select name='model_type'>
+                                        <option value="Scooter">Scooter</option>
+                                        <option value="Bike">Bike</option>
                                     </select>
                                 </div>
                             </div>
@@ -57,47 +57,51 @@
                             <div class='input_container'>
                                 <p>Enter Vehicle Menufecture Year</p>
                                 <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
+                                    <i class="fa-solid fa-y"></i>
                                     <input type='text' name='mg_yr' placeholder="Menufecture Year" />
                                 </div>
                             </div>
                             <div class='input_container'>
                                 <p>Enter Vehicle CC</p>
                                 <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
+                                    <i class="fa-solid fa-c"></i>
                                     <input type='text' name='vh_cc' placeholder="Model CC"/>
                                 </div>
                             </div>
                             <div class='input_container'>
                                 <p>Select Fuel</p>
                                 <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
+                                    <i class="fa-solid fa-gas-pump"></i>
                                     <select name='vh_fuel'>
-                                        <option value="">Petrol</option>
-                                        <option value="">Diesel</option>
-                                        <option value="">Electric</option>
-                                        <option value="">CNG</option>
+                                        <option value="Petrol">Petrol</option>
+                                        <option value="Diesel">Diesel</option>
+                                        <option value="Electric">Electric</option>
+                                        <option value="CNG">CNG</option>
                                     </select>
                                 </div>
                             </div>
                             <input type='hidden' name='vehicle_add' />
                             <div class='input_container'>
+                                <p>Select Image</p>
+                                <div class='input'>
+                                    <i class="fa-solid fa-image"></i>
+                                    <input type='file' name='vehicle_img'>
+                                </div>
+                            </div>    
+                             <!--<div class='input_container'>
                                 <p>Select Part</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <select name='part'>
+                                    <select name='part' class="vehicle_part_name">
                                         <option value="">Select Part</option>
-                                        <?php echo get_parts(); ?>
+                                        
                                     </select>
                                 </div>
                             </div> 
                             <div class="input_container">
-                                <details class='details_open' style='display:inline-block;margin-top:22px'>
-                                    <summary class='pop_up_open pop_up_summary part_add_open'><i class='fa-solid fa-pen-to-square'></i> Add Parts</summary>
-                                    <div class='pop_up Part_add_open_table'></div>
-                                </details>
+                                <h3 class='pop_up_open pop_up_summary vehicle_part_add'><i class='fa-solid fa-pen-to-square'></i> Add Parts</h3>
                             </div>
-                            <!-- <div class='input_container'>
+                            <div class='input_container'>
                                 <p>Enter Date</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
@@ -107,7 +111,17 @@
                             <center>
                                 <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                                 <button class='pop_up_submit add_vehicle' type='submit' name='add_vehicle'><i class='fa-solid fa-save'></i> Save</button>
-                            </center>
+                                <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
+                            </center><br clear="all" />
+                            <!-- <table class="item_table" cellspacing='0'>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Part Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody class='vehicle_part_table'></tbody>
+                            </table> -->
                         </div>
                     </form>
                 </div>
@@ -119,12 +133,12 @@
                     <thead>
                         <tr>
                             <th>Sr No.</th>
+                            <th>Model code.</th>
                             <th>Model Name</th>
                             <th>Model Type</th>
                             <th>Brand Name</th>
                             <th>Menufecture Year</th>
                             <th>Vehicle CC</th>
-                            <th style='text-align:center'>Parts</th>
                             <th>Fuel Type</th>
                             <th>Image</th>
                             <th>Added Date</th>
@@ -176,26 +190,59 @@
     });
 
     $(document).on('click','.up_open',function(){
-        var vehicle_up_open=$(this).attr("data-id");
+        var vehicle_open_table=$(this).attr("data-id");
         $.ajax({
             url:'assets/vehicle_jscript.php',
             method:'post',
-            data:{vehicle_up_open:vehicle_up_open},
+            data:{vehicle_open_table:vehicle_open_table},
             success:function(data){
                 $('.vehicle_open_table').html(data);
             }
         });
     });
-    $(document).on('click','.part_add_open',function(){
-        var part_add_open=$(this).attr("data-id");
+    $(document).on('submit','#vehicle_up',function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'assets/vehicle_jscript.php',
+                type:'post',
+                dataType:'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data:new FormData(this),
+                beforeSend:function(){
+                    $('.vehicle_up').attr('disabled','disabled');
+                },
+                success:function(data){
+                    alert(data);
+                    $('.vehicle_up').removeAttr('disabled');
+                    $('.details_open').removeAttr("open");
+                    get_vehicle();
+                }
+            });
+        });          
+    function get_vehicle_part(){
+        var get_vehicle_part='Get Vehicle Part';
         $.ajax({
             url:'assets/vehicle_jscript.php',
             method:'post',
-            data:{part_add_open:part_add_open},
+            data:{get_vehicle_part:get_vehicle_part},
             success:function(data){
-                $('.part_add_open_table').html(data);
+                $('.vehicle_part_table').html(data);
+            }
+        });
+    }
+    $(document).on('click','.vehicle_part_add',function(){
+        var vehicle_part_add=$('.vehicle_part_name').val();
+        $.ajax({
+            url:'assets/vehicle_jscript.php',
+            method:'post',
+            data:{vehicle_part_add:vehicle_part_add},
+            success:function(data){
+                get_vehicle_part();
             }
         });
     });
-                
+
+    
 </script>

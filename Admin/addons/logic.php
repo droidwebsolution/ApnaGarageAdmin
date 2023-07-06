@@ -42,7 +42,7 @@
         $state_get->setFetchMode(PDO::FETCH_ASSOC);
         $state_get->execute();
         while($rw_state=$state_get->fetch()):
-            echo"<option value='".$rw_state['ag_state_no']."'>".$rw_state['ag_state_name']."</option>";
+            echo"<option value='". $rw_state['ag_state_no']."'>".$rw_state['ag_state_name']."</option>";
         endwhile;
     }
     function get_city(){
@@ -62,7 +62,17 @@
         $part_get->setFetchMode(PDO::FETCH_ASSOC);
         $part_get->execute();
         while($rw_part=$part_get->fetch()):
-            echo"<option value='".$rw_part['ag_part_no']."'>".$rw_part['ag_part_name']."</option>";
+            echo"<option value='". $rw_part['ag_part_no']."'>".$rw_part['ag_part_name']."</option>";
+        endwhile;
+    }
+    function get_vehicle(){
+        global $con;
+        $get_vehicle="select * from ag_vehicle";
+        $vehicle_get=$con->prepare($get_vehicle,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $vehicle_get->setFetchMode(PDO::FETCH_ASSOC);
+        $vehicle_get->execute();
+        while($rw_vehicle=$vehicle_get->fetch()):
+            echo"<option value='".$rw_vehicle['ag_vehicle_no']."'>".$rw_vehicle['ag_vehicle_model_name']."</option>";
         endwhile;
     }
 ?>
