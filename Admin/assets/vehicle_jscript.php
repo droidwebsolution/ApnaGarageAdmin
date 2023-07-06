@@ -52,7 +52,8 @@
         echo json_encode($msg);
     }
     if(isset($_POST['get_vehicle'])){
-        $vehicle_get=$con->prepare("select vh.*,bn.ag_brand_name from ag_vehicle vh left join ag_brand bn on vh.ag_brand_no=bn.ag_brand_no");
+        $by_name=check_data($_POST['by_name']);
+        $vehicle_get=$con->prepare("select vh.*,bn.ag_brand_name from ag_vehicle vh left join ag_brand bn on vh.ag_brand_no=bn.ag_brand_no where ag_vehicle_model_name like'%$by_name%' || ag_vehicle_code like'%$by_name%'");
         $vehicle_get->setFetchMode(PDO::FETCH_ASSOC);
         $vehicle_get->execute();
         $count_vehicle=$vehicle_get->rowCount();
@@ -99,14 +100,14 @@
         $vehicle_get->setFetchMode(PDO::FETCH_ASSOC);
         $vehicle_get->execute();
         $rw_vehicle=$vehicle_get->fetch();
-        echo"<form class='form small_width_form' id='subs_up'>
+        echo"<form class='form small_width_form' id='vehicle_up'>
                 <h2>Edit ".$rw_vehicle['ag_vehicle_model_name']." <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                 <div class='form_container'>
                     <p>Select Brand</p>
                     <div class='input'>
                         <i class='fa-solid fa-copyright'></i>
                         <select name='vehicle_brand'>
-                        <option value='".encrypt_decrypt('encrypt', $rw_vehicle['ag_brand_no'])."'>".$rw_vehicle['ag_brand_name']."</option>";
+                        <option value='".$rw_vehicle['ag_brand_no']."'>".$rw_vehicle['ag_brand_name']."</option>";
                              echo get_brand(); 
                        echo" </select>
                     </div>
@@ -119,44 +120,52 @@
                                 <p>Select Model Type</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-t'></i>
-                                    <select name='vehicle_type' value='".$rw_vehicle['ag_vehicle_model_type']."'>
-                                        <option value=''>Scooter</option>
-                                        <option value=''>Bike</option>
+                                    <select name='vehicle_type'>
+                                        <option value='".$rw_vehicle['ag_vehicle_model_type']."'>".$rw_vehicle['ag_vehicle_model_type']."</option>
+                                        <option value='Scooter'>Scooter</option>
+                                        <option value='Bike'>Bike</option>
                                     </select>
                                 </div>
                             </div>
                     <input type='hidden' name='up_vehicles' value='".encrypt_decrypt('encrypt', $rw_vehicle['ag_vehicle_no'])."' />
                     <div class='input_container'>
-                    <p>Enter Vehicle Menufecture Year</p>
-                    <div class='input'>
-                        <i class='fa-solid fa-y'></i>
-                        <input type='text' name='mg_yr' value='".$rw_vehicle['ag_vehicle_mg_year']."' />
+                        <p>Enter Vehicle Menufecture Year</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-y'></i>
+                            <input type='text' name='mg_yr' value='".$rw_vehicle['ag_vehicle_mg_year']."' />
+                        </div>
                     </div>
-                </div>
-                <div class='input_container'>
-                    <p>Enter Vehicle CC</p>
-                    <div class='input'>
-                        <i class='fa-solid fa-c'></i>
-                        <input type='text' name='vh_cc' value='".$rw_vehicle['ag_vehicle_cc']."'/>
+                    <div class='input_container'>
+                        <p>Enter Vehicle CC</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-c'></i>
+                            <input type='text' name='vh_cc' value='".$rw_vehicle['ag_vehicle_cc']."'/>
+                        </div>
                     </div>
-                </div>
-                <div class='input_container'>
-                    <p>Select Fuel</p>
-                    <div class='input'>
-                        <i class='fa-solid fa-gas-pump'></i>
-                        <select name='vh_fuel' value='".$rw_vehicle['ag_vehicle_fuel']."'>
-                            <option value='Petrol'>Petrol</option>
-                            <option value='Diesel'>Diesel</option>
-                            <option value='Electric'>Electric</option>
-                            <option value='CNG'>CNG</option>
-                        </select>
+                    <div class='input_container'>
+                        <p>Select Fuel</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-gas-pump'></i>
+                            <select name='vh_fuel' value='".$rw_vehicle['ag_vehicle_fuel']."'>
+                                <option value='Petrol'>Petrol</option>
+                                <option value='Diesel'>Diesel</option>
+                                <option value='Electric'>Electric</option>
+                                <option value='CNG'>CNG</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                    <div class='input_container'>
+                        <p>Select Image</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-image'></i>
+                            <input type='file' name='vehicle_img'>
+                        </div>
+                    </div>
                     <center>
                         <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                         <button class='pop_up_submit vehicle_up' name='vehicle_up' type='submit'><i class='fa-solid fa-save'></i> Update</button>
                         <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
-                        </center>
+                    </center>
                 </div>
             </form>";
     }
@@ -200,30 +209,76 @@
     }
      if(isset($_POST['up_vehicles'])){
         $ag_vehicle_no=encrypt_decrypt('decrypt', check_data($_POST['up_vehicles']));
-        $ag_brand_no=encrypt_decrypt('decrypt', check_data($_POST['vehicle_brand']));
+        $ag_brand_no=check_data($_POST['vehicle_brand']);
         $ag_vehicle_model_name=check_data($_POST['up_vh_model_name']);
         $ag_vehicle_model_type=check_data($_POST['vehicle_type']);
         $ag_vehicle_mg_year=check_data($_POST['mg_yr']);
         $ag_vehicle_cc=check_data($_POST['vh_cc']);
         $ag_vehicle_fuel=check_data($_POST['vh_fuel']);
-                     
-        $up_vehicle="update ag_vehicle set ag_brand_no=:ag_brand_no,ag_vehicle_model_name=:ag_vehicle_model_name,ag_vehicle_model_type=:ag_vehicle_model_type,ag_vehicle_mg_year=:ag_vehicle_mg_year,ag_vehicle_cc=:ag_vehicle_cc,ag_vehicle_fuel=:ag_vehicle_fuel where ag_vehicle_no=:ag_vehicle_no";
-        $vehicle_up=$con->prepare($up_vehicle);
-        $vehicle_up->bindParam(':ag_vehicle_no',$ag_vehicle_no);
-        $vehicle_up->bindParam(':ag_brand_no',$ag_brand_no);
-        $vehicle_up->bindParam(':ag_vehicle_model_name',$ag_vehicle_model_name);
-        $vehicle_up->bindParam(':ag_vehicle_model_type',$ag_vehicle_model_type);
-        $vehicle_up->bindParam(':ag_vehicle_mg_year',$ag_vehicle_mg_year);
-        $vehicle_up->bindParam(':ag_vehicle_cc',$ag_vehicle_cc);
-        $vehicle_up->bindParam(':ag_vehicle_fuel',$ag_vehicle_fuel);
-     
-       
-        if($vehicle_up->execute()){
-            $msg="Data Updated Succeessfully";
-            echo json_encode($msg);
+        
+        $invimg=date('Y-m-d')."-".substr(mt_rand(),0,10).".png";
+        $ag_part_date=date('Y-m-d');     
+        $gtinv="select ag_vehicle_img from ag_vehicle where ag_vehicle_no=:ag_vehicle_no";
+        $invgt=$con->prepare($gtinv, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $invgt->bindParam(":ag_vehicle_no",$ag_vehicle_no);
+        $invgt->execute();
+        $rwinv=$invgt->fetch();
+        if(empty($_FILES['vehicle_img']['tmp_name'])){
+            $up_vehicle="update ag_vehicle set ag_brand_no=:ag_brand_no,ag_vehicle_model_name=:ag_vehicle_model_name,ag_vehicle_model_type=:ag_vehicle_model_type,ag_vehicle_mg_year=:ag_vehicle_mg_year,ag_vehicle_cc=:ag_vehicle_cc,ag_vehicle_fuel=:ag_vehicle_fuel where ag_vehicle_no=:ag_vehicle_no";
+            $vehicle_up=$con->prepare($up_vehicle);
+            $vehicle_up->bindParam(':ag_vehicle_no',$ag_vehicle_no);
+            $vehicle_up->bindParam(':ag_brand_no',$ag_brand_no);
+            $vehicle_up->bindParam(':ag_vehicle_model_name',$ag_vehicle_model_name);
+            $vehicle_up->bindParam(':ag_vehicle_model_type',$ag_vehicle_model_type);
+            $vehicle_up->bindParam(':ag_vehicle_mg_year',$ag_vehicle_mg_year);
+            $vehicle_up->bindParam(':ag_vehicle_cc',$ag_vehicle_cc);
+            $vehicle_up->bindParam(':ag_vehicle_fuel',$ag_vehicle_fuel);
+        
+            if($vehicle_up->execute()){
+                $msg="Data Updated Succeessfully";
+                echo json_encode($msg);
+            }else{
+                $msg="Something went wrong";
+                echo json_encode($msg);
+            }
         }else{
-            $msg="Something went wrong";
-            echo json_encode($msg);
+            $up_check_img=getimagesize($_FILES['vehicle_img']['tmp_name']);
+            $up_img_size=$_FILES['vehicle_img']['size'];
+            if($up_check_img == true){
+                if($up_img_size >2000000){
+                    $msg='Only 2MB Image File Allowed';
+                    echo json_encode($msg);
+                }else{
+                    $invimg=date('Y-m-d')."-".substr(mt_rand(),0,10).".png";
+                    $up_vehicle="update ag_vehicle set ag_vehicle_img=:ag_vehicle_img,ag_brand_no=:ag_brand_no,ag_vehicle_model_name=:ag_vehicle_model_name,ag_vehicle_model_type=:ag_vehicle_model_type,ag_vehicle_mg_year=:ag_vehicle_mg_year,ag_vehicle_cc=:ag_vehicle_cc,ag_vehicle_fuel=:ag_vehicle_fuel where ag_vehicle_no=:ag_vehicle_no";
+                    $vehicle_up=$con->prepare($up_vehicle);
+                    $vehicle_up->bindParam(':ag_vehicle_img',$invimg);
+                    $vehicle_up->bindParam(':ag_vehicle_no',$ag_vehicle_no);
+                    $vehicle_up->bindParam(':ag_brand_no',$ag_brand_no);
+                    $vehicle_up->bindParam(':ag_vehicle_model_name',$ag_vehicle_model_name);
+                    $vehicle_up->bindParam(':ag_vehicle_model_type',$ag_vehicle_model_type);
+                    $vehicle_up->bindParam(':ag_vehicle_mg_year',$ag_vehicle_mg_year);
+                    $vehicle_up->bindParam(':ag_vehicle_cc',$ag_vehicle_cc);
+                    $vehicle_up->bindParam(':ag_vehicle_fuel',$ag_vehicle_fuel);
+                   
+                    if($vehicle_up->execute()){
+                        if($rwinv['ag_vehicle_img'] == ''){}else{
+                            $old_img="../images/vehicle/".$rwinv['ag_vehicle_img']."";
+                            unlink($old_img);
+                        }
+                        $fpath="../images/vehicle/$invimg";
+                        move_uploaded_file($_FILES['vehicle_img']['tmp_name'],$fpath);
+                        $msg="Vehicle Has Been Updated Successfully";
+                        echo json_encode($msg);
+                    }else{
+                        $msg="Something Went Wrong Try Again";
+                        echo json_encode($msg);
+                    }
+                }
+            }else{
+                $msg="But Only Image(.jpg, .jpeg & .png) File Allowed";
+                echo json_encode($msg);
+            }
         }
     }
 ?>

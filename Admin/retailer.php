@@ -155,7 +155,7 @@
                     </form>
                 </div>
                 </details>
-                <input type='text' class='search_input by_name' onkeyup='get_vehicle()' placeholder='Search By Name & Type' />
+                <input type='text' class='search_input by_name' onkeyup='get_retailer()' placeholder='Search By Company Name & code' />
                 <!-- <input type='text' class='search_input by_name' onkeyup='get_vehicle()' placeholder='Search By Name' /> -->
             </div>
             <div class='table_container'>

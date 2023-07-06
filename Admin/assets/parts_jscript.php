@@ -17,7 +17,7 @@
             $ag_part_code="AGP_".($ex[1]+1);
         }
         $ag_brand_no=$_POST['part_brand'];
-        $ag_vehicle_no=['part_model'];
+        $ag_vehicle_no=$_POST['part_model'];
         $ag_part_name=$_POST['part_name'];
         $ag_part_cat=$_POST['part_cat'];
         $ag_part_hsn=$_POST['part_hsn'];
@@ -37,7 +37,7 @@
         $data_add->bindParam(':ag_part_no',$ag_part_no);
         $data_add->bindParam(':ag_part_code',$ag_part_code);
         $data_add->bindParam(':ag_brand_no',$ag_brand_no);
-        $data_add->bindParam(':ag_vehicle_no',$ag_brand_no);
+        $data_add->bindParam(':ag_vehicle_no',$ag_vehicle_no);
         $data_add->bindParam(':ag_part_name',$ag_part_name);
         $data_add->bindParam(':ag_part_cat',$ag_part_cat);
         $data_add->bindParam(':ag_part_hsn',$ag_part_hsn);
@@ -56,7 +56,8 @@
     }
     if(isset($_POST['get_parts'])){
         $by_name=check_data($_POST['by_name']);
-        $part_get=$con->prepare("select p.*,bn.ag_brand_name,vh.ag_vehicle_model_name from ag_part p inner join ag_brand bn on p.ag_brand_no=bn.ag_brand_no inner join ag_vehicle vh on vh.ag_vehicle_no=p.ag_vehicle_no where p.ag_part_name like '%$by_name%'");
+        //$part_get=$con->prepare("select p.*,bn.ag_brand_name,vh.ag_vehicle_model_name from ag_part p inner join ag_brand bn on p.ag_brand_no=bn.ag_brand_no inner join ag_vehicle vh on vh.ag_vehicle_no=p.ag_vehicle_no where p.ag_part_name like '%$by_name%'");
+        $part_get=$con->prepare("select pt.*,vh.ag_vehicle_model_name,bn.ag_brand_name from ag_part pt left join ag_vehicle vh on pt.ag_vehicle_no=vh.ag_vehicle_no left join ag_brand bn on bn.ag_brand_no=pt.ag_brand_no where ag_part_name like'%$by_name%' || ag_part_code like'%$by_name%'");
         $part_get->setFetchMode(PDO::FETCH_ASSOC);
         $part_get->execute();
         $count_part=$part_get->rowCount();
@@ -95,10 +96,8 @@
     }
     if(isset($_POST['part_up_open'])){
         $ag_part_no=encrypt_decrypt('decrypt',check_data($_POST['part_up_open']));
-        $get_part="select p.*,bn.ag_brand_name,vh.ag_vehicle_model_name from ag_part p inner join ag_brand bn on p.ag_brand_no=bn.ag_brand_no inner join ag_vehicle vh on vh.ag_vehicle_no=p.ag_vehicle_no where ag_part_no=:ag_part_no";
-        $part_get=$con->prepare($get_part,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $part_get=$con->prepare("select pt.*,vh.ag_vehicle_model_name,bn.ag_brand_name from ag_part pt left join ag_vehicle vh on pt.ag_vehicle_no=vh.ag_vehicle_no left join ag_brand bn on bn.ag_brand_no=pt.ag_brand_no where pt.ag_part_no=:ag_part_no");
         $part_get->bindParam(':ag_part_no',$ag_part_no);
-        
         $part_get->setFetchMode(PDO::FETCH_ASSOC);
         $part_get->execute();
         $rw_part=$part_get->fetch();
@@ -120,7 +119,7 @@
                     <div class='input'>
                         <i class='fa-sharp fa-regular fa-motorcycle'></i>
                         <select name='part_vehicle'>
-                        <option value='". $rw_part['ag_vehicle_no']."'>".$rw_part['ag_vehicle_name']."</option>";
+                            <option value='".$rw_part['ag_vehicle_no']."'>".$rw_part['ag_vehicle_model_name']."</option>";
                             echo get_vehicle(); 
                         echo"</select>
                     </div>
@@ -129,7 +128,8 @@
                     <p>Enter Category</p>
                     <div class='input'>
                         <i class='fa-solid fa-list'></i>
-                        <select name='part_cat' value='".$rw_part['ag_part_cat']."' >
+                        <select name='part_cat'>
+                            <option value='".$rw_part['ag_part_cat']."'>".$rw_part['ag_part_cat']."</option>
                             <option value='Oil'>Oil</option>
                             <option value='Spare'>Spare</option>
                             <option value='Accessories'>Accessories</option>
@@ -183,9 +183,10 @@
     if(isset($_POST['up_parts'])){
         $ag_part_no=encrypt_decrypt('decrypt', $_POST['up_parts']);
         $ag_brand_no=encrypt_decrypt('decrypt', check_data($_POST['part_brand']));
-        $ag_vehicle_no=encrypt_decrypt('decrypt', check_data($_POST['part_vehicle']));
+        $ag_vehicle_no=check_data($_POST['part_vehicle']);
         $ag_brand_no=check_data($_POST['part_brand']);
         $ag_part_name=check_data($_POST['part_name']);
+        $ag_part_cat=$_POST['part_cat'];
         
         $ag_part_hsn=check_data($_POST['part_hsn']);
         $ag_part_img=$_FILES['part_img']['tmp_name'];

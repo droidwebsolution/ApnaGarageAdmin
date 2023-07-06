@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 06, 2023 at 12:25 PM
+-- Generation Time: Jul 06, 2023 at 04:34 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -94,17 +94,15 @@ CREATE TABLE IF NOT EXISTS `ag_part` (
   `ag_part_status` int NOT NULL COMMENT '1=active\r\n2=inactive',
   `ag_part_date` date NOT NULL,
   PRIMARY KEY (`ag_part_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `ag_part`
 --
 
 INSERT INTO `ag_part` (`ag_part_id`, `ag_part_no`, `ag_part_code`, `ag_brand_no`, `ag_vehicle_no`, `ag_part_name`, `ag_part_hsn`, `ag_part_cat`, `ag_part_img`, `ag_part_status`, `ag_part_date`) VALUES
-(2, 329932558, 'AGP_1', 1441387750, 956600960, 'Foot Rest', 'KV102', 'spare', '2023-07-05-46493779.png', 1, '2023-07-05'),
-(9, 526514842, 'AGP_8', 1508640779, 1508640779, 'break', 'kv105', 'Oil', '2023-07-06-1222250695.png', 1, '2023-07-06'),
-(8, 1586245021, 'AGP_7', 1508640779, 1508640779, 'Foot Rest', 'kv105', 'Spare', '2023-07-06-1733960420.png', 1, '2023-07-06'),
-(7, 558681596, 'AGP_6', 1508640779, 1508640779, 'Oil 250', 'KV101', 'Oil', '2023-07-06-104979787.png', 1, '2023-07-06');
+(14, 1687722590, 'AGP_01', 1441387750, 306479930, 'ewrwer', 'tytyty', 'Oil', '2023-07-06-979878611.png', 1, '2023-07-06'),
+(15, 510293075, 'AGP_2', 385965455, 770299755, 'dassad', 'dsadsad', 'Accessories', '2023-07-06-800382390.png', 1, '2023-07-06');
 
 -- --------------------------------------------------------
 
@@ -196,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `ag_vehicle` (
 --
 
 INSERT INTO `ag_vehicle` (`ag_vehicle_id`, `ag_vehicle_code`, `ag_vehicle_no`, `ag_brand_no`, `ag_vehicle_model_name`, `ag_vehicle_model_type`, `ag_vehicle_mg_year`, `ag_vehicle_cc`, `ag_vehicle_fuel`, `ag_vehicle_img`, `ag_vehicle_status`, `ag_vehicle_date`) VALUES
-(24, '0', 32043944, 1441387750, 'Activa', 'Bike', 2012, '169', 'Diesel', '2023-07-06-858200902.png', 1, '2023-07-06'),
+(24, '0', 32043944, 630676143, 'Activa', 'Scooter', 2012, '169', 'Petrol', '2023-07-06-266920701.png', 1, '2023-07-06'),
 (25, '0', 306479930, 1441387750, 'Splendar', 'Bike', 2012, '124', 'Diesel', '2023-07-06-563766608.png', 1, '2023-07-06'),
 (26, '0', 1648172998, 1441387750, 'Activa', 'Bike', 2012, '169', 'Diesel', '2023-07-06-825091225.png', 1, '2023-07-06'),
 (27, '0', 473597468, 1441387750, 'Activa', 'Bike', 2012, '169', 'Diesel', '2023-07-06-1861554998.png', 1, '2023-07-06'),

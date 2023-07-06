@@ -201,26 +201,26 @@
         });
     });
     $(document).on('submit','#vehicle_up',function(e){
-            e.preventDefault();
-            $.ajax({
-                url:'assets/vehicle_jscript.php',
-                type:'post',
-                dataType:'json',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data:new FormData(this),
-                beforeSend:function(){
-                    $('.vehicle_up').attr('disabled','disabled');
-                },
-                success:function(data){
-                    alert(data);
-                    $('.vehicle_up').removeAttr('disabled');
-                    $('.details_open').removeAttr("open");
-                    get_vehicle();
-                }
-            });
-        });          
+        e.preventDefault();
+        $.ajax({
+            url:'assets/vehicle_jscript.php',
+            type:'post',
+            dataType:'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data:new FormData(this),
+            beforeSend:function(){
+                $('.vehicle_up').attr('disabled','disabled');
+            },
+            success:function(data){
+                alert(data);
+                $('.vehicle_up').removeAttr('disabled');
+                $('.details_open').removeAttr("open");
+                get_vehicle();
+            }
+        });
+    });          
     function get_vehicle_part(){
         var get_vehicle_part='Get Vehicle Part';
         $.ajax({

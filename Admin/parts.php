@@ -103,7 +103,7 @@
                         </form>
                     </div>
                 </details>
-                <input type='text' class='search_input by_name' onkeyup='get_vehicle()' placeholder='Search By Name and code' />
+                <input type='text' class='search_input by_name' onkeyup='get_parts()' placeholder='Search By Part Name and code' />
             </div>
             <div class='table_container'>
                 <table class='item_table' cellspacing='0'>

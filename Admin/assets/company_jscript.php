@@ -47,7 +47,7 @@
     }
     if(isset($_POST['get_brand'])){
         $by_name=check_data($_POST['by_name']);
-        $brand_get=$con->prepare("select * from ag_brand where ag_brand_name || ag_brand_code like'%$by_name%'  order by 1 desc");
+        $brand_get=$con->prepare("select * from ag_brand where ag_brand_name like'%$by_name%' || ag_brand_code like'%$by_name%'  order by 1 desc");
         $brand_get->setFetchMode(PDO::FETCH_ASSOC);
         $brand_get->execute();
         $count_brand=$brand_get->rowCount();

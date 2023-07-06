@@ -66,7 +66,7 @@
     }
     if(isset($_POST['get_retailer'])){
         $by_name=check_data($_POST['by_name']);
-        $retailer_get=$con->prepare("select *from ag_retailer");
+        $retailer_get=$con->prepare("select *from ag_retailer where ag_retailer_company_name like'%$by_name%' || ag_retailer_code like'%$by_name%'");
         $retailer_get->setFetchMode(PDO::FETCH_ASSOC);
         $retailer_get->execute();
         $count_retailer=$retailer_get->rowCount();

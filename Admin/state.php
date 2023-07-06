@@ -42,7 +42,7 @@
                         </form>
                     </div>
                 </details>
-                <input type='text' class='search_input by_name' onkeyup='get_state()' placeholder='Search By Name and code' />
+                <input type='text' class='search_input by_name' onkeyup='get_state()' placeholder='Search By Name ' />
             </div>
             <div class='table_container'>
                 <table class='item_table' cellspacing='0'>
