@@ -29,7 +29,7 @@
                                 <p>Enter Brand Name</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-copyright"></i>
-                                    <input type='text' name='brand_name' placeholder='* Only Characters Allowed' title='Enter Brand Name' required/>
+                                    <input type='text' name='brand_name' placeholder='* Enter Brand Name' title='Enter Brand Name' required/>
                                 </div>
                                 <input type='hidden' name='brand_add' /> 
                                 <p>Selct Category</p>

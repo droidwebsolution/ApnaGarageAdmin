@@ -68,10 +68,10 @@
                             
                             
                             <div class='input_container'>
-                                <p>Enter Vehicle Menufecture Year</p>
+                                <p>Enter Vehicle Manufacture Year</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-y"></i>
-                                    <input type='text' name='mg_yr' placeholder="Menufecture Year" required/>
+                                    <input type='text' name='mg_yr' placeholder="Manufacture Year" required/>
                                 </div>
                             </div>
                             <div class='input_container'>
@@ -150,7 +150,7 @@
                             <th>Model Name</th>
                             <th>Model Type</th>
                             <th>Brand Name</th>
-                            <th>Menufecture Year</th>
+                            <th>Manufacture Year</th>
                             <th>Vehicle CC</th>
                             <th>Fuel Type</th>
                             <th>Image</th>

@@ -20,6 +20,13 @@ body{background: #dee4ec;}
 .tost{position: fixed; top:80px; right: 20px; transition: right 0.3s; background: #253347; z-index: 5; padding: 10px; border-radius: 5px;}
 .tost p{font-size: 12px; color: #fff}
 
+.login{width:500px; border-radius:20px; height: auto; background:rgb(0,0,0,0.5); position: absolute; left:50%; top:50%; transform: translate(-50%,-50%); padding: 40px; box-sizing: border-box;}
+.input input:focus{border: none; outline: none}
+.login h2{margin-bottom: 20px; text-align: center; color:#1B2631}
+.login img{width:200px; height: 200px; object-fit: contain; display: block; margin: auto auto 20px auto}
+.login_btn{border-radius: 30px; transition: border-radius 0.3s; width:49%; height: 40px; font-weight: 800; border:1px solid #fff; background:none; color:#fff; text-transform: uppercase; outline: none; cursor: pointer;}
+.login p{font-size: 12px; margin-top:20px; cursor: pointer; text-align: right}
+
 .sidebar{z-index: 4; background:#253347; width:225px; height: 100vh; padding:20px 0; transition: all 0.3s; position: fixed; left: -225px; }
 .menu_close{background:#fff; color:#ef7d19; position: absolute; right:10px; top:10px; cursor: pointer; border-radius: 100%; width:40px; height: 40px; line-height: 40px !important; text-align: center;}
 .sidebar .profile{ margin-bottom: 30px; text-align: center;}
@@ -36,7 +43,7 @@ body{background: #dee4ec;}
 .sidebar ul li details{color:#fff}
 .sidebar ul li details:hover summary{color:#253347}
 
-header{z-index: 3; padding-right: 20px; background:#ef7d19; width:100%; height:60px;position: fixed; }
+header{z-index: 3; padding-right: 20px; background:#253347; width:100%; height:60px;position: fixed; }
 .bar{background:#fff; color:#253347; margin:10px 0px 0px 10px; cursor: pointer; border-radius: 100%; width:40px; height: 40px; line-height: 40px !important; text-align: center;}
 header ul {float: right;}
 header ul li{width:100px; height:40px; line-height: 40px; float: left; margin:10px 0px; text-align: center;}
@@ -74,12 +81,12 @@ header ul li a{color:#fff;}
 
 .table_container{ background:#fff; height: 75vh; overflow: auto; margin-top: 10px;border-radius: 7px;}
 .item_table{width:100%; position: relative; border:1px solid rgb(0,0,0,0.2) }
-.item_table thead tr th{background: #ef7d19; color:#253347;position: sticky; top: 0; }
+.item_table thead tr th{background: #ef7d19; color:#253347;position: sticky; top: 0; width:10% }
 .item_table thead tr th,.item_table tbody tr td{height:35px; font-size: 12px; text-align: left; padding: 0px 10px;}
 .item_table tbody tr:nth-child(2n+2){background-color: #e6e6e6;}
 .item_table tbody tr td a i{color: #253347;}
 
-.pagination{padding:10px 0px 0px 260px;}
+.big_table thead tr th,.big_table tbody tr td{width:250px;}
 
 .dashboard_container{width:100%;padding:80px 20px 20px 20px;}
 .card_box{float: left; margin-right: 10px; margin-top: 20px; margin-bottom: 10px;width:23%; height:120px; background: #fff; border-radius: 10px;}

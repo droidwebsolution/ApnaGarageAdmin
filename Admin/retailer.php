@@ -159,7 +159,7 @@
                 <!-- <input type='text' class='search_input by_name' onkeyup='get_vehicle()' placeholder='Search By Name' /> -->
             </div>
             <div class='table_container'>
-                <table class='item_table' cellspacing='0'>
+                <table class='item_table big_table' cellspacing='0'>
                     <thead>
                         <tr>
                             <th>Sr No.</th>
@@ -167,6 +167,7 @@
                             <th>Company Name</th>
                             <th>Owner Name</th>
                             <th>Company Mobile No</th>
+                            <th>Company Alt Mobile No</th>
                             <th>Company Email Id</th>
                             <th>Company Website</th>
                             <th>Company GST No</th>
@@ -175,7 +176,7 @@
                             <th>Contact Person Phone</th>
                             <th>State</th>
                             <th>City</th>
-                            <th>registration Date</th>
+                            <th>Registration Date</th>
                             
                             <th style='text-align:center'>Action</th>
                         </tr>

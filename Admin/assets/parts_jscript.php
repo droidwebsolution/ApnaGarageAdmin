@@ -57,7 +57,7 @@
     if(isset($_POST['get_parts'])){
         $by_name=check_data($_POST['by_name']);
         //$part_get=$con->prepare("select p.*,bn.ag_brand_name,vh.ag_vehicle_model_name from ag_part p inner join ag_brand bn on p.ag_brand_no=bn.ag_brand_no inner join ag_vehicle vh on vh.ag_vehicle_no=p.ag_vehicle_no where p.ag_part_name like '%$by_name%'");
-        $part_get=$con->prepare("select pt.*,vh.ag_vehicle_model_name,bn.ag_brand_name from ag_part pt left join ag_vehicle vh on pt.ag_vehicle_no=vh.ag_vehicle_no left join ag_brand bn on bn.ag_brand_no=pt.ag_brand_no where ag_part_name like'%$by_name%' || ag_part_code like'%$by_name%'");
+        $part_get=$con->prepare("select pt.*,vh.ag_vehicle_model_name,bn.ag_brand_name from ag_part pt left join ag_vehicle vh on pt.ag_vehicle_no=vh.ag_vehicle_no left join ag_brand bn on bn.ag_brand_no=pt.ag_brand_no where ag_part_code like'%$by_name%' || ag_part_name like'%$by_name%' || ag_brand_name like'%$by_name%' || ag_vehicle_model_name like'%$by_name%'");
         $part_get->setFetchMode(PDO::FETCH_ASSOC);
         $part_get->execute();
         $count_part=$part_get->rowCount();

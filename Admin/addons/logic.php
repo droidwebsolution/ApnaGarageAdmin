@@ -75,4 +75,33 @@
             echo"<option value='".$rw_vehicle['ag_vehicle_no']."'>".$rw_vehicle['ag_vehicle_model_name']."</option>";
         endwhile;
     }
+    function login(){
+		global $con;
+		if(isset($_POST['user_login'])){
+			$ag_admin_email=$_POST['user_email'];
+			$ag_admin_password=encrypt_decrypt('encrypt', $_POST['user_password']);
+			$gtusr="select * from ag_admin where ag_admin_email=:ag_admin_email and ag_admin_password=:ag_admin_password";
+			$usrgt=$con->prepare($gtusr,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$usrgt->bindParam(':ag_admin_email',$ag_admin_email);
+			$usrgt->bindParam(':ag_admin_password',$ag_admin_password);
+			$usrgt->setFetchMode(PDO::FETCH_ASSOC);
+			$usrgt->execute();
+			$rwusr=$usrgt->fetch();
+			if($usrgt->rowCount()==1){
+				$_SESSION['adsesmail']=encrypt_decrypt('encrypt', $rwusr['uap_ad_email']);
+				//header("Location: home");
+				header("Location: inventory");
+				die();
+			}else{
+				echo"<script>
+						alert('You Entered Wrong User Email or Password');
+						window.open('login','_self');
+					</script>";
+			}
+		}
+		if(isset($_SESSION['adsesmail'])){
+			header("Location:home");
+			die();
+		}
+	}
 ?>

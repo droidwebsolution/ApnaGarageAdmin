@@ -82,6 +82,7 @@
                         <td>".$rw_retailer['ag_retailer_company_name']."</td> 
                         <td>".$rw_retailer['ag_retailer_owner_name']."</td>
                         <td>".$rw_retailer['ag_retailer_comapny_phone']."</td>
+                        <td>".$rw_retailer['ag_retailer_comapny_alt_phone']."</td>
                         <td>".$rw_retailer['ag_retailer_company_email']."</td>
                         <td>".$rw_retailer['ag_retailer_company_website']."</td>
                         <td>".$rw_retailer['ag_retailer_company_gst']."</td>
