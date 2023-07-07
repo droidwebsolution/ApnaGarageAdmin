@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 07, 2023 at 08:34 AM
+-- Generation Time: Jul 07, 2023 at 10:08 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -31,13 +31,13 @@ DROP TABLE IF EXISTS `ag_brand`;
 CREATE TABLE IF NOT EXISTS `ag_brand` (
   `ag_brand_id` int NOT NULL AUTO_INCREMENT,
   `ag_brand_no` int NOT NULL,
-  `ag_brand_code` varchar(10) NOT NULL,
-  `ag_brand_name` varchar(30) NOT NULL,
-  `ag_brand_category` varchar(15) NOT NULL,
-  `ag_brand_img` text NOT NULL COMMENT 'l=100',
+  `ag_brand_code` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_brand_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_brand_category` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_brand_img` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'l=100',
   `ag_brand_status` int NOT NULL COMMENT '1=Active\r\n2=In Active',
   PRIMARY KEY (`ag_brand_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_brand`
@@ -60,9 +60,9 @@ CREATE TABLE IF NOT EXISTS `ag_city` (
   `ag_city_id` int NOT NULL AUTO_INCREMENT,
   `ag_city_no` int NOT NULL,
   `ag_state_no` int NOT NULL,
-  `ag_city_name` varchar(30) NOT NULL,
+  `ag_city_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`ag_city_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_city`
@@ -84,17 +84,17 @@ DROP TABLE IF EXISTS `ag_part`;
 CREATE TABLE IF NOT EXISTS `ag_part` (
   `ag_part_id` int NOT NULL AUTO_INCREMENT,
   `ag_part_no` int NOT NULL,
-  `ag_part_code` varchar(20) NOT NULL,
+  `ag_part_code` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_brand_no` int NOT NULL,
   `ag_vehicle_no` int NOT NULL,
-  `ag_part_name` varchar(50) NOT NULL,
-  `ag_part_hsn` varchar(10) NOT NULL,
-  `ag_part_cat` varchar(15) NOT NULL,
-  `ag_part_img` text NOT NULL COMMENT 'l=30',
+  `ag_part_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_part_hsn` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_part_cat` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_part_img` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'l=30',
   `ag_part_status` int NOT NULL COMMENT '1=active\r\n2=inactive',
   `ag_part_date` date NOT NULL,
   PRIMARY KEY (`ag_part_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_part`
@@ -114,26 +114,26 @@ DROP TABLE IF EXISTS `ag_retailer`;
 CREATE TABLE IF NOT EXISTS `ag_retailer` (
   `ag_retailer_id` int NOT NULL AUTO_INCREMENT,
   `ag_retailer_no` int NOT NULL,
-  `ag_retailer_code` varchar(10) NOT NULL,
-  `ag_retailer_company_name` varchar(30) NOT NULL,
-  `ag_retailer_owner_name` varchar(30) NOT NULL,
+  `ag_retailer_code` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_retailer_company_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_retailer_owner_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_retailer_comapny_phone` int NOT NULL,
   `ag_retailer_comapny_alt_phone` int NOT NULL,
-  `ag_retailer_company_email` varchar(30) NOT NULL,
-  `ag_retailer_company_website` varchar(30) NOT NULL,
-  `ag_retailer_company_gst` varchar(10) NOT NULL,
-  `ag_retailer_company_tin` varchar(10) NOT NULL,
-  `ag_retailer_contact_persone_name` varchar(30) NOT NULL,
+  `ag_retailer_company_email` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_retailer_company_website` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_retailer_company_gst` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_retailer_company_tin` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_retailer_contact_persone_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_retailer_contact_person_phone` int NOT NULL,
   `ag_retailer_state` int NOT NULL,
   `ag_retailer_city` int NOT NULL,
-  `ag_retailer_area` varchar(15) NOT NULL,
-  `ag_retailer_house_no` varchar(10) NOT NULL,
+  `ag_retailer_area` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_retailer_house_no` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_retailer_pincode` int NOT NULL,
   `ag_retailer_register_date` date NOT NULL,
   `ag_retailer_status` int NOT NULL COMMENT '1=active\r\n2=inactive',
   PRIMARY KEY (`ag_retailer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_retailer`
@@ -154,9 +154,9 @@ DROP TABLE IF EXISTS `ag_state`;
 CREATE TABLE IF NOT EXISTS `ag_state` (
   `ag_state_id` int NOT NULL AUTO_INCREMENT,
   `ag_state_no` int NOT NULL,
-  `ag_state_name` varchar(30) NOT NULL,
+  `ag_state_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`ag_state_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_state`
@@ -175,19 +175,19 @@ INSERT INTO `ag_state` (`ag_state_id`, `ag_state_no`, `ag_state_name`) VALUES
 DROP TABLE IF EXISTS `ag_vehicle`;
 CREATE TABLE IF NOT EXISTS `ag_vehicle` (
   `ag_vehicle_id` int NOT NULL AUTO_INCREMENT,
-  `ag_vehicle_code` varchar(10) NOT NULL,
+  `ag_vehicle_code` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_vehicle_no` int NOT NULL,
   `ag_brand_no` int NOT NULL,
-  `ag_vehicle_model_name` varchar(30) NOT NULL,
-  `ag_vehicle_model_type` varchar(20) NOT NULL,
+  `ag_vehicle_model_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_vehicle_model_type` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_vehicle_mg_year` int NOT NULL,
-  `ag_vehicle_cc` varchar(10) NOT NULL,
-  `ag_vehicle_fuel` varchar(30) NOT NULL,
-  `ag_vehicle_img` text NOT NULL COMMENT 'l=50',
+  `ag_vehicle_cc` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_vehicle_fuel` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_vehicle_img` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'l=50',
   `ag_vehicle_status` int NOT NULL COMMENT '1=active\r\n2=inactive',
   `ag_vehicle_date` date NOT NULL,
   PRIMARY KEY (`ag_vehicle_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_vehicle`
@@ -213,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `ag_vehicle_parts` (
   `ag_vehicle_no` int NOT NULL,
   `ag_vehicle_part_no` int NOT NULL,
   PRIMARY KEY (`ag_vehicle_part_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_vehicle_parts`
