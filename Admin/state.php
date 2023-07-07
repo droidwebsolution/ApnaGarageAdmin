@@ -29,7 +29,7 @@
                                 <p>Enter State Name</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-copyright"></i>
-                                    <input type='text' name='state_name' placeholder='* Only Characters Allowed' title='Enter State Name' />
+                                    <input type='text' name='state_name' placeholder='* Only Characters Allowed' title='Enter State Name' required />
                                 </div>
                                 <input type='hidden' name='state_add' /> 
                                

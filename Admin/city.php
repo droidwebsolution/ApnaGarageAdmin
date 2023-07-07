@@ -29,7 +29,7 @@
                                 <p>Select state</p>
                                 <div class='input'>
                                     <i class='fa-solid fa-user'></i>
-                                    <select name='state'>
+                                    <select name='state' required>
                                         <option value="">Select State</option>
                                         <?php echo get_state(); ?>
                                     </select>
@@ -37,7 +37,7 @@
                                 <p>Enter City Name</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-copyright"></i>
-                                    <input type='text' name='city_name' placeholder='* Only Characters Allowed' title='Enter City Name' />
+                                    <input type='text' name='city_name' placeholder='* Only Characters Allowed' title='Enter City Name' required/>
                                 </div>
                                 <input type='hidden' name='city_add' /> 
                                

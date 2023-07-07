@@ -30,9 +30,31 @@
                                 <p>Select Brand</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-copyright"></i>
-                                    <select name='vehicle_brand'>
+                                    <select name='vehicle_brand' required>
                                         <option value="">Select Brand</option>
                                         <?php echo get_brand(); ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class='input_container'>
+                                <p>Select Model Type</p>
+                                <div class='input'>
+                                    <i class="fa-solid fa-t"></i>
+                                    <select name='model_type' required>
+                                        <option value="Scooter">Scooter</option>
+                                        <option value="Bike">Bike</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class='input_container'>
+                                <p>Select Fuel</p>
+                                <div class='input'>
+                                    <i class="fa-solid fa-gas-pump"></i>
+                                    <select name='vh_fuel' required>
+                                        <option value="Petrol">Petrol</option>
+                                        <option value="Diesel">Diesel</option>
+                                        <option value="Electric">Electric</option>
+                                        <option value="CNG">CNG</option>
                                     </select>
                                 </div>
                             </div>
@@ -40,39 +62,30 @@
                                 <p>Enter Vehicle Model Name</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-bicycle"></i>
-                                    <input type='text' name='model_name' placeholder="Model Name" />
+                                    <input type='text' name='model_name' placeholder="Model Name" required/>
                                 </div>
                             </div>
-                            <div class='input_container'>
-                                <p>Select Model Type</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-t"></i>
-                                    <select name='model_type'>
-                                        <option value="Scooter">Scooter</option>
-                                        <option value="Bike">Bike</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
                             
                             <div class='input_container'>
                                 <p>Enter Vehicle Menufecture Year</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-y"></i>
-                                    <input type='text' name='mg_yr' placeholder="Menufecture Year" />
+                                    <input type='text' name='mg_yr' placeholder="Menufecture Year" required/>
                                 </div>
                             </div>
                             <div class='input_container'>
                                 <p>Enter Vehicle CC</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-c"></i>
-                                    <input type='text' name='vh_cc' placeholder="Model CC"/>
+                                    <input type='text' name='vh_cc' placeholder="Model CC" required/>
                                 </div>
                             </div>
                             <div class='input_container'>
                                 <p>Select Fuel</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-gas-pump"></i>
-                                    <select name='vh_fuel'>
+                                    <select name='vh_fuel' required>
                                         <option value="Petrol">Petrol</option>
                                         <option value="Diesel">Diesel</option>
                                         <option value="Electric">Electric</option>
@@ -85,7 +98,7 @@
                                 <p>Select Image</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-image"></i>
-                                    <input type='file' name='vehicle_img'>
+                                    <input type='file' name='vehicle_img' >
                                 </div>
                             </div>    
                              <!--<div class='input_container'>

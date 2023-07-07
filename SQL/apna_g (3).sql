@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 06, 2023 at 04:34 PM
+-- Generation Time: Jul 07, 2023 at 08:34 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `ag_part` (
   `ag_part_status` int NOT NULL COMMENT '1=active\r\n2=inactive',
   `ag_part_date` date NOT NULL,
   PRIMARY KEY (`ag_part_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `ag_part`
@@ -125,24 +125,24 @@ CREATE TABLE IF NOT EXISTS `ag_retailer` (
   `ag_retailer_company_tin` varchar(10) NOT NULL,
   `ag_retailer_contact_persone_name` varchar(30) NOT NULL,
   `ag_retailer_contact_person_phone` int NOT NULL,
-  `ag_retailer_state` varchar(15) NOT NULL,
-  `ag_retailer_city` varchar(15) NOT NULL,
+  `ag_retailer_state` int NOT NULL,
+  `ag_retailer_city` int NOT NULL,
   `ag_retailer_area` varchar(15) NOT NULL,
   `ag_retailer_house_no` varchar(10) NOT NULL,
   `ag_retailer_pincode` int NOT NULL,
   `ag_retailer_register_date` date NOT NULL,
+  `ag_retailer_status` int NOT NULL COMMENT '1=active\r\n2=inactive',
   PRIMARY KEY (`ag_retailer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `ag_retailer`
 --
 
-INSERT INTO `ag_retailer` (`ag_retailer_id`, `ag_retailer_no`, `ag_retailer_code`, `ag_retailer_company_name`, `ag_retailer_owner_name`, `ag_retailer_comapny_phone`, `ag_retailer_comapny_alt_phone`, `ag_retailer_company_email`, `ag_retailer_company_website`, `ag_retailer_company_gst`, `ag_retailer_company_tin`, `ag_retailer_contact_persone_name`, `ag_retailer_contact_person_phone`, `ag_retailer_state`, `ag_retailer_city`, `ag_retailer_area`, `ag_retailer_house_no`, `ag_retailer_pincode`, `ag_retailer_register_date`) VALUES
-(1, 792307898, 'AGR_1', 'ABC', '', 0, 0, '', '', '', '', '', 0, 'Guajarat', 'Bharuch', '', '', 0, '0000-00-00'),
-(2, 231924102, 'RT_2', 'Shiv Automobiles', 'Pravin Patel', 1125421212, 0, 'Shivautomobile@gmail.com', 'www.shivautomob.com', 'GT12456', '123', 'Deepen Pandey', 2147483647, 'Guajarat', 'Bharuch', '', 'ac145', 392020, '2023-04-05'),
-(3, 1815203693, 'RT_3', 'ABC', 'Maynak', 1125421212, 2147483647, 'abc@gmail.com', 'www.abc.com', 'GT12456', '123', 'Abhishek Patel', 2147483647, 'Guajarat', 'Bharuch', '', 'ac145', 392020, '2022-11-30'),
-(4, 1755715726, 'RT_4', '', '', 0, 0, '', '', '', '', '', 0, '', '', '', '', 0, '0000-00-00');
+INSERT INTO `ag_retailer` (`ag_retailer_id`, `ag_retailer_no`, `ag_retailer_code`, `ag_retailer_company_name`, `ag_retailer_owner_name`, `ag_retailer_comapny_phone`, `ag_retailer_comapny_alt_phone`, `ag_retailer_company_email`, `ag_retailer_company_website`, `ag_retailer_company_gst`, `ag_retailer_company_tin`, `ag_retailer_contact_persone_name`, `ag_retailer_contact_person_phone`, `ag_retailer_state`, `ag_retailer_city`, `ag_retailer_area`, `ag_retailer_house_no`, `ag_retailer_pincode`, `ag_retailer_register_date`, `ag_retailer_status`) VALUES
+(2, 231924102, 'RT_2', 'Shiv Automobiles', 'Pravin Patel', 1125421212, 0, 'Shivautomobile@gmail.com', 'www.shivautomob.com', 'GT12456', '123', 'Deepen Pandey', 2147483647, 1111343021, 1026896286, '', 'ac145', 392020, '2023-04-05', 0),
+(3, 1815203693, 'RT_3', 'ABC', 'Maynak', 1125421212, 2147483647, 'abc@gmail.com', 'www.abc.com', 'GT12456', '123', 'Abhishek Patel', 2147483647, 1111343021, 1026896286, '', 'ac145', 392020, '2022-11-30', 0),
+(5, 2035485059, 'RT_4', 'xyz', 'Pravin Patel', 1125421212, 2147483647, 'xyz@gmail.com', 'www.xyz.com', 'GT12456', '123', 'Abhishek Patel', 2147483647, 1211211715, 2064270509, 'qaqaqa', 'ac145', 392020, '2023-07-07', 0);
 
 -- --------------------------------------------------------
 

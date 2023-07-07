@@ -29,7 +29,7 @@
                                 <p>Enter Brand Name</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-copyright"></i>
-                                    <input type='text' name='brand_name' placeholder='* Only Characters Allowed' title='Enter Brand Name' />
+                                    <input type='text' name='brand_name' placeholder='* Only Characters Allowed' title='Enter Brand Name' required/>
                                 </div>
                                 <input type='hidden' name='brand_add' /> 
                                 <p>Selct Category</p>
@@ -44,7 +44,7 @@
                                 <p>Select Image</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-image"></i>
-                                    <input type='file' name='brand_img'>
+                                    <input type='file' name='brand_img' required>
                                 </div>
                                 <p>Select Status</p>
                                 <div class='input'>

@@ -33,6 +33,8 @@ body{background: #dee4ec;}
 .sidebar ul li:hover{background-color:#fff;}
 .sidebar ul li:hover a{color:#253347}
 .sidebar ul li:hover a i{color:#ef7d19}
+.sidebar ul li details{color:#fff}
+.sidebar ul li details:hover summary{color:#253347}
 
 header{z-index: 3; padding-right: 20px; background:#ef7d19; width:100%; height:60px;position: fixed; }
 .bar{background:#fff; color:#253347; margin:10px 0px 0px 10px; cursor: pointer; border-radius: 100%; width:40px; height: 40px; line-height: 40px !important; text-align: center;}

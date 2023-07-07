@@ -31,7 +31,7 @@
                                     <p>Select Brand</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-copyright"></i>
-                                        <select name='part_brand'>
+                                        <select name='part_brand' required>
                                             <option value="">Select Brand</option>
                                             <?php echo get_brand(); ?>
                                         </select>
@@ -41,7 +41,7 @@
                                     <p>Select Model</p>
                                     <div class='input'>
                                         <i class="fa-sharp fa-regular fa-motorcycle"></i>
-                                        <select name='part_model'>
+                                        <select name='part_model' required>
                                             <option value="">Select Model</option>
                                             <?php echo get_vehicle(); ?>
                                         </select>
@@ -51,7 +51,7 @@
                                     <p>Select Category</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-list"></i>
-                                        <select name='part_cat' >
+                                        <select name='part_cat' required >
                                             <option value='Oil'>Oil</option>
                                             <option value='Spare'>Spare</option>
                                             <option value='Accessories'>Accessories</option>
@@ -63,7 +63,7 @@
                                     <p>Enter Part Name</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-screwdriver-wrench"></i>
-                                        <input type='text' name='part_name' placeholder="Part Name eg.foot rest"  />
+                                        <input type='text' name='part_name' placeholder="Part Name eg.foot rest" required />
                                     </div>
                                 </div>
                                 
@@ -72,14 +72,14 @@
                                     <p>Enter HSN</p>
                                     <div class='input'>
                                         <i class="fa-brands fa-digital-ocean"></i>
-                                        <input type='text' name='part_hsn' placeholder="Only Digits Allowed" />
+                                        <input type='text' name='part_hsn' placeholder="Only Digits Allowed" required/>
                                     </div>
                                 </div>
                                 <div class='input_container'>
                                     <p>Choose Part Image</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-image"></i>
-                                        <input type='file' name='part_img' />
+                                        <input type='file' name='part_img' required/>
                                     </div>
                                 </div>
                                 <div class='input_container'>

@@ -12,23 +12,29 @@
                 </a>
             </li>
             <li>
-                <a href="parts.php">
-                    <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
-                    <span class="item">Parts</span>
-                </a>
-            </li>
-            <li>
-                <a href="brand.php">
-                    <span class="icon"><i class="fa-solid fa-copyright"></i></span>
-                    <span class="item">Company</span>
-                </a>
-            </li>
-            <li>
-                <a href="vehicle.php">
-                    <span class="icon"><i class="fa-solid fa-list"></i></span>
-                    <span class="item">All Model</span>
-                </a>
-            </li>
+                <details><summary><span class="icon"><i class="fa-solid fa-copyright"></i></span>Company Details</summary>
+               
+                    <li>
+                        <a href="parts.php">
+                            <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                            <span class="item">Parts</span>
+                        </a>
+                    
+                    <li>
+                        <a href="brand.php">
+                            <span class="icon"><i class="fa-solid fa-copyright"></i></span>
+                            <span class="item">Company</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="vehicle.php">
+                            <span class="icon"><i class="fa-solid fa-list"></i></span>
+                            <span class="item">All Model</span>
+                        </a>
+                    </li>
+                        </details>
+                    </li>
+                
             <li>
                 <a href="retailer.php">
                     <span class="icon"><i class="fa-solid fa-person"></i></span>
