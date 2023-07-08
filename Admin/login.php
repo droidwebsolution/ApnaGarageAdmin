@@ -1,15 +1,17 @@
 <!doctype html>
-<?php session_start(); include("addons/apna_garage.php");
-        ?> echo login(); ?>
+<?php 
+	session_start();
+	include("addons/logic.php");
+	echo login();
+?>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title> Apna Garage | Login</title>
 		<link href="css/style.css" rel="stylesheet" />
-		<link href="css/all.min.css" rel="stylesheet" />
-		<link href="css/webfonts.css" rel="stylesheet" />
-		<script src='js/jquery-3.6.0.min.js' crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 		<script>
 			$(document).on("contextmenu",function(){
 				return false;
@@ -30,11 +32,11 @@
 			<div class='login'>
 				<form method="post" autocomplete="off">
 					<img src='images/profile.png' />
-					<div class=''>
-						<i class="far fa-user" ></i>
+					<div class='input'>
+						<i class="far fa-user"></i>
 						<input type='text' name='user_email' title='Enter Email Here' required placeholder='Enter Email Here' />
 					</div>
-					<div class=''>
+					<div class='input'>
 						<i class="fas fa-lock"></i>
 						<input type='password' name='user_password' title='Enter Password Here' required placeholder='Enter Password Here' />
 					</div>
@@ -48,3 +50,7 @@
 		</div>
 	</body>
 </html>
+<?php
+	$pass='123ghjgflkhj9';
+	$pass_enc=encrypt_decrypt('encrypt', $pass);
+?>

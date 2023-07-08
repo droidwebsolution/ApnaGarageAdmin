@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 07, 2023 at 10:08 AM
+-- Generation Time: Jul 08, 2023 at 03:08 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `apna_g`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ag_admin`
+--
+
+DROP TABLE IF EXISTS `ag_admin`;
+CREATE TABLE IF NOT EXISTS `ag_admin` (
+  `ag_admin_id` int NOT NULL AUTO_INCREMENT,
+  `ag_admin_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_admin_password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`ag_admin_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ag_admin`
+--
+
+INSERT INTO `ag_admin` (`ag_admin_id`, `ag_admin_email`, `ag_admin_password`) VALUES
+(1, 'admin@gmail.com', 'SUF4Rk1qN0JOUkhKNjdFYTZZeHpkUT09');
 
 -- --------------------------------------------------------
 
@@ -44,10 +65,10 @@ CREATE TABLE IF NOT EXISTS `ag_brand` (
 --
 
 INSERT INTO `ag_brand` (`ag_brand_id`, `ag_brand_no`, `ag_brand_code`, `ag_brand_name`, `ag_brand_category`, `ag_brand_img`, `ag_brand_status`) VALUES
-(1, 1508640779, 'ag_01', 'Honda', 'Bike', '2023-07-03-1735622875.png', 0),
-(2, 1441387750, 'ag_02', 'TVS', 'Bike', '2023-07-03-1963712477.png', 0),
-(22, 630676143, 'AG_4', 'Bajaj', 'Bike', '2023-07-06-1547431257.png', 0),
-(17, 385965455, 'AG_3', 'Bajaj1', 'Bike', '2023-07-03-327665657.png', 0);
+(1, 1508640779, 'ag_01', 'Honda', 'Bike', '2023-07-03-1735622875.png', 1),
+(2, 1441387750, 'ag_02', 'TVS', 'Bike', '2023-07-03-1963712477.png', 1),
+(22, 630676143, 'AG_4', 'Bajaj', 'Bike', '2023-07-06-1547431257.png', 2),
+(17, 385965455, 'AG_3', 'Bajaj1', 'Bike', '2023-07-03-327665657.png', 1);
 
 -- --------------------------------------------------------
 
@@ -101,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `ag_part` (
 --
 
 INSERT INTO `ag_part` (`ag_part_id`, `ag_part_no`, `ag_part_code`, `ag_brand_no`, `ag_vehicle_no`, `ag_part_name`, `ag_part_hsn`, `ag_part_cat`, `ag_part_img`, `ag_part_status`, `ag_part_date`) VALUES
-(14, 1687722590, 'AGP_01', 1441387750, 306479930, 'ewrwer', 'tytyty', 'Oil', '2023-07-06-979878611.png', 1, '2023-07-06'),
+(14, 1687722590, 'AGP_01', 1441387750, 306479930, 'ewrwer', 'tytyty', 'Oil', '2023-07-06-979878611.png', 2, '2023-07-06'),
 (15, 510293075, 'AGP_2', 385965455, 770299755, 'dassad', 'dsadsad', 'Accessories', '2023-07-06-800382390.png', 1, '2023-07-06');
 
 -- --------------------------------------------------------
@@ -117,8 +138,8 @@ CREATE TABLE IF NOT EXISTS `ag_retailer` (
   `ag_retailer_code` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_retailer_company_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_retailer_owner_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `ag_retailer_comapny_phone` int NOT NULL,
-  `ag_retailer_comapny_alt_phone` int NOT NULL,
+  `ag_retailer_comapny_phone` bigint NOT NULL,
+  `ag_retailer_comapny_alt_phone` bigint NOT NULL,
   `ag_retailer_company_email` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_retailer_company_website` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `ag_retailer_company_gst` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
@@ -133,16 +154,18 @@ CREATE TABLE IF NOT EXISTS `ag_retailer` (
   `ag_retailer_register_date` date NOT NULL,
   `ag_retailer_status` int NOT NULL COMMENT '1=active\r\n2=inactive',
   PRIMARY KEY (`ag_retailer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_retailer`
 --
 
 INSERT INTO `ag_retailer` (`ag_retailer_id`, `ag_retailer_no`, `ag_retailer_code`, `ag_retailer_company_name`, `ag_retailer_owner_name`, `ag_retailer_comapny_phone`, `ag_retailer_comapny_alt_phone`, `ag_retailer_company_email`, `ag_retailer_company_website`, `ag_retailer_company_gst`, `ag_retailer_company_tin`, `ag_retailer_contact_persone_name`, `ag_retailer_contact_person_phone`, `ag_retailer_state`, `ag_retailer_city`, `ag_retailer_area`, `ag_retailer_house_no`, `ag_retailer_pincode`, `ag_retailer_register_date`, `ag_retailer_status`) VALUES
-(2, 231924102, 'RT_2', 'Shiv Automobiles', 'Pravin Patel', 1125421212, 0, 'Shivautomobile@gmail.com', 'www.shivautomob.com', 'GT12456', '123', 'Deepen Pandey', 2147483647, 1111343021, 1026896286, '', 'ac145', 392020, '2023-04-05', 0),
+(2, 231924102, 'RT_2', 'Shiv Automobiles', 'Pravin Patelsd', 7698903619, 7698903699, 'Shivautomobile@gmail.com', 'www.shivautomob.com', 'GT12456', '1235543', 'Deepen Pandeye', 2147483647, 1111343021, 2064270509, '', 'ac14555', 392200, '2023-03-29', 0),
 (3, 1815203693, 'RT_3', 'ABC', 'Maynak', 1125421212, 2147483647, 'abc@gmail.com', 'www.abc.com', 'GT12456', '123', 'Abhishek Patel', 2147483647, 1111343021, 1026896286, '', 'ac145', 392020, '2022-11-30', 0),
-(5, 2035485059, 'RT_4', 'xyz', 'Pravin Patel', 1125421212, 2147483647, 'xyz@gmail.com', 'www.xyz.com', 'GT12456', '123', 'Abhishek Patel', 2147483647, 1211211715, 2064270509, 'qaqaqa', 'ac145', 392020, '2023-07-07', 0);
+(5, 2035485059, 'RT_4', 'xyz', 'Pravin Patel', 1125421212, 2147483647, 'xyz@gmail.com', 'www.xyz.com', 'GT12456', '123', 'Abhishek Patel', 2147483647, 1211211715, 2064270509, 'qaqaqa', 'ac145', 392020, '2023-07-07', 0),
+(6, 1438042722, 'RT_5', 'Shiv Automobiles', 'Pravin Patel', 1125421212, 0, 'Shivautomobile@gmail.com', 'www.shivautomob.com', 'GT12456', '123', 'Deepen Pandey', 2147483647, 1111343021, 1026896286, '', 'ac145', 392020, '2023-04-05', 0),
+(7, 503325297, 'RT_6', 'Shiv Automobiles', 'Pravin Patel', 1125421212, 0, 'Shivautomobile@gmail.com', 'www.shivautomob.com', 'GT12456', '123', 'Deepen Pandey', 2147483647, 1111343021, 1026896286, '', 'ac145', 392020, '2023-04-05', 0);
 
 -- --------------------------------------------------------
 
@@ -156,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `ag_state` (
   `ag_state_no` int NOT NULL,
   `ag_state_name` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`ag_state_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_state`
@@ -164,7 +187,8 @@ CREATE TABLE IF NOT EXISTS `ag_state` (
 
 INSERT INTO `ag_state` (`ag_state_id`, `ag_state_no`, `ag_state_name`) VALUES
 (1, 1111343021, 'Gujarat'),
-(2, 1211211715, 'Delhi');
+(2, 1211211715, 'Delhi'),
+(3, 1833473341, 'Check');
 
 -- --------------------------------------------------------
 
@@ -194,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `ag_vehicle` (
 --
 
 INSERT INTO `ag_vehicle` (`ag_vehicle_id`, `ag_vehicle_code`, `ag_vehicle_no`, `ag_brand_no`, `ag_vehicle_model_name`, `ag_vehicle_model_type`, `ag_vehicle_mg_year`, `ag_vehicle_cc`, `ag_vehicle_fuel`, `ag_vehicle_img`, `ag_vehicle_status`, `ag_vehicle_date`) VALUES
-(24, '0', 32043944, 630676143, 'Activa', 'Scooter', 2012, '169', 'Petrol', '2023-07-06-266920701.png', 1, '2023-07-06'),
+(24, '0', 32043944, 630676143, 'Activa', 'Scooter', 2012, '169', 'Electric', '2023-07-06-266920701.png', 1, '2023-07-06'),
 (25, '0', 306479930, 1441387750, 'Splendar', 'Bike', 2012, '124', 'Diesel', '2023-07-06-563766608.png', 1, '2023-07-06'),
 (26, '0', 1648172998, 1441387750, 'Activa', 'Bike', 2012, '169', 'Diesel', '2023-07-06-825091225.png', 1, '2023-07-06'),
 (27, '0', 473597468, 1441387750, 'Activa', 'Bike', 2012, '169', 'Diesel', '2023-07-06-1861554998.png', 1, '2023-07-06'),

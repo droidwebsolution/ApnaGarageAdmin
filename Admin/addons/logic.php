@@ -88,20 +88,15 @@
 			$usrgt->execute();
 			$rwusr=$usrgt->fetch();
 			if($usrgt->rowCount()==1){
-				$_SESSION['adsesmail']=encrypt_decrypt('encrypt', $rwusr['uap_ad_email']);
-				//header("Location: home");
-				header("Location: inventory");
+				$_SESSION['adsesmail']=encrypt_decrypt('encrypt', $rwusr['ag_admin_email']);
+				header("Location: index.php");
 				die();
 			}else{
 				echo"<script>
 						alert('You Entered Wrong User Email or Password');
-						window.open('login','_self');
+						window.open('login.php','_self');
 					</script>";
 			}
-		}
-		if(isset($_SESSION['adsesmail'])){
-			header("Location:home");
-			die();
 		}
 	}
 ?>

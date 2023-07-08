@@ -4,7 +4,7 @@
 	if(isset($_COOKIE["email"])){
 		setcookie("email", '', strtotime( '-5 days' ), '/');	
 	}
-	header("Location:home");
+	header("Location:index.php");
 	die();
 	
 	session_destroy();
