@@ -267,4 +267,14 @@
             }
         }
     }
+    if(isset($_POST['change_brand'])){
+        $ag_brand_no=$_POST['change_brand'];
+        $get_vehicle="select * from ag_vehicle where ag_brand_no=:ag_brand_no";
+        $vehicle_get=$con->prepare($get_vehicle);
+        $vehicle_get->bindParam(':ag_brand_no',$ag_brand_no);
+        $vehicle_get->execute();
+        while($rw_vehicle=$vehicle_get->fetch()):
+            echo"<option value='".$rw_vehicle['ag_vehicle_no']."'>".$rw_vehicle['ag_vehicle_model_name']."</option>";
+        endwhile;
+    }
 ?>

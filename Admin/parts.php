@@ -31,7 +31,7 @@
                                     <p>Select Brand</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-copyright"></i>
-                                        <select name='part_brand' required>
+                                        <select name='part_brand' class='part_brand' required>
                                             <option value="">Select Brand</option>
                                             <?php echo get_brand(); ?>
                                         </select>
@@ -41,9 +41,8 @@
                                     <p>Select Model</p>
                                     <div class='input'>
                                         <i class="fa-sharp fa-regular fa-motorcycle"></i>
-                                        <select name='part_model' required>
+                                        <select name='part_model' class='part_model' required>
                                             <option value="">Select Model</option>
-                                            <?php echo get_vehicle(); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -97,7 +96,6 @@
                                     <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                                     <button class='pop_up_submit add_part' type='submit' name='add_part'><i class='fa-solid fa-save'></i> Save</button>
                                     <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
-
                                 </center>
                             </div>
                         </form>
@@ -166,28 +164,27 @@
         });
     });
     $(document).on('submit','#part_up',function(e){
-            e.preventDefault();
-            $.ajax({
-                url:'assets/parts_jscript.php',
-                type:'post',
-                dataType:'json',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data:new FormData(this),
-                beforeSend:function(){
-                    $('.part_up').attr('disabled','disabled');
-                },
-                success:function(data){
-                    alert(data);
-                    $('.part_up').removeAttr('disabled');
-                    $('.details_open').removeAttr("open");
-                
-                    get_parts();
-                }
-            });
+        e.preventDefault();
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            type:'post',
+            dataType:'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data:new FormData(this),
+            beforeSend:function(){
+                $('.part_up').attr('disabled','disabled');
+            },
+            success:function(data){
+                alert(data);
+                $('.part_up').removeAttr('disabled');
+                $('.details_open').removeAttr("open");
+            
+                get_parts();
+            }
         });
-    
+    });
     $(document).on('click','.up_open',function(){
         var part_up_open=$(this).attr("data-id");
         $.ajax({
@@ -199,5 +196,15 @@
             }
         });
     });
-                
+    $(document).on('change','.part_brand',function(){
+        var change_brand=$(this).val();
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{change_brand:change_brand},
+            success:function(data){
+                $('.part_model').html(data);
+            }
+        });
+    }); 
 </script>

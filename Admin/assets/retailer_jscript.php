@@ -290,4 +290,14 @@
             echo json_encode($msg);
         }
     }
+    if(isset($_POST['change_state'])){
+        $ag_state_no=$_POST['change_state'];
+        $get_city="select * from ag_city where ag_state_no=:ag_state_no";
+        $city_get=$con->prepare($get_city);
+        $city_get->bindParam(':ag_state_no',$ag_state_no);
+        $city_get->execute();
+        while($rw_city=$city_get->fetch()):
+            echo"<option value='".$rw_city['ag_city_no']."'>".$rw_city['ag_city_name']."</option>";
+        endwhile;
+    }
 ?>

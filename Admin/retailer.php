@@ -100,7 +100,7 @@
                                 <p>Select state</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-city"></i>
-                                    <select name='r_state'>
+                                    <select name='r_state' class='r_state'>
                                         <option value="">Select State</option>
                                         <?php echo get_state(); ?>
                                     </select>
@@ -110,9 +110,8 @@
                                 <p>Select City</p>
                                 <div class='input'>
                                     <i class="fa-solid fa-city"></i>
-                                    <select name='r_city'>
+                                    <select name='r_city' class='r_city'>
                                         <option value="">Select City</option>
-                                        <?php echo get_city(); ?>
                                     </select>
                                 </div>
                             </div>
@@ -177,7 +176,6 @@
                             <th>State</th>
                             <th>City</th>
                             <th>Registration Date</th>
-                            
                             <th style='text-align:center'>Action</th>
                         </tr>
                     </thead>
@@ -255,5 +253,16 @@
                     get_retailer();
                 }
             });
-        });        
+    });
+    $(document).on('change','.r_state',function(){
+        var change_state=$(this).val();
+        $.ajax({
+            url:'assets/retailer_jscript.php',
+            method:'post',
+            data:{change_state:change_state},
+            success:function(data){
+                $('.r_city').html(data);
+            }
+        });
+    });   
 </script>
