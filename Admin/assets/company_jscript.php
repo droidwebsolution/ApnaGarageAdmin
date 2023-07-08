@@ -56,20 +56,18 @@
         }else{
             $i=1;
             while($rw_brand=$brand_get->fetch()):
+                if($rw_brand['ag_brand_status'] == 1){
+                    $status='Active';
+                }else{
+                    $status='In Active';
+                }
                 echo"<tr>
                         <td>".$i++."</td>
                         <td>".$rw_brand['ag_brand_code']."</td> 
                         <td>".$rw_brand['ag_brand_name']."</td>
                         <td>".$rw_brand['ag_brand_category']."</td>
                         <td><img src= 'images/brand/".$rw_brand['ag_brand_img']."' style='width:40px;height:40px'></td>
-                        <td>";
-                        if($rw_brand['ag_brand_status'] == 1){
-                            echo 'Active';
-                        }else{
-                            echo"In Active";
-                        }
-                        
-                        echo"</td>
+                        <td>$status</td>
                         <td style='text-align:center'>
                             <details class='details_open' style='display:inline-block'>
                                 <summary class='pop_up_open pop_up_summary brand_open' data-id='".encrypt_decrypt('encrypt', $rw_brand['ag_brand_no'])."'><i class='fa-solid fa-pen-to-square'></i> Edit</summary>
@@ -88,6 +86,11 @@
         $brand_get->setFetchMode(PDO::FETCH_ASSOC);
         $brand_get->execute();
         $rw_brand=$brand_get->fetch();
+        if($rw_brand['ag_brand_status'] == 1){
+            $status="Active";
+        }else{
+            $status="In Active";
+        }
         echo"<form class='form small_width_form' id='brand_up' enctype='multipart/form-data'>
                 <h2>Edit ".$rw_brand['ag_brand_name']." <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                 <div class='form_container'>
@@ -102,7 +105,6 @@
                         <i class='fa-solid fa-list'></i>
                         <select name='brand_category' value='".$rw_brand['ag_brand_category']."' >
                             <option>Bike</option>
-                            
                         </select>
                     </div>
                     <p>Update brand Image</p>
@@ -113,9 +115,10 @@
                     <p>Update brand Status</p>
                     <div class='input'>
                         <i class='fa-sharp fa-solid fa-battery-full'></i>
-                        <select name='brand_status' value='".$rw_brand['ag_brand_status']."'>
-                            <option>Active</option>
-                            <option>In Active</option>
+                        <select name='brand_status'>
+                            <option value='$status'>$status</option>
+                            <option value='Active'>Active</option>
+                            <option value='In Active'>In Active</option>
                         </select>
                     </div>
                     <center>
@@ -131,6 +134,11 @@
         $ag_brand_name=check_data($_POST['brand_name']);
         $ag_brand_category=check_data($_POST['brand_category']);
         $ag_brand_status=check_data($_POST['brand_status']);
+        if($ag_brand_status == 'Active'){
+            $ag_brand_status=1;
+        }else{
+            $ag_brand_status=2;
+        }
         $gtinv="select ag_brand_img from ag_brand where ag_brand_no=:ag_brand_no";
         $invgt=$con->prepare($gtinv, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $invgt->bindParam(":ag_brand_no",$ag_brand_no);

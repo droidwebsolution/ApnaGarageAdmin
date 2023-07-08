@@ -111,136 +111,132 @@
         $retailer_get->setFetchMode(PDO::FETCH_ASSOC);
         $retailer_get->execute();
         $rw_retailer=$retailer_get->fetch();
-        echo"<form class='form min_width_form' id='state_up' enctype='multipart/form-data'>
+        echo"<form class='form min_width_form' id='retailer_up' enctype='multipart/form-data'>
                 <h2>Edit ".$rw_retailer['ag_retailer_company_name']." <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                 <div class='form_container'>
-                    
                     <input type='hidden' name='up_retailers' value='".encrypt_decrypt('encrypt', $rw_retailer['ag_retailer_no'])."' />
                     <div class='input_container'>
-                                <p>Enter Retailer Company Name</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-copyright'></i>
-                                    <input type='text' name='r_company_name' value='".$rw_retailer['ag_retailer_company_name']."' placeholder='Company Name' />
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Retailer Owner Name</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='r_owner_name' value='".$rw_retailer['ag_retailer_owner_name']."' placeholder='owner Name' />
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Company Phone No</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-phone'></i>
-                                    <input type='tel' name='r_company_phone' value='".$rw_retailer['ag_retailer_comapny_phone']."' placeholder='Enter Digits Only' />
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Company Alternate Phone No</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-phone'></i>
-                                    <input type='tel' name='r_company_alt_phone' value='".$rw_retailer['ag_retailer_comapny_alt_phone']."' placeholder='Enter Digits Only' />
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Company Email Id</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-envelope'></i>
-                                    <input type='email' name='r_company_email' value='".$rw_retailer['ag_retailer_company_email']."' placeholder='Enter Comapny Email' />
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Website Link</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-browser'></i>
-                                    <input type='text' name='r_company_web' value='".$rw_retailer['ag_retailer_company_website']."' placeholder='Enter webisite formate'/>
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Company GST No</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-n'></i>
-                                    <input type='text' name='r_company_gst' value='".$rw_retailer['ag_retailer_company_gst']."' placeholder='Enter GST No' />
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter TIN No</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-n'></i>
-                                    <input type='text' name='r_company_tin' value='".$rw_retailer['ag_retailer_company_tin']."' placeholder='Enter TIN no' />
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Contact Person Name</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='r_contact_person_name' value='".$rw_retailer['ag_retailer_contact_persone_name']."' placeholder='Enter Contact Person Name' />
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Contact Person Phone No</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-phone'></i>
-                                    <input type='tel' name='r_contact_person_phone' value='".$rw_retailer['ag_retailer_contact_person_phone']."' placeholder='Enter Contact Person Phone No' />
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Select state</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-city'></i>
-                                    <select name='r_state'>
-                                    <option value='". $rw_retailer['ag_retailer_state']."'>".$rw_retailer['ag_state_name']."</option>";
-                                         echo get_state(); 
-                                    echo"</select>
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Select City</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-city'></i>
-                                    <select name='r_city'>
-                                    <option value='". $rw_retailer['ag_retailer_city']."'>".$rw_retailer['ag_city_name']."</option>";
-                                         echo get_city(); 
-                                   echo" </select>
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Area</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-city'></i>
-                                    <input type='text' name='r_area' placeholder='Enter Area' value='".$rw_retailer['ag_retailer_area']."'/>
-                                </div>
-                            </div>
-                            <input type='hidden' name='retailer_add' />
-                            <div class='input_container'>
-                                <p>Enter Shop No</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-n'></i>
-                                    <input type='text' name='r_house_no' placeholder='Enter Shop No' value='".$rw_retailer['ag_retailer_house_no']."'/>
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter PinCode</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-n'></i>
-                                    <input type='text' name='r_pincode' placeholder='Enter Pin-code' value='".$rw_retailer['ag_retailer_pincode']."'/>
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Registration Date</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-calendar-days'></i>
-                                    <input type='date' name='r_register_date' placeholder='Enter Date' value='".$rw_retailer['ag_retailer_register_date']."'/>
-                                </div>
-                            </div><br clear='all'>
+                        <p>Enter Retailer Company Name</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-copyright'></i>
+                            <input type='text' name='r_company_name' value='".$rw_retailer['ag_retailer_company_name']."' placeholder='Company Name' />
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Retailer Owner Name</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-user'></i>
+                            <input type='text' name='r_owner_name' value='".$rw_retailer['ag_retailer_owner_name']."' placeholder='owner Name' />
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Company Phone No</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-phone'></i>
+                            <input type='tel' name='r_company_phone' value='".$rw_retailer['ag_retailer_comapny_phone']."' placeholder='Enter Digits Only' />
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Company Alternate Phone No</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-phone'></i>
+                            <input type='tel' name='r_company_alt_phone' value='".$rw_retailer['ag_retailer_comapny_alt_phone']."' placeholder='Enter Digits Only' />
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Company Email Id</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-envelope'></i>
+                            <input type='email' name='r_company_email' value='".$rw_retailer['ag_retailer_company_email']."' placeholder='Enter Comapny Email' />
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Website Link</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-browser'></i>
+                            <input type='text' name='r_company_web' value='".$rw_retailer['ag_retailer_company_website']."' placeholder='Enter webisite formate'/>
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Company GST No</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-n'></i>
+                            <input type='text' name='r_company_gst' value='".$rw_retailer['ag_retailer_company_gst']."' placeholder='Enter GST No' />
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter TIN No</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-n'></i>
+                            <input type='text' name='r_company_tin' value='".$rw_retailer['ag_retailer_company_tin']."' placeholder='Enter TIN no' />
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Contact Person Name</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-user'></i>
+                            <input type='text' name='r_contact_person_name' value='".$rw_retailer['ag_retailer_contact_persone_name']."' placeholder='Enter Contact Person Name' />
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Contact Person Phone No</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-phone'></i>
+                            <input type='tel' name='r_contact_person_phone' value='".$rw_retailer['ag_retailer_contact_person_phone']."' placeholder='Enter Contact Person Phone No' />
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Select state</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-city'></i>
+                            <select name='r_state' class='r_state'>
+                            <option value='". $rw_retailer['ag_retailer_state']."'>".$rw_retailer['ag_state_name']."</option>";
+                                    echo get_state(); 
+                            echo"</select>
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Select City</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-city'></i>
+                            <select name='r_city' class='r_city'>
+                                <option value='". $rw_retailer['ag_retailer_city']."'>".$rw_retailer['ag_city_name']."</option>";
+                            echo"</select>
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Area</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-city'></i>
+                            <input type='text' name='r_area' placeholder='Enter Area' value='".$rw_retailer['ag_retailer_area']."'/>
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Shop No</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-n'></i>
+                            <input type='text' name='r_house_no' placeholder='Enter Shop No' value='".$rw_retailer['ag_retailer_house_no']."'/>
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter PinCode</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-n'></i>
+                            <input type='text' name='r_pincode' placeholder='Enter Pin-code' value='".$rw_retailer['ag_retailer_pincode']."'/>
+                        </div>
+                    </div>
+                    <div class='input_container'>
+                        <p>Enter Registration Date</p>
+                        <div class='input'>
+                            <i class='fa-solid fa-calendar-days'></i>
+                            <input type='date' name='r_register_date' placeholder='Enter Date' value='".$rw_retailer['ag_retailer_register_date']."'/>
+                        </div>
+                    </div><br clear='all'>
                     <center>
                         <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
                         <button class='pop_up_submit retailer_up' type='submit' name='retailer_up'><i class='fa-solid fa-save'></i> Update</button>
                         <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
-
-                        </center>
+                    </center>
                 </div>
             </form>";
     }

@@ -21,123 +21,109 @@
         <div id='container'>
             <div class='search_filter'>
                 <details class='details_open' style='display:inline-block'>
-                <summary class='pop_up_open pop_up_summary' onclick="get_vehicle_part()"><i class="fa-solid fa-circle-plus"></i> Add New</summary>
-                <div class='pop_up'>
-                    <form class='form min_width_form' id='add_vehicle' enctype='multipart/form-data'>
-                        <h2>Add Vehicle <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
-                        <div class='form_container'>
-                            <div class='input_container'>
-                                <p>Select Brand</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-copyright"></i>
-                                    <select name='vehicle_brand' required>
-                                        <option value="">Select Brand</option>
-                                        <?php echo get_brand(); ?>
-                                    </select>
+                    <summary class='pop_up_open pop_up_summary' onclick="get_vehicle_part()"><i class="fa-solid fa-circle-plus"></i> Add New</summary>
+                    <div class='pop_up'>
+                        <form class='form min_width_form' id='add_vehicle' enctype='multipart/form-data'>
+                            <h2>Add Vehicle <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                            <div class='form_container'>
+                                <div class='input_container'>
+                                    <p>Select Brand</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-copyright"></i>
+                                        <select name='vehicle_brand' required>
+                                            <option value="">Select Brand</option>
+                                            <?php echo get_brand(); ?>
+                                        </select>
+                                    </div>
                                 </div>
+                                <div class='input_container'>
+                                    <p>Select Model Type</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-t"></i>
+                                        <select name='model_type' required>
+                                            <option value="Scooter">Scooter</option>
+                                            <option value="Bike">Bike</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='input_container'>
+                                    <p>Select Fuel</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-gas-pump"></i>
+                                        <select name='vh_fuel' required>
+                                            <option value="Petrol">Petrol</option>
+                                            <option value="Diesel">Diesel</option>
+                                            <option value="Electric">Electric</option>
+                                            <option value="CNG">CNG</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='input_container'>
+                                    <p>Enter Vehicle Model Name</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-bicycle"></i>
+                                        <input type='text' name='model_name' placeholder="Model Name" required/>
+                                    </div>
+                                </div>
+                                <div class='input_container'>
+                                    <p>Enter Vehicle Manufacture Year</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-y"></i>
+                                        <input type='text' name='mg_yr' placeholder="Manufacture Year" required/>
+                                    </div>
+                                </div>
+                                <div class='input_container'>
+                                    <p>Enter Vehicle CC</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-c"></i>
+                                        <input type='text' name='vh_cc' placeholder="Model CC" required/>
+                                    </div>
+                                </div>
+                                <input type='hidden' name='vehicle_add' />
+                                <div class='input_container'>
+                                    <p>Select Image</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-image"></i>
+                                        <input type='file' name='vehicle_img' >
+                                    </div>
+                                </div>    
+                                <!--<div class='input_container'>
+                                    <p>Select Part</p>
+                                    <div class='input'>
+                                        <i class='fa-solid fa-user'></i>
+                                        <select name='part' class="vehicle_part_name">
+                                            <option value="">Select Part</option>
+                                            
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="input_container">
+                                    <h3 class='pop_up_open pop_up_summary vehicle_part_add'><i class='fa-solid fa-pen-to-square'></i> Add Parts</h3>
+                                </div>
+                                <div class='input_container'>
+                                    <p>Enter Date</p>
+                                    <div class='input'>
+                                        <i class='fa-solid fa-user'></i>
+                                        <input type='date' name='vh_date' />
+                                    </div>
+                                </div> --><br clear="all">                            
+                                <center>
+                                    <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
+                                    <button class='pop_up_submit add_vehicle' type='submit' name='add_vehicle'><i class='fa-solid fa-save'></i> Save</button>
+                                    <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
+                                </center><br clear="all" />
+                                <!-- <table class="item_table" cellspacing='0'>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Part Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class='vehicle_part_table'></tbody>
+                                </table> -->
                             </div>
-                            <div class='input_container'>
-                                <p>Select Model Type</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-t"></i>
-                                    <select name='model_type' required>
-                                        <option value="Scooter">Scooter</option>
-                                        <option value="Bike">Bike</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Select Fuel</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-gas-pump"></i>
-                                    <select name='vh_fuel' required>
-                                        <option value="Petrol">Petrol</option>
-                                        <option value="Diesel">Diesel</option>
-                                        <option value="Electric">Electric</option>
-                                        <option value="CNG">CNG</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Vehicle Model Name</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-bicycle"></i>
-                                    <input type='text' name='model_name' placeholder="Model Name" required/>
-                                </div>
-                            </div>
-                            
-                            
-                            <div class='input_container'>
-                                <p>Enter Vehicle Manufacture Year</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-y"></i>
-                                    <input type='text' name='mg_yr' placeholder="Manufacture Year" required/>
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Vehicle CC</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-c"></i>
-                                    <input type='text' name='vh_cc' placeholder="Model CC" required/>
-                                </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Select Fuel</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-gas-pump"></i>
-                                    <select name='vh_fuel' required>
-                                        <option value="Petrol">Petrol</option>
-                                        <option value="Diesel">Diesel</option>
-                                        <option value="Electric">Electric</option>
-                                        <option value="CNG">CNG</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <input type='hidden' name='vehicle_add' />
-                            <div class='input_container'>
-                                <p>Select Image</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-image"></i>
-                                    <input type='file' name='vehicle_img' >
-                                </div>
-                            </div>    
-                             <!--<div class='input_container'>
-                                <p>Select Part</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
-                                    <select name='part' class="vehicle_part_name">
-                                        <option value="">Select Part</option>
-                                        
-                                    </select>
-                                </div>
-                            </div> 
-                            <div class="input_container">
-                                <h3 class='pop_up_open pop_up_summary vehicle_part_add'><i class='fa-solid fa-pen-to-square'></i> Add Parts</h3>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Date</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
-                                    <input type='date' name='vh_date' />
-                                </div>
-                            </div> --><br clear="all">                            
-                            <center>
-                                <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
-                                <button class='pop_up_submit add_vehicle' type='submit' name='add_vehicle'><i class='fa-solid fa-save'></i> Save</button>
-                                <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
-                            </center><br clear="all" />
-                            <!-- <table class="item_table" cellspacing='0'>
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Part Name</th>
-                                    </tr>
-                                </thead>
-                                <tbody class='vehicle_part_table'></tbody>
-                            </table> -->
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
                 </details>
                 <input type='text' class='search_input by_name' onkeyup='get_vehicle()' placeholder='Search By Name and code' />
             </div>

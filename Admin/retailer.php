@@ -21,138 +21,138 @@
         <div id='container'>
             <div class='search_filter'>
                 <details class='details_open' style='display:inline-block'>
-                <summary class='pop_up_open pop_up_summary'><i class="fa-solid fa-circle-plus"></i> Add New</summary>
-                <div class='pop_up'>
-                    <form class='form min_width_form' id='add_retailer' enctype='multipart/form-data'>
-                        <h2>Add Retailer <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
-                        <div class='form_container'>
-                            <div class='input_container'>
-                                <p>Enter Retailer Company Name</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-copyright"></i>
-                                    <input type='text' name='r_company_name' placeholder="Company Name" required />
+                    <summary class='pop_up_open pop_up_summary'><i class="fa-solid fa-circle-plus"></i> Add New</summary>
+                    <div class='pop_up'>
+                        <form class='form min_width_form' id='add_retailer' enctype='multipart/form-data'>
+                            <h2>Add Retailer <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                            <div class='form_container'>
+                                <div class='input_container'>
+                                    <p>Enter Retailer Company Name</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-copyright"></i>
+                                        <input type='text' name='r_company_name' placeholder="Company Name" required />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Retailer Owner Name</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='r_owner_name' placeholder="owner Name" required/>
+                                <div class='input_container'>
+                                    <p>Enter Retailer Owner Name</p>
+                                    <div class='input'>
+                                        <i class='fa-solid fa-user'></i>
+                                        <input type='text' name='r_owner_name' placeholder="owner Name" required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Company Phone No</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-phone"></i>
-                                    <input type='tel' name='r_company_phone' placeholder="Enter Digits Only" required/>
+                                <div class='input_container'>
+                                    <p>Enter Company Phone No</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-phone"></i>
+                                        <input type='tel' name='r_company_phone' placeholder="Enter Digits Only" required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Company Alternate Phone No</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-phone"></i>
-                                    <input type='tel' name='r_company_alt_phone' placeholder="Enter Digits Only" />
+                                <div class='input_container'>
+                                    <p>Enter Company Alternate Phone No</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-phone"></i>
+                                        <input type='tel' name='r_company_alt_phone' placeholder="Enter Digits Only" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Company Email Id</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-envelope"></i>
-                                    <input type='email' name='r_company_email' placeholder="Enter Comapny Email" required/>
+                                <div class='input_container'>
+                                    <p>Enter Company Email Id</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-envelope"></i>
+                                        <input type='email' name='r_company_email' placeholder="Enter Comapny Email" required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Website Link</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-browser"></i>
-                                    <input type='text' name='r_company_web' placeholder="Enter webisite formate"/>
+                                <div class='input_container'>
+                                    <p>Enter Website Link</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-browser"></i>
+                                        <input type='text' name='r_company_web' placeholder="Enter webisite formate"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Company GST No</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-n"></i>
-                                    <input type='text' name='r_company_gst' placeholder="Enter GST No" required/>
+                                <div class='input_container'>
+                                    <p>Enter Company GST No</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-n"></i>
+                                        <input type='text' name='r_company_gst' placeholder="Enter GST No" required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter TIN No</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-n"></i>
-                                    <input type='text' name='r_company_tin' placeholder="Enter TIN no" required/>
+                                <div class='input_container'>
+                                    <p>Enter TIN No</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-n"></i>
+                                        <input type='text' name='r_company_tin' placeholder="Enter TIN no" required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Contact Person Name</p>
-                                <div class='input'>
-                                    <i class='fa-solid fa-user'></i>
-                                    <input type='text' name='r_contact_person_name' placeholder="Enter Contact Person Name" required/>
+                                <div class='input_container'>
+                                    <p>Enter Contact Person Name</p>
+                                    <div class='input'>
+                                        <i class='fa-solid fa-user'></i>
+                                        <input type='text' name='r_contact_person_name' placeholder="Enter Contact Person Name" required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Contact Person Phone No</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-phone"></i>
-                                    <input type='tel' name='r_contact_person_phone' placeholder="Enter Contact Person Phone No" required/>
+                                <div class='input_container'>
+                                    <p>Enter Contact Person Phone No</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-phone"></i>
+                                        <input type='tel' name='r_contact_person_phone' placeholder="Enter Contact Person Phone No" required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Select state</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-city"></i>
-                                    <select name='r_state' class='r_state'>
-                                        <option value="">Select State</option>
-                                        <?php echo get_state(); ?>
-                                    </select>
+                                <div class='input_container'>
+                                    <p>Select state</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-city"></i>
+                                        <select name='r_state' class='r_state'>
+                                            <option value="">Select State</option>
+                                            <?php echo get_state(); ?>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Select City</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-city"></i>
-                                    <select name='r_city' class='r_city'>
-                                        <option value="">Select City</option>
-                                    </select>
+                                <div class='input_container'>
+                                    <p>Select City</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-city"></i>
+                                        <select name='r_city' class='r_city'>
+                                            <option value="">Select City</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Area</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-city"></i>
-                                    <input type='text' name='r_area' placeholder="Enter Area" required/>
+                                <div class='input_container'>
+                                    <p>Enter Area</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-city"></i>
+                                        <input type='text' name='r_area' placeholder="Enter Area" required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <input type='hidden' name='retailer_add' />
-                            <div class='input_container'>
-                                <p>Enter Shop No</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-n"></i>
-                                    <input type='text' name='r_house_no' placeholder="Enter Shop No"/>
+                                <input type='hidden' name='retailer_add' />
+                                <div class='input_container'>
+                                    <p>Enter Shop No</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-n"></i>
+                                        <input type='text' name='r_house_no' placeholder="Enter Shop No"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter PinCode</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-n"></i>
-                                    <input type='text' name='r_pincode' placeholder="Enter Pin-code"/>
+                                <div class='input_container'>
+                                    <p>Enter PinCode</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-n"></i>
+                                        <input type='text' name='r_pincode' placeholder="Enter Pin-code"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='input_container'>
-                                <p>Enter Registration Date</p>
-                                <div class='input'>
-                                    <i class="fa-solid fa-calendar-days"></i>
-                                    <input type='date' name='r_register_date' placeholder="Enter Date" />
+                                <div class='input_container'>
+                                    <p>Enter Registration Date</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        <input type='date' name='r_register_date' placeholder="Enter Date" />
+                                    </div>
                                 </div>
+                                <br clear="all">                            
+                                <center>
+                                    <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> RESET</button>
+                                    <button class='pop_up_submit add_retailer' type='submit' name='add_retailer'><i class='fa-solid fa-save'></i> ADD</button>
+                                    <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> CANCEL</button>
+                                </center>
                             </div>
-                             <br clear="all">                            
-                            <center>
-                                <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> RESET</button>
-                                <button class='pop_up_submit add_retailer' type='submit' name='add_retailer'><i class='fa-solid fa-save'></i> ADD</button>
-                                <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> CANCEL</button>
-                            </center>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
                 </details>
                 <input type='text' class='search_input by_name' onkeyup='get_retailer()' placeholder='Search By Company Name & code' />
                 <!-- <input type='text' class='search_input by_name' onkeyup='get_vehicle()' placeholder='Search By Name' /> -->
@@ -234,25 +234,25 @@
         });
     });
     $(document).on('submit','#retailer_up',function(e){
-            e.preventDefault();
-            $.ajax({
-                url:'assets/retailer_jscript.php',
-                type:'post',
-                dataType:'json',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data:new FormData(this),
-                beforeSend:function(){
-                    $('.retailer_up').attr('disabled','disabled');
-                },
-                success:function(data){
-                    alert(data);
-                    $('.retailer_up').removeAttr('disabled');
-                    $('.details_open').removeAttr("open");
-                    get_retailer();
-                }
-            });
+        e.preventDefault();
+        $.ajax({
+            url:'assets/retailer_jscript.php',
+            type:'post',
+            dataType:'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data:new FormData(this),
+            beforeSend:function(){
+                $('.retailer_up').attr('disabled','disabled');
+            },
+            success:function(data){
+                alert(data);
+                $('.retailer_up').removeAttr('disabled');
+                $('.details_open').removeAttr("open");
+                get_retailer();
+            }
+        });
     });
     $(document).on('change','.r_state',function(){
         var change_state=$(this).val();

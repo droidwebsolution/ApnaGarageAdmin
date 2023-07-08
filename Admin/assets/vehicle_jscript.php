@@ -146,7 +146,8 @@
                         <p>Select Fuel</p>
                         <div class='input'>
                             <i class='fa-solid fa-gas-pump'></i>
-                            <select name='vh_fuel' value='".$rw_vehicle['ag_vehicle_fuel']."'>
+                            <select name='vh_fuel'>
+                                <option value='".$rw_vehicle['ag_vehicle_fuel']."'>".$rw_vehicle['ag_vehicle_fuel']."</option>
                                 <option value='Petrol'>Petrol</option>
                                 <option value='Diesel'>Diesel</option>
                                 <option value='Electric'>Electric</option>
@@ -169,7 +170,6 @@
                 </div>
             </form>";
     }
-
     if(isset($_POST['get_vehicle_part'])){
         $ag_vehicle_no=0;
         $get_part="select vh.*,pt.ag_part_name from ag_vehicle_parts vh inner join ag_part pt on vh.ag_vehicle_part_no=pt.ag_part_no where vh.ag_vehicle_no=:ag_vehicle_no";

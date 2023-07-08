@@ -101,7 +101,7 @@
                         </form>
                     </div>
                 </details>
-                <input type='text' class='search_input by_name' onkeyup='get_parts()' placeholder='Search By Name and code' />
+                <input type='text' class='search_input by_name' title='Search By Part Code, Name, Brand, Model & Category' onkeyup='get_parts()' placeholder='Search By Part Code, Name, Brand, Model & Category' />
             </div>
             <div class='table_container'>
                 <table class='item_table'  cellspacing='0'>
