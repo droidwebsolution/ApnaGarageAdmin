@@ -28,7 +28,7 @@
         <div id='container'>
             <div class='search_filter'>
                 <details class='details_open' style='display:inline-block'>
-                    <summary class='pop_up_open pop_up_summary'><i class="fa-solid fa-circle-plus"></i> Add New</summary>
+                    <summary class='pop_up_open pop_up_summary refresh_add'><i class="fa-solid fa-circle-plus"></i> Add New</summary>
                     <div class='pop_up'>
                         <form class='form min_width_form' id='add_part' enctype='multipart/form-data'>
                             <h2>Add Parts <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>

@@ -108,6 +108,84 @@
             echo json_encode($msg);
         }
     }
+    if (isset($_POST['vehicle_add'])) {
+        $modelNames = explode(',', $_POST['model_name']);
+        $manufactureYears = explode(',', $_POST['mg_yr']);
+        $vehicleCCs = explode(',', $_POST['vh_cc']);
+    
+        if (count($modelNames) !== count($manufactureYears) || count($modelNames) !== count($vehicleCCs)) {
+            echo json_encode("The number of model names, manufacture years, and vehicle CCs should be the same.");
+            return;
+        }
+    
+        $ag_vehicle_status = 1;
+        $ag_vehicle_date = date('Y-m-d');
+        $msg = "";
+    
+        $vehicle_get = $con->prepare("SELECT MAX(ag_vehicle_code) AS max_code FROM ag_vehicle");
+        $vehicle_get->setFetchMode(PDO::FETCH_ASSOC);
+        $vehicle_get->execute();
+        $result = $vehicle_get->fetch();
+        $maxCode = $result['max_code'];
+    
+        if (empty($maxCode)) {
+            $maxCode = 'AGV_00';
+        }
+    
+        $maxCodeNumber = intval(substr($maxCode, -1));
+    
+        for ($i = 0; $i < count($modelNames); $i++) {
+            $ag_vehicle_no = substr(mt_rand(), 0, 10);
+            $ag_brand_no = check_data($_POST['vehicle_brand']);
+            $ag_vehicle_model_name = check_data($modelNames[$i]);
+            $ag_vehicle_model_type = check_data($_POST['model_type']);
+            $ag_vehicle_mg_year = check_data($manufactureYears[$i]);
+            $ag_vehicle_cc = check_data($vehicleCCs[$i]);
+            $ag_vehicle_fuel = check_data($_POST['vh_fuel']);
+            $ag_vehicle_img = $_FILES['vehicle_img']['tmp_name'];
+    
+            $invimg = date('Y-m-d') . "-" . substr(mt_rand(), 0, 10) . ".png";
+    
+            $maxCodeNumber++;
+            $ag_vehicle_code = 'AGV_' . sprintf('%02d', $maxCodeNumber);
+            $vehicle_get = $con->prepare("SELECT * FROM ag_vehicle where ag_vehicle_model_name=:ag_vehicle_model_name and ag_vehicle_mg_year=:ag_vehicle_mg_year");
+            $vehicle_get->bindParam(':ag_vehicle_model_name',$ag_vehicle_model_name);
+            $vehicle_get->bindParam(':ag_vehicle_mg_year',$ag_vehicle_mg_year);
+            $vehicle_get->setFetchMode(PDO::FETCH_ASSOC);
+            $vehicle_get->execute();
+            $count_vehicle = $vehicle_get->rowCount();
+            if($count_vehicle == 1){
+                echo json_encode("Model with same Manufacture year already exist.");
+                return;
+            }else{
+
+                $add_data = "INSERT INTO ag_vehicle(ag_vehicle_no, ag_vehicle_code, ag_brand_no, ag_vehicle_model_name, ag_vehicle_model_type, ag_vehicle_mg_year, ag_vehicle_cc, ag_vehicle_fuel, ag_vehicle_img, ag_vehicle_status, ag_vehicle_date)
+                VALUES (:ag_vehicle_no, :ag_vehicle_code, :ag_brand_no, :ag_vehicle_model_name, :ag_vehicle_model_type, :ag_vehicle_mg_year, :ag_vehicle_cc, :ag_vehicle_fuel, :ag_vehicle_img, :ag_vehicle_status, :ag_vehicle_date)";
+                $data_add = $con->prepare($add_data, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                $data_add->bindParam(':ag_vehicle_no', $ag_vehicle_no);
+                $data_add->bindParam(':ag_vehicle_code', $ag_vehicle_code);
+                $data_add->bindParam(':ag_brand_no', $ag_brand_no);
+                $data_add->bindParam(':ag_vehicle_model_name', $ag_vehicle_model_name);
+                $data_add->bindParam(':ag_vehicle_model_type', $ag_vehicle_model_type);
+                $data_add->bindParam(':ag_vehicle_mg_year', $ag_vehicle_mg_year);
+                $data_add->bindParam(':ag_vehicle_cc', $ag_vehicle_cc);
+                $data_add->bindParam(':ag_vehicle_fuel', $ag_vehicle_fuel);
+                $data_add->bindParam(':ag_vehicle_img', $invimg);
+                $data_add->bindParam(':ag_vehicle_status', $ag_vehicle_status);
+                $data_add->bindParam(':ag_vehicle_date', $ag_vehicle_date);
+        
+                if ($data_add->execute()) {
+                    $path = "../images/vehicle/$invimg";
+                    move_uploaded_file($ag_vehicle_img, $path);
+                    $msg .= "Data Added Successfully for model: $ag_vehicle_model_name\n";
+                } else {
+                    $msg .= "Failed to add data for model: $ag_vehicle_model_name\n";
+                }
+            }
+        }
+    
+        echo json_encode($msg);
+    }
     if(isset($_POST['get_parts'])){
         $by_name=check_data($_POST['by_name']);
         //$part_get=$con->prepare("select p.*,bn.ag_brand_name,vh.ag_vehicle_model_name from ag_part p inner join ag_brand bn on p.ag_brand_no=bn.ag_brand_no inner join ag_vehicle vh on vh.ag_vehicle_no=p.ag_vehicle_no where p.ag_part_name like '%$by_name%'");
