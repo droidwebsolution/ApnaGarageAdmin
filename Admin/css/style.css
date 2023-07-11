@@ -129,7 +129,7 @@ header ul li a{color:#fff;}
 
 #update_admin{width:500px; margin: auto; margin-top: 20px;}
 
-.pos_left{width:64%; float: left; padding: 20px 1%; box-sizing: border-box; position: relative}
+.pos_left{width:34%; float: left; padding: 20px 1%; box-sizing: border-box; position: relative}
 .pos_right{width:36%; float: right;}
 .pos_left, .pos_right{height: 90vh; overflow: auto; background: #17202A; border-radius: 10px;}
 .pos_filter{height:auto; width:98%; margin:0px 1%; border-radius: 10px;}
@@ -137,7 +137,7 @@ header ul li a{color:#fff;}
 .pos_filter_input{width:auto; background: rgb(0,0,0,0.4); height:45px; color:#fff; border-radius: 10px; margin-left: 10px; outline: none; border:none; padding: 0px 10px; box-sizing: border-box}
 .pos_left .c_table thead tr th{background:#283747;}
 
-.pos_right{width: 35%; margin-left:1%; padding: 10px; box-sizing: border-box; overflow: hidden}
+.pos_right{width: 65%; margin-left:1%; padding: 10px; box-sizing: border-box; overflow: hidden}
 .pop_left{width:50% !important}
 .pop_right{width:49% !important}
 #print_img{display: block; margin: auto; height: 80px; width: 80px}

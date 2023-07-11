@@ -51,12 +51,12 @@
                     <span class="item">All City</span>
                 </a>
             </li>
-            <!-- <li>
+            <li>
                 <a href="po_create.php">
                     <span class="icon"><i class="fa-solid fa-person"></i></span>
                     <span class="item">Create PO</span>
                 </a>
-            </li> -->
+            </li>
             <li>
                 <a href="#">
                     <span class="icon"><i class="fa-solid fa-person"></i></span>

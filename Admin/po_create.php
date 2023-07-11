@@ -28,6 +28,10 @@
         <div id='container'>
             <div class='search_filter'>
                 <input type='text' class='search_input pos_search' placeholder='Search By Vehicle Name' />
+					<select name='retailer' class='retailer'>
+						<option value="">Select Retailer</option>
+						<?php echo get_retailer(); ?>
+					</select>
             </div>
             <div class='pos_left'>
                 <div class='table_container'>

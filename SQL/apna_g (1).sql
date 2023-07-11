@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 08, 2023 at 03:08 PM
+-- Generation Time: Jul 11, 2023 at 12:31 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `ag_brand` (
   `ag_brand_img` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'l=100',
   `ag_brand_status` int NOT NULL COMMENT '1=Active\r\n2=In Active',
   PRIMARY KEY (`ag_brand_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_brand`
@@ -68,7 +68,10 @@ INSERT INTO `ag_brand` (`ag_brand_id`, `ag_brand_no`, `ag_brand_code`, `ag_brand
 (1, 1508640779, 'ag_01', 'Honda', 'Bike', '2023-07-03-1735622875.png', 1),
 (2, 1441387750, 'ag_02', 'TVS', 'Bike', '2023-07-03-1963712477.png', 1),
 (22, 630676143, 'AG_4', 'Bajaj', 'Bike', '2023-07-06-1547431257.png', 2),
-(17, 385965455, 'AG_3', 'Bajaj1', 'Bike', '2023-07-03-327665657.png', 1);
+(17, 385965455, 'AG_3', 'Bajaj1', 'Bike', '2023-07-03-327665657.png', 1),
+(26, 1769269604, 'AG_5', 'sdgfgfdg', 'Bike', '2023-07-10-1397982160.png', 1),
+(27, 2081912260, 'AG_6', 'Bajajddsfs', 'Bike', '2023-07-10-476109186.png', 1),
+(28, 1085779345, 'AG_7', 'Honda city', 'Bike', '2023-07-11-1752959018.png', 1);
 
 -- --------------------------------------------------------
 
@@ -122,8 +125,43 @@ CREATE TABLE IF NOT EXISTS `ag_part` (
 --
 
 INSERT INTO `ag_part` (`ag_part_id`, `ag_part_no`, `ag_part_code`, `ag_brand_no`, `ag_vehicle_no`, `ag_part_name`, `ag_part_hsn`, `ag_part_cat`, `ag_part_img`, `ag_part_status`, `ag_part_date`) VALUES
-(14, 1687722590, 'AGP_01', 1441387750, 306479930, 'ewrwer', 'tytyty', 'Oil', '2023-07-06-979878611.png', 2, '2023-07-06'),
-(15, 510293075, 'AGP_2', 385965455, 770299755, 'dassad', 'dsadsad', 'Accessories', '2023-07-06-800382390.png', 1, '2023-07-06');
+(14, 1687722590, 'AGP_01', 1441387750, 1700026017, 'Foot Rest', 'tytyty', 'Oil', '2023-07-06-979878611.png', 2, '2023-07-06'),
+(15, 510293075, 'AGP_2', 385965455, 1700026017, 'Front break', 'dsadsad', 'Accessories', '2023-07-06-800382390.png', 1, '2023-07-06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ag_po_cart`
+--
+
+DROP TABLE IF EXISTS `ag_po_cart`;
+CREATE TABLE IF NOT EXISTS `ag_po_cart` (
+  `ag_po_cart_id` int NOT NULL AUTO_INCREMENT,
+  `ag_retailer_no` int NOT NULL,
+  `ag_po_invoice_no` int NOT NULL,
+  `ag_po_part_no` int NOT NULL,
+  `ag_vehicle_no` int NOT NULL,
+  `ag_vehicle_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `ag_po_qty` int NOT NULL,
+  `ag_po_price` decimal(10,2) NOT NULL,
+  `ag_po_date` date NOT NULL,
+  `ag_po_status` int NOT NULL COMMENT '1=active\r\n2=inactive',
+  PRIMARY KEY (`ag_po_cart_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ag_po_cart`
+--
+
+INSERT INTO `ag_po_cart` (`ag_po_cart_id`, `ag_retailer_no`, `ag_po_invoice_no`, `ag_po_part_no`, `ag_vehicle_no`, `ag_vehicle_name`, `ag_po_qty`, `ag_po_price`, `ag_po_date`, `ag_po_status`) VALUES
+(11, 0, 1262612359, 0, 770299755, 'Splendar', 4, '100.00', '2023-07-09', 0),
+(14, 0, 1262612359, 0, 1700026017, 'Activa', 2, '100.00', '2023-07-09', 0),
+(10, 0, 1262612359, 0, 1648172998, 'Activa', 7, '100.00', '2023-07-09', 0),
+(16, 0, 1262612359, 0, 306479930, 'Splendar', 1, '100.00', '2023-07-09', 0),
+(15, 0, 1262612359, 0, 473597468, 'Activa', 1, '100.00', '2023-07-09', 0),
+(17, 0, 1262612359, 0, 32043944, 'Activa', 1, '100.00', '2023-07-09', 0),
+(18, 0, 1262612359, 0, 1176080786, 'B', 1, '100.00', '2023-07-11', 0),
+(19, 0, 1262612359, 0, 1171453103, 'Activa', 1, '100.00', '2023-07-11', 0);
 
 -- --------------------------------------------------------
 
@@ -211,19 +249,24 @@ CREATE TABLE IF NOT EXISTS `ag_vehicle` (
   `ag_vehicle_status` int NOT NULL COMMENT '1=active\r\n2=inactive',
   `ag_vehicle_date` date NOT NULL,
   PRIMARY KEY (`ag_vehicle_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=159 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ag_vehicle`
 --
 
 INSERT INTO `ag_vehicle` (`ag_vehicle_id`, `ag_vehicle_code`, `ag_vehicle_no`, `ag_brand_no`, `ag_vehicle_model_name`, `ag_vehicle_model_type`, `ag_vehicle_mg_year`, `ag_vehicle_cc`, `ag_vehicle_fuel`, `ag_vehicle_img`, `ag_vehicle_status`, `ag_vehicle_date`) VALUES
-(24, '0', 32043944, 630676143, 'Activa', 'Scooter', 2012, '169', 'Electric', '2023-07-06-266920701.png', 1, '2023-07-06'),
-(25, '0', 306479930, 1441387750, 'Splendar', 'Bike', 2012, '124', 'Diesel', '2023-07-06-563766608.png', 1, '2023-07-06'),
-(26, '0', 1648172998, 1441387750, 'Activa', 'Bike', 2012, '169', 'Diesel', '2023-07-06-825091225.png', 1, '2023-07-06'),
-(27, '0', 473597468, 1441387750, 'Activa', 'Bike', 2012, '169', 'Diesel', '2023-07-06-1861554998.png', 1, '2023-07-06'),
-(28, '0', 770299755, 385965455, 'Splendar', 'Scooter', 2005, '169', 'Diesel', '2023-07-06-861047422.png', 1, '2023-07-06'),
-(29, 'AGV_1', 1700026017, 1508640779, 'Activa', 'Scooter', 2012, '169', 'Petrol', '2023-07-06-1290059301.png', 1, '2023-07-06');
+(29, 'AGV_01', 1700026017, 1508640779, 'Activa', 'Scooter', 2012, '169', 'Petrol', '2023-07-06-1290059301.png', 1, '2023-07-06'),
+(30, 'AGV_02', 1171453103, 1508640779, 'Activa', 'Scooter', 2010, '150', 'Diesel', '2023-07-10-1826550690.png', 1, '2023-07-10'),
+(158, 'AGV_01', 193825068, 630676143, 'C', 'Scooter', 2023, '160', 'Petrol', '2023-07-11-756992506.png', 1, '2023-07-11'),
+(157, 'AGV_01', 1176080786, 630676143, 'B', 'Scooter', 2013, '150', 'Petrol', '2023-07-11-941764334.png', 1, '2023-07-11'),
+(156, 'AGV_01', 1786629320, 630676143, 'A', 'Scooter', 2012, '34', 'Petrol', '2023-07-11-163996481.png', 1, '2023-07-11'),
+(155, 'AGV_06', 550893339, 1441387750, 'ex3', 'Scooter', 2023, '160', 'Petrol', '2023-07-11-1623506901.png', 1, '2023-07-11'),
+(154, 'AGV_05', 1050315894, 1441387750, 'ex1', 'Scooter', 2012, '34', 'Petrol', '2023-07-11-177353981.png', 1, '2023-07-11'),
+(153, 'AGV_04', 836174151, 1441387750, 'ex2', 'Scooter', 2013, '150', 'Petrol', '2023-07-11-1734376328.png', 1, '2023-07-11'),
+(152, 'AGV_03', 1062940961, 1441387750, 'model3', 'Scooter', 2023, '160', 'Petrol', '2023-07-11-1626124827.png', 1, '2023-07-11'),
+(151, 'AGV_03', 963161555, 1441387750, 'model2', 'Scooter', 2013, '150', 'Petrol', '2023-07-11-203198660.png', 1, '2023-07-11'),
+(150, 'AGV_03', 692048720, 1441387750, 'model1', 'Scooter', 2012, '34', 'Petrol', '2023-07-11-2133146271.png', 1, '2023-07-11');
 
 -- --------------------------------------------------------
 

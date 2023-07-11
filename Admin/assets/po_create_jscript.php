@@ -108,7 +108,11 @@
                             <th>Vehicle Name</th>
                             <th>Part Name</th>
                             <th>Part Qty</th>
-                            <th>Part Price</th>
+                            <th>Alert Qty</th>
+                            <th>Purchase Price</th>
+                            <th>Sell Price</th>
+                            <th>Discount</th>
+                            <th>Tax</th>
                             <th>Subtotal</th>
                         </tr>
                     </thead>
@@ -134,13 +138,17 @@
                             echo"</select>
                         </td>
                         <td><input style='width:100px' class='pos_qty' type='number' step='.01' value='".$rwsl['ag_po_qty']."' data-pos-qty='".encrypt_decrypt('encrypt', $rwsl['ag_po_cart_id'])."' title='Item Quantity' /></td>
+                        <td><input style='width:100px' class='pos_qty' type='number' title='Alert Quantity' /></td>
                         <td><input style='width:100px' type='text' class='pos_price' value='".number_format($rwsl['ag_po_price'],2)."' data-pos-price='".encrypt_decrypt('encrypt', $rwsl['ag_po_cart_id'])."' title='Item Price' /></td>
+                        <td><input style='width:100px' type='text' class='pos_discount' title='Sell Price' /></td>
+                        <td><input style='width:100px' type='text' class='pos_discount' title='Item Discount' /></td>
+                        <td><input style='width:100px' type='text' class='pos_tax' title='Item Tax' /></td>
                         <td style='text-align:right; border-right:1px solid #000 !important'>".number_format($subtotal,2)."</td>
                     </tr>";
                 $stotal+=$subtotal;
             endwhile;
             echo"<tr>
-                    <td colspan='6' style='text-align:right'>
+                        <td colspan='6' style='text-align:right'><br />
                         Basic Total: ".number_format($stotal,2)."<br /><br />
                         Gross Total: <span id='grand_total'>".number_format($stotal,2)."</span><br />
                     </td>

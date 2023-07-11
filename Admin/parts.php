@@ -104,7 +104,7 @@
                     </div>
                 </details>
                 <details class='details_open' style='display:inline-block'>
-                    <summary class='pop_up_open pop_up_summary'><i class="fa-solid fa-circle-plus"></i> Add Brand</summary>
+                    <summary class='pop_up_open pop_up_summary' style='background:rgb(0,0,0,0.5)' ><i class="fa-solid fa-circle-plus"></i> Add Brand</summary>
                     <div class='pop_up'>
                         <form class='form small_width_form' id='add_brand'>
                             <h2>Add Brand <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
@@ -148,7 +148,7 @@
                     </div>
                 </details>
                 <details class='details_open' style='display:inline-block'>
-                    <summary class='pop_up_open pop_up_summary refresh_add' onclick="get_vehicle_part()"><i class="fa-solid fa-circle-plus"></i> Add Vehicle</summary>
+                    <summary class='pop_up_open pop_up_summary refresh_add' style='background:rgb(0,0,0,0.5)' onclick="get_vehicle_part()"><i class="fa-solid fa-circle-plus"></i> Add Vehicle</summary>
                     <div class='pop_up'>
                         <form class='form min_width_form' id='add_vehicle' enctype='multipart/form-data'>
                             <h2>Add Vehicle <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>

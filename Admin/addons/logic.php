@@ -75,6 +75,16 @@
             echo"<option value='".$rw_vehicle['ag_vehicle_no']."'>".$rw_vehicle['ag_vehicle_model_name']."</option>";
         endwhile;
     }
+    function get_retailer(){
+        global $con;
+        $get_retailer="select * from ag_retailer";
+        $retailer_get=$con->prepare($get_retailer,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $retailer_get->setFetchMode(PDO::FETCH_ASSOC);
+        $retailer_get->execute();
+        while($rw_retailer=$retailer_get->fetch()):
+            echo"<option value='".$rw_retailer['ag_retailer_no']."'>".$rw_retailer['ag_retailer_company_name']."</option>";
+        endwhile;
+    }
     function login(){
 		global $con;
 		if(isset($_POST['user_login'])){
