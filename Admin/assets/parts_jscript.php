@@ -54,6 +54,60 @@
         }
         echo json_encode($msg);
     }
+    if(isset($_POST['brand_add'])){
+        $ag_brand_no=substr(mt_rand(),0,10);
+        $brand_get=$con->prepare("select * from ag_brand order by 1 desc limit 1");
+        $brand_get->setFetchMode(PDO::FETCH_ASSOC);
+        $brand_get->execute();
+        $count_brand=$brand_get->rowCount();
+        if($count_brand == 0){
+            $ag_brand_code="AG_01";
+        }else{
+            $rw_brand=$brand_get->fetch();
+            $code=$rw_brand['ag_brand_code'];
+            $ex=explode('_',$code);
+            $ag_brand_code="AG_".($ex[1]+1);
+        }
+        $ag_brand_name=check_data($_POST['brand_name']);
+        $ag_brand_category=check_data($_POST['brand_category']);
+        $ag_brand_img=$_FILES['brand_img']['tmp_name'];
+        $ag_brand_status=$_POST['brand_Status'];
+        if($ag_brand_status == "Active"){
+            $ag_brand_status=1;
+        }else{
+            $ag_brand_status=2;
+        }
+
+        $brand_get=$con->prepare("select * from ag_brand where ag_brand_name=:ag_brand_name");
+        $brand_get->bindParam(':ag_brand_name',$ag_brand_name);
+        $brand_get->setFetchMode(PDO::FETCH_ASSOC);
+        $brand_get->execute();
+        $count_brand=$brand_get->rowCount();
+        if($count_brand == 1){
+            $msg="Brand Name Already Exist!!";
+            echo json_encode($msg);
+        }else{
+            $invimg=date('Y-m-d')."-".substr(mt_rand(),0,10).".png";     
+            $add_data="insert into ag_brand(ag_brand_no,ag_brand_code,ag_brand_name,ag_brand_category,ag_brand_img,ag_brand_status)
+            values(:ag_brand_no,:ag_brand_code,:ag_brand_name,:ag_brand_category,:ag_brand_img,:ag_brand_status)";
+            $data_add=$con->prepare($add_data,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $data_add->bindParam(':ag_brand_no',$ag_brand_no);
+            $data_add->bindParam(':ag_brand_code',$ag_brand_code);
+            $data_add->bindParam(':ag_brand_name',$ag_brand_name);
+            $data_add->bindParam(':ag_brand_category',$ag_brand_category);
+            $data_add->bindParam(':ag_brand_img',$invimg);
+            $data_add->bindParam(':ag_brand_status',$ag_brand_status);
+            
+            if($data_add->execute()){
+                $path="../images/brand/$invimg";
+                move_uploaded_file($_FILES['brand_img']['tmp_name'],$path);
+                $msg="Data Added Successfully";
+            }else{
+                $msg="Something Wrong!!";
+            }
+            echo json_encode($msg);
+        }
+    }
     if(isset($_POST['get_parts'])){
         $by_name=check_data($_POST['by_name']);
         //$part_get=$con->prepare("select p.*,bn.ag_brand_name,vh.ag_vehicle_model_name from ag_part p inner join ag_brand bn on p.ag_brand_no=bn.ag_brand_no inner join ag_vehicle vh on vh.ag_vehicle_no=p.ag_vehicle_no where p.ag_part_name like '%$by_name%'");
@@ -120,7 +174,7 @@
                     </div>
                 </div>
                 <div class='input_container'>
-                    <p>Select Brand</p>
+                    <p>Select Model</p>
                     <div class='input'>
                         <i class='fa-sharp fa-regular fa-motorcycle'></i>
                         <select name='part_vehicle'>
@@ -280,7 +334,15 @@
         $vehicle_get->bindParam(':ag_brand_no',$ag_brand_no);
         $vehicle_get->execute();
         while($rw_vehicle=$vehicle_get->fetch()):
-            echo"<option value='".$rw_vehicle['ag_vehicle_no']."'>".$rw_vehicle['ag_vehicle_model_name']."</option>";
+            echo"<option value='".$rw_vehicle['ag_vehicle_no']."'>".$rw_vehicle['ag_vehicle_model_name']." (".$rw_vehicle['ag_vehicle_mg_year'].")</option>";
         endwhile;
+    }
+    if(isset($_POST['refresh_brand'])){
+        echo"<option value=''>Select Brand</option>";
+        echo get_brand();
+    }
+    if(isset($_POST['refresh_model'])){
+        echo"<option value=''>Select model</option>";
+        echo get_vehicle();
     }
 ?>

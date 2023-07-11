@@ -105,7 +105,7 @@
             data:new FormData(this),
             success:function(data){
                 alert(data);
-                $('.details_open').removeAttr("open");
+                //$('.details_open').removeAttr("open");
                 $('.add_city').removeAttr('disabled');
                 $('.form').find('input').val('');
                 get_city();

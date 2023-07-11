@@ -49,7 +49,7 @@ header ul {float: right;}
 header ul li{width:100px; height:40px; line-height: 40px; float: left; margin:10px 0px; text-align: center;}
 header ul li a{color:#fff;}
 
-#container{transition: all 0.3s; height: 100vh; padding:80px 20px 20px 20px;}
+#container{transition: all 0.3s; height: 100vh; padding:80px 20px 20px 20px; background: #fff;}
 
 .search_filter{background:#fff; height: 40px; border-radius: 7px; padding: 0px 5px;}
 .search_filter .pop_up_summary{text-align: center; font-size: 13px; width:120px; font-weight: 600;}
@@ -126,3 +126,43 @@ header ul li a{color:#fff;}
 .trend_dish h5{font-size: 14px;margin:  20px 10px 2px 5px;float:left;}
 .trend_dish p{font-size: 14px;margin:  10px 10px 2px 70px;width:20%}
 .trend_dish ul li{float: left; width:50%}
+
+#update_admin{width:500px; margin: auto; margin-top: 20px;}
+
+.pos_left{width:64%; float: left; padding: 20px 1%; box-sizing: border-box; position: relative}
+.pos_right{width:36%; float: right;}
+.pos_left, .pos_right{height: 90vh; overflow: auto; background: #17202A; border-radius: 10px;}
+.pos_filter{height:auto; width:98%; margin:0px 1%; border-radius: 10px;}
+.pos_filter .pop_up p{text-align: left}
+.pos_filter_input{width:auto; background: rgb(0,0,0,0.4); height:45px; color:#fff; border-radius: 10px; margin-left: 10px; outline: none; border:none; padding: 0px 10px; box-sizing: border-box}
+.pos_left .c_table thead tr th{background:#283747;}
+
+.pos_right{width: 35%; margin-left:1%; padding: 10px; box-sizing: border-box; overflow: hidden}
+.pop_left{width:50% !important}
+.pop_right{width:49% !important}
+#print_img{display: block; margin: auto; height: 80px; width: 80px}
+#bill_header{padding-bottom: 15px; box-sizing: border-box; border-bottom: 1px dashed rgb(255,255,255,0.1); display: none}
+#bill_header h5{color:#fff; margin-bottom: 5px; text-align: center}
+#bill_header p{font-size: 12px; margin: 10px 0px; text-align: center}
+
+#bill_header_left{float: left; width:50%;}
+#bill_header_right{float: right; width:50%;}
+#bill_header_left p{text-align:left}
+#bill_header_right p{text-align:right}
+
+#bill_body{width:100%; box-sizing: border-box;}
+#bill_body > .table_container{height: 66vh; background:/*rgb(0,0,0,.4)*/#283747; border-radius: 10px; margin-top: 0px}
+#bill_body select{width:50%; height: 35px; border-radius: 30px; margin: 10px; outline: none; border:none; background:#2a2e32; color:#fff; padding: 0px 10px; box-sizing: border-box}
+#bill_body table{border-collapse:collapse; width: 100%;}
+#bill_body table tr th{white-space: nowrap; color:#17202a; position: sticky; background: #fff; font-size: 14px; top:0px; z-index: 1; height: 50px; list-style: none;}
+#bill_body table thead tr th, #bill_body table tbody tr td{text-align: center; padding: 0px 10px; box-sizing: border-box}
+#bill_body table tbody tr:nth-child(2n+2){border-bottom: 1px solid rgb(255,255,255,0.1);}
+#bill_body table tbody tr:last-child{border-bottom: 1px solid rgb(255,255,255,0.1);}
+#bill_body table tbody tr td{padding:10px; width:auto; color:#fff; background:#283747; font-size: 14px;}
+#bill_body table tbody tr td input{width:50px; height: 25px; outline: none; text-align: center}
+#discount{margin: 0px 0px 10px 0px; border:none;}
+#bill_body input[type=number]::-webkit-inner-spin-button {-webkit-appearance: none;}
+#bill_body input[type=number]{appearance: textfield;}
+
+#bill_footer{width:100%; height: 10vh;}
+#bill_footer button{font-weight:800; border-radius: 10px; border:none; width:150px; height:40px; box-sizing: border-box; color:#000; text-transform: uppercase; cursor: pointer; background:#fff; margin-top:20px;}

@@ -28,7 +28,7 @@
         <div id='container'>
             <div class='search_filter'>
                 <details class='details_open' style='display:inline-block'>
-                    <summary class='pop_up_open pop_up_summary' onclick="get_vehicle_part()"><i class="fa-solid fa-circle-plus"></i> Add New</summary>
+                    <summary class='pop_up_open pop_up_summary refresh_add' onclick="get_vehicle_part()"><i class="fa-solid fa-circle-plus"></i> Add New</summary>
                     <div class='pop_up'>
                         <form class='form min_width_form' id='add_vehicle' enctype='multipart/form-data'>
                             <h2>Add Vehicle <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
@@ -37,10 +37,7 @@
                                     <p>Select Brand</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-copyright"></i>
-                                        <select name='vehicle_brand' required>
-                                            <option value="">Select Brand</option>
-                                            <?php echo get_brand(); ?>
-                                        </select>
+                                        <select name='vehicle_brand' required class="refresh_brand"></select>
                                     </div>
                                 </div>
                                 <div class='input_container'>
@@ -49,7 +46,11 @@
                                         <i class="fa-solid fa-t"></i>
                                         <select name='model_type' required>
                                             <option value="Scooter">Scooter</option>
-                                            <option value="Bike">Bike</option>
+                                            <option value="Motorcycle">Motorcycle</option>
+                                            <option value="Street Bike">Street Bike</option>
+                                            <option value="Cruisers">Cruisers</option>
+                                            <option value="Adventure Tourers">Adventure Tourers</option>
+                                            <option value="Dirt Bike">Dirt Bike</option>
                                         </select>
                                     </div>
                                 </div>
@@ -132,7 +133,51 @@
                         </form>
                     </div>
                 </details>
-                <input type='text' class='search_input by_name' onkeyup='get_vehicle()' placeholder='Search By Name and code' />
+                <details class='details_open' style='display:inline-block'>
+                    <summary class='pop_up_open pop_up_summary'><i class="fa-solid fa-circle-plus"></i> Add Brand</summary>
+                    <div class='pop_up'>
+                        <form class='form small_width_form' id='add_brand'>
+                            <h2>Add Brand <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                            <div class='form_container'>
+                                
+                                <p>Enter Brand Name</p>
+                                <div class='input'>
+                                    <i class="fa-solid fa-copyright"></i>
+                                    <input type='text' name='brand_name' placeholder='* Enter Brand Name' title='Enter Brand Name' required/>
+                                </div>
+                                <input type='hidden' name='brand_add' /> 
+                                <p>Selct Category</p>
+                                <div class='input'>
+                                    <i class="fa-solid fa-list"></i>
+                                    <select name='brand_category'>
+                                        <option value='Bike'>Bike</option>
+                                        <!-- <option value='Car'>Car</option>
+                                        <option value='Auto Rikshaw'>Auto Rikshaw</option> -->
+                                    </select>
+                                </div>
+                                <p>Select Image</p>
+                                <div class='input'>
+                                    <i class="fa-solid fa-image"></i>
+                                    <input type='file' name='brand_img' required>
+                                </div>
+                                <p>Select Status</p>
+                                <div class='input'>
+                                    <i class="fa-sharp fa-solid fa-battery-full"></i>
+                                    <select name='brand_Status'>
+                                        <option value='Active'>Active</option>
+                                        <option value='In Active'>In Active</option>
+                                    </select>
+                                </div>
+                                <center>
+                                    <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
+                                    <button class='pop_up_submit add_brand' type='submit' name='add_brand'><i class='fa-solid fa-save'></i> Save</button>
+                                    <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
+                                </center>
+                            </div>
+                        </form>
+                    </div>
+                </details>
+                <input type='text' class='search_input by_name' onkeyup='get_vehicle()' placeholder='Search By Any Column' />
             </div>
             <div class='table_container'>
                 <table class='item_table' cellspacing='0'>
@@ -172,7 +217,7 @@
             }
         });
     }
-    $(document).on('submit','#add_vehicle',function(e){
+    $(document).on('submit','#add_brand',function(e){
         e.preventDefault();
         $.ajax({
             url:'assets/vehicle_jscript.php',
@@ -182,19 +227,84 @@
             processData:false,
             dataType:'json',
             beforeSend:function(){
-                $('.add_vehicle').attr('disabled','disabled');
+                $('.add_brand').attr('disabled','disabled');
             },
             data:new FormData(this),
             success:function(data){
                 alert(data);
-                $('.details_open').removeAttr("open");
-                $('.add_vehicle').removeAttr('disabled');
+              //  $('.details_open').removeAttr("open");
+                $('.add_brand').removeAttr('disabled');
                 $('.form').find('input').val('');
-                get_vehicle();
+                get_brand();
             }
         });
     });
+    $(document).ready(function() {
+        $(document).on('submit', '#add_vehicle', function(e) {
+            e.preventDefault();
 
+            // Get the values entered in the model_name and mg_yr and CC inputs
+            var modelNames = $('[name="model_name"]').val().split(',');
+            var manufactureYears = $('[name="mg_yr"]').val().split(',');
+            var ccs = $('[name="vh_cc"]').val().split(',');
+
+            // Check if the number of model names and manufacture years match
+            if (modelNames.length !== manufactureYears.length || modelNames.length !== ccs.length  ) {
+            alert("The number of model names and manufacture years should be the same.");
+            return;
+            }
+
+            // Create an array to hold the promises for each entry
+            var promises = [];
+
+            // Iterate over the model names and manufacture years arrays
+            for (var i = 0; i < modelNames.length; i++) {
+            var modelName = modelNames[i].trim();
+            var manufactureYear = manufactureYears[i].trim();
+            var cc = ccs[i].trim();
+
+            // Create a promise for each entry
+            var promise = addVehicleEntry(modelName, manufactureYear, cc);
+            promises.push(promise);
+            }
+
+            // Execute all promises
+            Promise.all(promises)
+            .then(function() {
+                alert("Data Added Successfully.");
+                $('.form').find('input').val('');
+                get_vehicle();
+            })
+            .catch(function(error) {
+                alert("Failed to add data: " + error);
+            });
+        });
+   
+        function addVehicleEntry(modelName, manufactureYear,cc) {
+            return new Promise(function(resolve, reject) {
+            var formData = new FormData($('#add_vehicle')[0]);
+            formData.append('model_name', modelName);
+            formData.append('mg_yr', manufactureYear);
+            formData.append('vh_cc', cc);
+
+            $.ajax({
+                url: 'assets/vehicle_jscript.php',
+                method: 'post',
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                data: formData,
+                success: function(data) {
+                resolve();
+                },
+                error: function(xhr, textStatus, error) {
+                reject(error);
+                }
+            });
+        });
+        }
+    });
     $(document).on('click','.up_open',function(){
         var vehicle_open_table=$(this).attr("data-id");
         $.ajax({
@@ -249,6 +359,15 @@
             }
         });
     });
-
-    
+    $(document).on('click','.refresh_add',function(){
+        var refresh_brand="Refresh Brand"
+        $.ajax({
+            url:'assets/vehicle_jscript.php',
+            method:'post',
+            data:{refresh_brand:refresh_brand},
+            success:function(data){
+                $('.refresh_brand').html(data);
+            }
+        });
+    });
 </script>

@@ -13,11 +13,10 @@
             </li>
             <li>
                 <details><summary><span class="icon"><i class="fa-solid fa-copyright"></i></span>Company Details</summary>
-                
                     <li>
                         <a href="brand.php">
                             <span class="icon"><i class="fa-solid fa-copyright"></i></span>
-                            <span class="item">Company</span>
+                            <span class="item">Brand</span>
                         </a>
                     </li>
                     <li>
@@ -52,6 +51,12 @@
                     <span class="item">All City</span>
                 </a>
             </li>
+            <!-- <li>
+                <a href="po_create.php">
+                    <span class="icon"><i class="fa-solid fa-person"></i></span>
+                    <span class="item">Create PO</span>
+                </a>
+            </li> -->
             <li>
                 <a href="#">
                     <span class="icon"><i class="fa-solid fa-person"></i></span>

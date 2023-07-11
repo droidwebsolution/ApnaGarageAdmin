@@ -25,29 +25,40 @@
         }else{
             $ag_brand_status=2;
         }
-        $invimg=date('Y-m-d')."-".substr(mt_rand(),0,10).".png";     
-        $add_data="insert into ag_brand(ag_brand_no,ag_brand_code,ag_brand_name,ag_brand_category,ag_brand_img,ag_brand_status)
-        values(:ag_brand_no,:ag_brand_code,:ag_brand_name,:ag_brand_category,:ag_brand_img,:ag_brand_status)";
-        $data_add=$con->prepare($add_data,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-        $data_add->bindParam(':ag_brand_no',$ag_brand_no);
-        $data_add->bindParam(':ag_brand_code',$ag_brand_code);
-        $data_add->bindParam(':ag_brand_name',$ag_brand_name);
-        $data_add->bindParam(':ag_brand_category',$ag_brand_category);
-        $data_add->bindParam(':ag_brand_img',$invimg);
-        $data_add->bindParam(':ag_brand_status',$ag_brand_status);
-        
-        if($data_add->execute()){
-            $path="../images/brand/$invimg";
-            move_uploaded_file($_FILES['brand_img']['tmp_name'],$path);
-            $msg="Data Added Successfully";
+
+        $brand_get=$con->prepare("select * from ag_brand where ag_brand_name=:ag_brand_name");
+        $brand_get->bindParam(':ag_brand_name',$ag_brand_name);
+        $brand_get->setFetchMode(PDO::FETCH_ASSOC);
+        $brand_get->execute();
+        $count_brand=$brand_get->rowCount();
+        if($count_brand == 1){
+            $msg="Brand Name Already Exist!!";
+            echo json_encode($msg);
         }else{
-            $msg="Something Wrong!!";
+            $invimg=date('Y-m-d')."-".substr(mt_rand(),0,10).".png";     
+            $add_data="insert into ag_brand(ag_brand_no,ag_brand_code,ag_brand_name,ag_brand_category,ag_brand_img,ag_brand_status)
+            values(:ag_brand_no,:ag_brand_code,:ag_brand_name,:ag_brand_category,:ag_brand_img,:ag_brand_status)";
+            $data_add=$con->prepare($add_data,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $data_add->bindParam(':ag_brand_no',$ag_brand_no);
+            $data_add->bindParam(':ag_brand_code',$ag_brand_code);
+            $data_add->bindParam(':ag_brand_name',$ag_brand_name);
+            $data_add->bindParam(':ag_brand_category',$ag_brand_category);
+            $data_add->bindParam(':ag_brand_img',$invimg);
+            $data_add->bindParam(':ag_brand_status',$ag_brand_status);
+            
+            if($data_add->execute()){
+                $path="../images/brand/$invimg";
+                move_uploaded_file($_FILES['brand_img']['tmp_name'],$path);
+                $msg="Data Added Successfully";
+            }else{
+                $msg="Something Wrong!!";
+            }
+            echo json_encode($msg);
         }
-        echo json_encode($msg);
     }
     if(isset($_POST['get_brand'])){
         $by_name=check_data($_POST['by_name']);
-        $brand_get=$con->prepare("select * from ag_brand where ag_brand_name like'%$by_name%' || ag_brand_code like'%$by_name%'  order by 1 desc");
+        $brand_get=$con->prepare("select * from ag_brand where ag_brand_name like'%$by_name%' || ag_brand_code like'%$by_name%' || ag_brand_category like'%$by_name%'  order by 1 desc");
         $brand_get->setFetchMode(PDO::FETCH_ASSOC);
         $brand_get->execute();
         $count_brand=$brand_get->rowCount();
