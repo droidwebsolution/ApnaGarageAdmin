@@ -17,6 +17,7 @@ body{background: #dee4ec;}
     height:5px;
   }
 
+  
 .tost{position: fixed; top:80px; right: 20px; transition: right 0.3s; background: #253347; z-index: 5; padding: 10px; border-radius: 5px;}
 .tost p{font-size: 12px; color: #fff}
 
@@ -76,6 +77,7 @@ header ul li a{color:#fff;}
 .input input,.input select{font-size: 12px; width:100%; height: 100%; background:none; border:none; outline: none; padding:0px 10px 0px 50px;}
 .input input[type='file']{padding-top: 8px;}
 .input input[type='radio']{padding-top: 40px;}
+.input input[type='checkbox']{position: absolute; margin-left:-50px;top:-5px;width:5%}
 
 .pop_up_submit{width:100px; cursor: pointer; height: 35px; background: #ef7d19; font-weight: 700; border:none; outline: none; border-radius: 5px;}
 
@@ -166,3 +168,21 @@ header ul li a{color:#fff;}
 
 #bill_footer{width:100%; height: 10vh;}
 #bill_footer button{font-weight:800; border-radius: 10px; border:none; width:150px; height:40px; box-sizing: border-box; color:#000; text-transform: uppercase; cursor: pointer; background:#fff; margin-top:20px;}
+
+.tabs{user-select: none; display: flex; flex-wrap: wrap;}
+.tabs label{user-select: none; font-size: 12px; font-weight: 700; text-transform: uppercase; background: #e6e6e6; text-align: center; cursor: pointer; display: block; order: 1; width:135px; height: 35px; line-height: 35px; box-sizing: border-box; border-top:1px solid rgb(0,0,0,0.15); border-inline:1px solid rgb(0,0,0,0.15);}
+.tabs .content{display: none !important; order: 99; min-height: 500px; max-height: auto; flex-grow: 1; width:98%; padding-top: 20px; box-sizing: border-box; padding-bottom:20px; border:1px solid rgb(0,0,0,0.15);}
+.tabs input[type="radio"]{display: none}
+.tabs input[type="radio"]:checked + label{background:#fff;}
+.tabs input[type="radio"]:checked + label + .content{display: block !important}
+.content label{cursor: pointer; height:40px; width:150px; line-height: 40px; font-size:12px; background: #FFC300; font-weight: 800; border:none; outline:none; border-radius: 5px; display: inline-block}
+.content .pro_imgs li{width:22% !important; height: 150px !important}
+.content h3{padding:0px 20px 10px 20px; box-sizing: border-box; text-transform: uppercase; font-size: 18px}
+
+@media (max-width:600px){
+	.tabs .content, .tabs label{order: initial}
+	.tabs label{width:100%}
+}
+
+.checkbox input[type='checkbox']{position: absolute; margin-left:-50px;top:-5px;width:10%}
+.btn_group{font-size: 12px; width:100%; height: 100%; background:none; border:none; outline: none; padding:0px 10px 0px 50px;}

@@ -35,6 +35,7 @@
             echo"<option value='".$rw_brand['ag_brand_no']."'>".$rw_brand['ag_brand_name']."</option>";
         endwhile;
     }
+   
     function get_state(){
         global $con;
         $get_state="select * from ag_state";

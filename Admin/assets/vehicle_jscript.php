@@ -80,7 +80,6 @@
     
         echo json_encode($msg);
     }
-    
     if(isset($_POST['brand_add'])){
         $ag_brand_no=substr(mt_rand(),0,10);
         $brand_get=$con->prepare("select * from ag_brand order by 1 desc limit 1");
@@ -148,7 +147,7 @@
             while($rw_vehicle=$vehicle_get->fetch()):
                 $ag_vehicle_no=$rw_vehicle['ag_vehicle_no'];
 
-                $check_part="select * from ag_vehicle_parts where ag_vehicle_no=:ag_vehicle_no";
+                $check_part="select * from ag_vehicle where ag_vehicle_no=:ag_vehicle_no";
                 $part_check=$con->prepare($check_part);
                 $part_check->bindParam(':ag_vehicle_no',$ag_vehicle_no);
                 $part_check->setFetchMode(PDO::FETCH_ASSOC);
@@ -263,7 +262,7 @@
                 </div>
             </form>";
     }
-    if(isset($_POST['get_vehicle_part'])){
+    /*if(isset($_POST['get_vehicle_part'])){
         $ag_vehicle_no=0;
         $get_part="select vh.*,pt.ag_part_name from ag_vehicle_parts vh inner join ag_part pt on vh.ag_vehicle_part_no=pt.ag_part_no where vh.ag_vehicle_no=:ag_vehicle_no";
         $part_get=$con->prepare($get_part);
@@ -281,7 +280,7 @@
                     </tr>";
             endwhile;
         }
-    }
+    }*/
     if(isset($_POST['vehicle_part_add'])){
         $ag_vehicle_no=0;
         $ag_vehicle_part_no=encrypt_decrypt('decrypt',check_data($_POST['vehicle_part_add']));

@@ -58,9 +58,15 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="labour.php">
                     <span class="icon"><i class="fa-solid fa-person"></i></span>
                     <span class="item">Add Labour</span>
+                </a>
+            </li>
+            <li>
+                <a href="tabs.php">
+                    <span class="icon"><i class="fa-solid fa-person"></i></span>
+                    <span class="item">Add tabs</span>
                 </a>
             </li>
         </ul>

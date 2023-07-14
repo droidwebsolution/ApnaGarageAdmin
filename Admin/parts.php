@@ -16,7 +16,13 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     </head>
     <body>
         <?php
@@ -33,33 +39,46 @@
                         <form class='form min_width_form' id='add_part' enctype='multipart/form-data'>
                             <h2>Add Parts <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                             <div class='form_container'>
-                               
-                            <div class='input_container'>
+                                <div class='input_container'>
                                     <p>Select Brand</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-copyright"></i>
-                                        <select name='vehicle_brand' required class="refresh_brand"></select>
+                                        <select name='vehicle_brand[]' required class="refresh_brand" id="multiple-checkboxes" multiple="multiple">
+                                            <!-- <option value=''>Select Brand</option> -->
+                                            <?php  echo get_brand(); ?>
+                                        </select>
                                     </div>
                                 </div>
+                                <!-- <div class='input_container'>
+                                    <p>Select Brand</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-copyright"></i>
+                                        <select name='vehicle_brand' required class="refresh_brand">
+                                            <option value=''>Select Brand</option>
+                                            <?php echo get_brand(); ?>
+                                        </select>
+                                    </div>
+                                </div> -->
                                 <div class='input_container'>
                                     <p>Select Model</p>
                                     <div class='input'>
                                         <i class="fa-sharp fa-regular fa-motorcycle"></i>
-                                        <select name='vehicle_model' required class="refresh_model"></select>
+                                        <select name='vehicle_model[]' required class="refresh_model" multiple="multiple">
+                                             <?php get_vehicle(); ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class='input_container'>
                                     <p>Select Category</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-list"></i>
-                                        <select name='part_cat' required >
+                                        <select name='part_cat' required>
                                             <option value='Oil'>Oil</option>
                                             <option value='Spare'>Spare</option>
                                             <option value='Accessories'>Accessories</option>
                                         </select>
                                     </div>
                                 </div>
-                                
                                 <div class='input_container'>
                                     <p>Enter Part Name</p>
                                     <div class='input'>
@@ -67,13 +86,19 @@
                                         <input type='text' name='part_name' placeholder="Part Name eg.foot rest" required />
                                     </div>
                                 </div>
-                                
+                                <div class='input_container'>
+                                    <p>Enter Part Company Name</p>
+                                    <div class='input'>
+                                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                                        <input type='text' name='part_company_name' placeholder="Part Company Name" required />
+                                    </div>
+                                </div>
                                 <input type='hidden' name='part_add' />
                                 <div class='input_container'>
                                     <p>Enter HSN</p>
                                     <div class='input'>
                                         <i class="fa-brands fa-digital-ocean"></i>
-                                        <input type='text' name='part_hsn' placeholder="Only Digits Allowed" required/>
+                                        <input type='text' name='part_hsn' placeholder="Enter HSN number" required/>
                                     </div>
                                 </div>
                                 <div class='input_container'>
@@ -280,6 +305,37 @@
 </html>
 <script src='js/comman.js'></script>
 <script>
+    $(document).ready(function() {
+        $('#multiple-checkboxes').multiselect({
+          includeSelectAllOption: true,
+          nonSelectedText: 'Select Brand',
+          buttonClass:'<div class="input_container"></div>',
+          //buttonContainer: '<div class="input"></div>',
+          onChange: function(option, checked, select) {
+            // var selectedBrands = $('#multiple-checkboxes').val(); // Get the selected brand values
+            // refreshModel(selectedBrands); // Call the function to update the model select options
+            refreshModel(); 
+        }
+        });
+        $('.refresh_model').multiselect({
+        includeSelectAllOption: true,
+        nonSelectedText: 'Select Model',
+        buttonClass:'<div class="input_container"></div>',
+        buttonContainer: '<div class="input"></div>',
+  });
+    });
+    function refreshModel() {
+        var selectedBrands = $('#multiple-checkboxes').val(); // Get the selected brand values
+        $.ajax({
+            url: 'assets/parts_jscript.php',
+            method: 'post',
+            data: {selectedBrands: selectedBrands},
+            success: function(data) {
+            $('.refresh_model').html(data);
+            $('.refresh_model').multiselect('rebuild'); // Rebuild the model select dropdown
+            }
+        });
+        }
     get_parts();
     function get_parts() {
         var get_parts = "Get Parts";
@@ -310,7 +366,7 @@
                 alert(data);
                 //$('.details_open').removeAttr("open");
                 $('.add_part').removeAttr('disabled');
-                $('.form').find('input').val('');
+                $('#add_part').trigger("reset");
                 get_parts();
             }
         });
@@ -348,25 +404,47 @@
             }
         });
     });
-    $(document).on('change','.part_brand',function(){
+    $(document).on('change','.refresh_brand',function(){
         var change_brand=$(this).val();
         $.ajax({
             url:'assets/parts_jscript.php',
             method:'post',
             data:{change_brand:change_brand},
             success:function(data){
-                $('.part_model').html(data);
+                $('.refresh_model').html(data);
             }
         });
     }); 
-    $(document).on('click','.refresh_add',function(){
-        var refresh_brand="Refresh Brand"
+    $(document).on('click', '.refresh_add', function(){
+    var refresh_brand = "Refresh Brand";
+    $.ajax({
+        url: 'assets/parts_jscript.php',
+        method: 'post',
+        data: { refresh_brand: refresh_brand },
+        success: function(data){
+            $('.refresh_brand').html(data);
+        }
+        });
+    });
+    $(document).on('submit','#add_brand',function(e){
+        e.preventDefault();
         $.ajax({
             url:'assets/parts_jscript.php',
             method:'post',
-            data:{refresh_brand:refresh_brand},
+            cache:false,
+            contentType:false,
+            processData:false,
+            dataType:'json',
+            beforeSend:function(){
+                $('.add_brand').attr('disabled','disabled');
+            },
+            data:new FormData(this),
             success:function(data){
-                $('.refresh_brand').html(data);
+                alert(data);
+              //  $('.details_open').removeAttr("open");
+                // $('.add_brand').removeAttr('disabled');
+                // $('.form').find('input').val('');
+                window.open('parts.php','_self')
             }
         });
     });
@@ -380,5 +458,71 @@
                 $('.refresh_model').html(data);
             }
         });
+    });
+    $(document).ready(function() {
+        $(document).on('submit', '#add_vehicle', function(e) {
+            e.preventDefault();
+
+            // Get the values entered in the model_name and mg_yr and CC inputs
+            var modelNames = $('[name="model_name"]').val().split(',');
+            var manufactureYears = $('[name="mg_yr"]').val().split(',');
+            var ccs = $('[name="vh_cc"]').val().split(',');
+
+            // Check if the number of model names and manufacture years match
+            if (modelNames.length !== manufactureYears.length || modelNames.length !== ccs.length  ) {
+            alert("The number of model names and manufacture years should be the same.");
+            return;
+            }
+
+            // Create an array to hold the promises for each entry
+            var promises = [];
+
+            // Iterate over the model names and manufacture years arrays
+            for (var i = 0; i < modelNames.length; i++) {
+            var modelName = modelNames[i].trim();
+            var manufactureYear = manufactureYears[i].trim();
+            var cc = ccs[i].trim();
+
+            // Create a promise for each entry
+            var promise = addVehicleEntry(modelName, manufactureYear, cc);
+            promises.push(promise);
+            }
+
+            // Execute all promises
+            Promise.all(promises)
+            .then(function() {
+                alert("Data Added Successfully.");
+                $('.form').find('input').val('');
+                get_vehicle();
+            })
+            .catch(function(error) {
+                alert("Failed to add data: " + error);
+            });
+        });
+   
+        function addVehicleEntry(modelName, manufactureYear,cc) {
+            return new Promise(function(resolve, reject) {
+            var formData = new FormData($('#add_vehicle')[0]);
+            formData.append('model_name', modelName);
+            formData.append('mg_yr', manufactureYear);
+            formData.append('vh_cc', cc);
+
+            $.ajax({
+                url: 'assets/parts_jscript.php',
+                method: 'post',
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                data: formData,
+                success: function(data) {
+                resolve();
+                },
+                error: function(xhr, textStatus, error) {
+                reject(error);
+                }
+            });
+        });
+        }
     });
 </script>
