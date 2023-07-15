@@ -133,7 +133,7 @@
     
             // Get the ID of the inserted part
             $part_id = $con->lastInsertId();
-
+            $msg="$part_id";
             
             // Convert $ag_brand_nos to an array if it's a string
             if (is_string($ag_brand_nos)) {
@@ -146,7 +146,7 @@
             // Insert selected brands and models into the ag_part table
             foreach ($ag_brand_nos as $brand_id) {
                 foreach ($ag_vehicle_nos as $vehicle_id) {
-                    $insert_bridge = "INSERT INTO ag_part_repo(ag_part_id, ag_brand_no, ag_vehicle_no, ag_part_company,ag_part_name) 
+                    $insert_bridge = "INSERT INTO ag_part_repo(ag_part_id,ag_brand_no,ag_vehicle_no,ag_part_company,ag_part_name) 
                                       VALUES(:ag_part_id, :ag_brand_no, :ag_vehicle_no, :ag_part_company, :ag_part_name)";
                     $data_bridge = $con->prepare($insert_bridge, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
                     $data_bridge->bindParam(':ag_part_id', $part_id);
@@ -154,7 +154,6 @@
                     $data_bridge->bindParam(':ag_vehicle_no', $vehicle_id);
                     $data_bridge->bindParam(':ag_part_company', $ag_part_company);
                     $data_bridge->bindParam(':ag_part_name', $ag_part_name);
-                    
                     $data_bridge->execute();
                 }
             }
@@ -301,8 +300,8 @@
     }
     if(isset($_POST['get_parts'])){
         $by_name=check_data($_POST['by_name']);
-        //$part_get=$con->prepare("select p.*,bn.ag_brand_name,vh.ag_vehicle_model_name from ag_part p inner join ag_brand bn on p.ag_brand_no=bn.ag_brand_no inner join ag_vehicle vh on vh.ag_vehicle_no=p.ag_vehicle_no where p.ag_part_name like '%$by_name%'");
-        $part_get=$con->prepare("select pt.*,vh.ag_vehicle_model_name,bn.ag_brand_name from ag_part pt left join ag_vehicle vh on pt.ag_vehicle_no=vh.ag_vehicle_no left join ag_brand bn on bn.ag_brand_no=pt.ag_brand_no where ag_part_code like'%$by_name%' || ag_part_name like'%$by_name%' || ag_brand_name like'%$by_name%' || ag_vehicle_model_name like'%$by_name%' || ag_part_cat like'%$by_name%'");
+        //$part_get=$con->prepare("select pt.*,vh.ag_vehicle_model_name,bn.ag_brand_name from ag_part pt left join ag_vehicle vh on pt.ag_vehicle_no=vh.ag_vehicle_no left join ag_brand bn on bn.ag_brand_no=pt.ag_brand_no where ag_part_code like'%$by_name%' || ag_part_name like'%$by_name%' || ag_brand_name like'%$by_name%' || ag_vehicle_model_name like'%$by_name%' || ag_part_cat like'%$by_name%'");
+        $part_get=$con->prepare("select * from ag_part where ag_part_code like'%$by_name%' || ag_part_name like'%$by_name%' || ag_part_cat like'%$by_name%'");
         $part_get->setFetchMode(PDO::FETCH_ASSOC);
         $part_get->execute();
         $count_part=$part_get->rowCount();
@@ -311,11 +310,60 @@
         }else{
             $i=1;
             while($rw_part=$part_get->fetch()):
+                $part_id=$rw_part['ag_part_id'];
+
+                $get_repo="select * from ag_part_repo where ag_part_id=:ag_part_id group by ag_brand_no";
+                $repo_get=$con->prepare($get_repo,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                $repo_get->bindParam(':ag_part_id',$part_id);
+                $repo_get->setFetchMode(PDO::FETCH_ASSOC);
+                $repo_get->execute();
+                $count_repo=$repo_get->rowCount();
                 echo"<tr>
                         <td>".$i++."</td>
                         <td>".$rw_part['ag_part_code']."</td>
-                        <td>".$rw_part['ag_brand_name']."</td>
-                        <td>".$rw_part['ag_vehicle_model_name']."</td>
+                        <td>";
+                            if($count_repo == 0){}else{
+                            $i=1;
+                            while($rw_repo=$repo_get->fetch()):
+                                $ag_brand_no= $rw_repo['ag_brand_no'];
+
+                                $get_brand="select * from ag_brand where ag_brand_no='$ag_brand_no'";
+                                $brand_get=$con->prepare($get_brand);
+                                $brand_get->setFetchMode(PDO::FETCH_ASSOC);
+                                $brand_get->execute();
+                                $rw_brand=$brand_get->fetch();
+                                $ag_brand_name=$rw_brand['ag_brand_name'];
+                                echo $ag_brand_name;
+                                $sr=$i++;
+                                if($count_repo == $sr){}else{
+                                    echo",";
+                                }
+                            endwhile;
+                        }
+                    echo"</td>
+                        <td>";
+                        $get_repo="select * from ag_part_repo where ag_part_id=:ag_part_id group by ag_vehicle_no";
+                        $repo_get=$con->prepare($get_repo,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                        $repo_get->bindParam(':ag_part_id',$part_id);
+                        $repo_get->setFetchMode(PDO::FETCH_ASSOC);
+                        $repo_get->execute();
+                        $count_repo=$repo_get->rowCount();
+                        $i=1;
+                        while($rw_repo=$repo_get->fetch()):
+                            $ag_vehicle_no= $rw_repo['ag_vehicle_no'];
+                            $get_vehicle="select * from ag_vehicle where ag_vehicle_no='$ag_vehicle_no'";
+                            $vehicle_get=$con->prepare($get_vehicle);
+                            $vehicle_get->setFetchMode(PDO::FETCH_ASSOC);
+                            $vehicle_get->execute();
+                            $rw_vehicle=$vehicle_get->fetch();
+                            $ag_vehicle_model_name=$rw_vehicle['ag_vehicle_model_name'];
+                            echo $ag_vehicle_model_name;
+                            $sr=$i++;
+                            if($count_repo == $sr){}else{
+                                echo",";
+                            }
+                        endwhile;
+                        echo"</td>
                         <td>".$rw_part['ag_part_cat']."</td>
                         <td>".$rw_part['ag_part_name']."</td>
                         <td>".$rw_part['ag_part_hsn']."</td>
@@ -328,7 +376,6 @@
                             echo"In Active";
                         }
                         echo"</td>
-                    
                         <td style='text-align:center'>
                             <details class='details_open' style='display:inline-block'>
                                 <summary class='pop_up_open pop_up_summary up_open' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."'><i class='fa-solid fa-pen-to-square'></i> Edit</summary>
@@ -432,7 +479,6 @@
                     <button class='pop_up_submit part_up' type='submit' name='part_up'><i class='fa-solid fa-save'></i> Update</button>
                     <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
                     <a target='_blank' href='images/part/".$rw_part['ag_part_img']."'><img style='width:100%; height:400px; object-fit:contain; border:1px solid rgb(0,0,0,0.2); margin-top:20px' src='images/part/".$rw_part['ag_part_img']."' /></a>
-
                     </center>
             </div>
             </form>";
@@ -477,11 +523,11 @@
             
             
             if($part_up->execute()){
-                $update_bridge = "UPDATE ag_part_repo SET ag_brand_no = :ag_brand_no, ag_vehicle_no = :ag_vehicle_no, ag_part_company=:ag_part_company WHERE ag_part_id = :ag_part_id";
-                $data_bridge = $con->prepare($update_bridge);
-                $data_bridge->bindParam(':ag_part_id', $ag_part_no);
-                $data_bridge->bindParam(':ag_brand_no', $ag_brand_no);
-                $data_bridge->bindParam(':ag_vehicle_no', $ag_vehicle_no);
+                // $update_bridge = "UPDATE ag_part_repo SET ag_brand_no = :ag_brand_no, ag_vehicle_no = :ag_vehicle_no, ag_part_company=:ag_part_company WHERE ag_part_id = :ag_part_id";
+                // $data_bridge = $con->prepare($update_bridge);
+                // $data_bridge->bindParam(':ag_part_id', $ag_part_no);
+                // $data_bridge->bindParam(':ag_brand_no', $ag_brand_no);
+                // $data_bridge->bindParam(':ag_vehicle_no', $ag_vehicle_no);
 
                 $msg="Data Updated Succeessfully";
                 echo json_encode($msg);
@@ -576,36 +622,3 @@
         echo get_vehicle();
     }
 ?>
-<script>
-    $(document).ready(function() {
-        $('#multiple-checkboxes').multiselect({
-          includeSelectAllOption: true,
-          nonSelectedText: 'Select Brand',
-          buttonClass:'<div class="input_container"></div>',
-          //buttonContainer: '<div class="input"></div>',
-          onChange: function(option, checked, select) {
-            // var selectedBrands = $('#multiple-checkboxes').val(); // Get the selected brand values
-            // refreshModel(selectedBrands); // Call the function to update the model select options
-            refreshModel(); 
-        }
-        });
-        $('.refresh_model').multiselect({
-        includeSelectAllOption: true,
-        nonSelectedText: 'Select Model',
-        buttonClass:'<div class="input_container"></div>',
-        buttonContainer: '<div class="input"></div>',
-  });
-    });
-    function refreshModel() {
-        var selectedBrands = $('#multiple-checkboxes').val(); // Get the selected brand values
-        $.ajax({
-            url: 'assets/parts_jscript.php',
-            method: 'post',
-            data: {selectedBrands: selectedBrands},
-            success: function(data) {
-            $('.refresh_model').html(data);
-            $('.refresh_model').multiselect('rebuild'); // Rebuild the model select dropdown
-            }
-        });
-        }
-</script>

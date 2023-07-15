@@ -55,7 +55,7 @@
                                         <i class="fa-solid fa-copyright"></i>
                                         <select name='vehicle_brand' required class="refresh_brand">
                                             <option value=''>Select Brand</option>
-                                            <?php echo get_brand(); ?>
+                                            <?php //echo get_brand(); ?>
                                         </select>
                                     </div>
                                 </div> -->
@@ -309,7 +309,7 @@
         $('#multiple-checkboxes').multiselect({
           includeSelectAllOption: true,
           nonSelectedText: 'Select Brand',
-          buttonClass:'<div class="input_container"></div>',
+          //buttonClass:'<div class="input_container"></div>',
           //buttonContainer: '<div class="input"></div>',
           onChange: function(option, checked, select) {
             // var selectedBrands = $('#multiple-checkboxes').val(); // Get the selected brand values
@@ -320,8 +320,8 @@
         $('.refresh_model').multiselect({
         includeSelectAllOption: true,
         nonSelectedText: 'Select Model',
-        buttonClass:'<div class="input_container"></div>',
-        buttonContainer: '<div class="input"></div>',
+        buttonClass:'<div class="input"></div>',
+        //buttonContainer: '<div class="input"></div>',
   });
     });
     function refreshModel() {
@@ -332,7 +332,8 @@
             data: {selectedBrands: selectedBrands},
             success: function(data) {
             $('.refresh_model').html(data);
-            $('.refresh_model').multiselect('rebuild'); // Rebuild the model select dropdown
+            $('.refresh_model').multiselect('rebuild');
+             // Rebuild the model select dropdown
             }
         });
         }
