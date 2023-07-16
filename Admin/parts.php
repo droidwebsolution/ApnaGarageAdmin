@@ -43,22 +43,12 @@
                                     <p>Select Brand</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-copyright"></i>
-                                        <select name='vehicle_brand[]' required class="refresh_brand" id="multiple-checkboxes" multiple="multiple">
+                                        <select name='vehicle_brand[]' required class="refresh_brand multiple-checkboxes" multiple="multiple">
                                             <!-- <option value=''>Select Brand</option> -->
                                             <?php  echo get_brand(); ?>
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class='input_container'>
-                                    <p>Select Brand</p>
-                                    <div class='input'>
-                                        <i class="fa-solid fa-copyright"></i>
-                                        <select name='vehicle_brand' required class="refresh_brand">
-                                            <option value=''>Select Brand</option>
-                                            <?php //echo get_brand(); ?>
-                                        </select>
-                                    </div>
-                                </div> -->
                                 <div class='input_container'>
                                     <p>Select Model</p>
                                     <div class='input'>
@@ -286,8 +276,7 @@
                         <tr>
                             <th>Sr No.</th>
                             <th>Part Code</th>
-                            <th>Brand Name</th>
-                            <th>Model Name</th>
+                            <th>Brands & Models</th>
                             <th>Category</th>
                             <th>Part Name</th>
                             <th>Part HSN</th>
@@ -306,7 +295,7 @@
 <script src='js/comman.js'></script>
 <script>
     $(document).ready(function() {
-        $('#multiple-checkboxes').multiselect({
+        $('.multiple-checkboxes').multiselect({
           includeSelectAllOption: true,
           nonSelectedText: 'Select Brand',
           //buttonClass:'<div class="input_container"></div>',
@@ -318,14 +307,14 @@
         }
         });
         $('.refresh_model').multiselect({
-        includeSelectAllOption: true,
-        nonSelectedText: 'Select Model',
-        buttonClass:'<div class="input"></div>',
-        //buttonContainer: '<div class="input"></div>',
-  });
+            includeSelectAllOption: true,
+            nonSelectedText: 'Select Model',
+            buttonClass:'<div class="input"></div>',
+            //buttonContainer: '<div class="input"></div>',
+        });
     });
     function refreshModel() {
-        var selectedBrands = $('#multiple-checkboxes').val(); // Get the selected brand values
+        var selectedBrands = $('.multiple-checkboxes').val(); // Get the selected brand values
         $.ajax({
             url: 'assets/parts_jscript.php',
             method: 'post',
@@ -336,7 +325,7 @@
              // Rebuild the model select dropdown
             }
         });
-        }
+    }
     get_parts();
     function get_parts() {
         var get_parts = "Get Parts";
@@ -417,14 +406,14 @@
         });
     }); 
     $(document).on('click', '.refresh_add', function(){
-    var refresh_brand = "Refresh Brand";
-    $.ajax({
-        url: 'assets/parts_jscript.php',
-        method: 'post',
-        data: { refresh_brand: refresh_brand },
-        success: function(data){
-            $('.refresh_brand').html(data);
-        }
+        var refresh_brand = "Refresh Brand";
+        $.ajax({
+            url: 'assets/parts_jscript.php',
+            method: 'post',
+            data: { refresh_brand: refresh_brand },
+            success: function(data){
+                $('.refresh_brand').html(data);
+            }
         });
     });
     $(document).on('submit','#add_brand',function(e){
@@ -525,5 +514,55 @@
             });
         });
         }
+    });
+    function part_brand_model_open(part_open){
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{part_brand_model_open:part_open},
+            success:function(data){
+                $('.part_brand_model_table').html(data);
+            }
+        });
+    }
+    $(document).on('submit','#add_new_part',function(e){
+        var part_open=$(this).attr('data-id');
+        e.preventDefault();
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            cache:false,
+            contentType:false,
+            processData:false,
+            dataType:'json',
+            beforeSend:function(){
+                $('.add_new_part').attr('disabled','disabled');
+            },
+            data:new FormData(this),
+            success:function(data){
+                part_brand_model_open(part_open);
+                $('.add_new_part').removeAttr('disabled');
+                $('#add_new_part').trigger("reset");
+            }
+        });
+    });
+    $(document).on('click','.part_brand_model_open',function(){
+        var part_open=$(this).attr('data-id');
+        part_brand_model_open(part_open);
+    });
+    $(document).on('change','.part_brand_model_delete',function(){
+        var check_val = $(this).prop("checked");
+		if(check_val == true){
+			var status='Active';
+		}else{
+			var status='InActive';
+		}
+        var part_brand_model_delete=$(this).attr('data-delete');
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{part_brand_model_delete:part_brand_model_delete,status:status},
+            success:function(data){}
+        });
     });
 </script>
