@@ -318,6 +318,13 @@
                     nonSelectedText: 'Select Brand',
                     onChange: function(option, checked, select) {}
                 });
+               
+                // Initialize the 'Select Model' select element as a multiple-select checkbox
+                $('.refresh_model$ag_part_id').multiselect({
+                    includeSelectAllOption: true, 
+                    nonSelectedText: 'Select Model',
+                    onChange: function(option, checked, select) {}
+                });
                 $(document).on('change','.refresh_brand$ag_part_id',function(){
                     var change_brand=$(this).val();
                     //$('.refresh_model$ag_part_id').attr('mulitple','multiple');
@@ -326,7 +333,11 @@
                         method:'post',
                         data:{change_brand:change_brand},
                         success:function(data){
+                            // Update the options of the 'Select Model' select element
                             $('.refresh_model$ag_part_id').html(data);
+        
+                            // After updating the options, reinitialize the 'Select Model' select element as a multiple-select checkbox
+                            $('.refresh_model$ag_part_id').multiselect('rebuild');
                         }
                     });
                 });
