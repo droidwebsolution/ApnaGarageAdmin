@@ -306,7 +306,7 @@
     }
     if(isset($_POST['part_brand_model_open'])){
         $ag_part_id=encrypt_decrypt('decrypt', $_POST['part_brand_model_open']);
-        $get_brand="select pr.*,bn.ag_brand_name,vh.ag_vehicle_model_name from ag_part_repo pr left join ag_brand bn on pr.ag_brand_no=bn.ag_brand_no left join ag_vehicle vh on pr.ag_vehicle_no=vh.ag_vehicle_no where pr.ag_part_id='$ag_part_id'";
+        $get_brand="select pr.*,bn.ag_brand_name,vh.ag_vehicle_model_name,vh.ag_vehicle_mg_year from ag_part_repo pr left join ag_brand bn on pr.ag_brand_no=bn.ag_brand_no left join ag_vehicle vh on pr.ag_vehicle_no=vh.ag_vehicle_no where pr.ag_part_id='$ag_part_id'";
         $brand_get=$con->prepare($get_brand);
         $brand_get->setFetchMode(PDO::FETCH_ASSOC);
         $brand_get->execute();
@@ -393,7 +393,7 @@
             echo"<tr>
                     <td>".$j++."</td>
                     <td>".$rw_brand['ag_brand_name']."</td>
-                    <td>".$rw_brand['ag_vehicle_model_name']."</td>
+                    <td>".$rw_brand['ag_vehicle_model_name']." (".$rw_brand['ag_vehicle_mg_year'].")</td>
                     <td>
                         <label class='switch'>
                             <input type='checkbox' name='ite_status' class='part_brand_model_delete' $checked data-id='".encrypt_decrypt('encrypt', $ag_part_id)."' data-delete='".encrypt_decrypt('encrypt', $part_id)."'>

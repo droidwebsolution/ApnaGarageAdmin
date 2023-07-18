@@ -73,7 +73,9 @@
         $vehicle_get->setFetchMode(PDO::FETCH_ASSOC);
         $vehicle_get->execute();
         while($rw_vehicle=$vehicle_get->fetch()):
-            echo"<option value='".$rw_vehicle['ag_vehicle_no']."'>".$rw_vehicle['ag_vehicle_model_name']."</option>";
+           // $model_name_year = $rw_vehicle['ag_vehicle_name'] . ' (' . $rw_vehicle['ag_vehicle_mg_year'] . ')';
+            //echo "<option value='".$rw_vehicle['ag_vehicle_no']."'>".$model_name_year."</option>";
+            echo"<option value='".$rw_vehicle['ag_vehicle_no']."'>".$rw_vehicle['ag_vehicle_model_name'].".(".$rw_vehicle['ag_vehicle_mg_year'].")</option>";
         endwhile;
     }
     function get_retailer(){

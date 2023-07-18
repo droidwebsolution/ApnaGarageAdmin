@@ -85,7 +85,7 @@ header ul li a{color:#fff;}
 
 .table_container{ background:#fff; height: 75vh; overflow: auto; margin-top: 10px;border-radius: 7px;}
 .item_table{width:100%; position: relative; border:1px solid rgb(0,0,0,0.2) }
-.item_table thead tr th{background: #ef7d19; color:#253347;position: sticky; top: 0; width:10% }
+.item_table thead tr th{background: #ef7d19; color:#253347;position: sticky; top: 0; width:10%}
 .item_table thead tr th,.item_table tbody tr td{height:35px; font-size: 12px; text-align: left; padding: 0px 10px;}
 .item_table tbody tr:nth-child(2n+2){background-color: #e6e6e6;}
 .item_table tbody tr td a i{color: #253347;}

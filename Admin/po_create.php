@@ -27,8 +27,8 @@
         ?>
         <div id='container'>
             <div class='search_filter'>
-                <input type='text' class='search_input pos_search' placeholder='Search By Vehicle Name' />
-					<select name='retailer' class='retailer'>
+                <input type='text' class='search_input pos_search' onkeyup="get_po_part()" placeholder='Search By Part Name' />
+					<select name='retailer' class='search_input retailer'>
 						<option value="">Select Retailer</option>
 						<?php echo get_retailer(); ?>
 					</select>
@@ -39,11 +39,12 @@
                         <thead>
                             <tr>
                                 <th>Sr No.</th>
-                                <th>Vehicle Code</th>
-                                <th>Vehicle</th>
+                                <th>Part Code</th>
+                                <th>Part Name</th>
+								<th>Category</th>
                             </tr>
                         </thead>
-                        <tbody class='get_po_vehicle'></tbody>
+                        <tbody class='get_po_part'></tbody>
                     </table>
                 </div>
             </div>
@@ -55,29 +56,32 @@
 </html>
 <script src='js/comman.js'></script>
 <script>
-    get_po_vehicle();
+    get_po_part();
     get_pos_items();
-    function get_po_vehicle(){
-		var get_po_vehicle='Get PO Vehicle';
+    function get_po_part(){
+		var get_po_part='Get PO Parts';
 		var pos_search=$('.pos_search').val();
 		$.ajax({
 			method:'post',
 			url:'assets/po_create_jscript.php',
-			data:{get_po_vehicle:get_po_vehicle,pos_search:pos_search},
+			data:{get_po_part:get_po_part,pos_search:pos_search},
 			success:function(data){
-				$('.get_po_vehicle').html(data);
+				$('.get_po_part').html(data);
 			}
 		});
 	}
     $(document).on('click','.pos_item',function(){
 		var pos_add=$(this).attr('data-pos');
+		var pos_brand=$(this).attr('data-brand');
+		var pos_vehicle=$(this).attr('data-vehicle');
+		var pos_part_name=$(this).attr('data-part');
 		$.ajax({
 			url:'assets/po_create_jscript.php',
 			type:'post',
 			cache: false,
-			data:{pos_add:pos_add},
+			data:{pos_add:pos_add,pos_brand:pos_brand,pos_vehicle:pos_vehicle,pos_part_name:pos_part_name},
 			success:function(data){
-				get_po_vehicle();
+				get_po_part();
 				get_pos_items();
 			}
 		});
@@ -95,6 +99,32 @@
 			}
 		});
 	});
+	$(document).on('change','.pos_discount', function(){
+		var pos_discount=$(this).val();
+		var data_pos_discount=$(this).attr("data-pos-discount");
+		$.ajax({
+			url:'assets/po_create_jscript.php',
+			type:'post',
+			cache: false,
+			data:{pos_discount:pos_discount,data_pos_discount:data_pos_discount},
+			success:function(data){
+				get_pos_items();
+			}
+		});
+	});
+	$(document).on('change','.pos_tax', function(){
+		var pos_tax=$(this).val();
+		var data_pos_tax=$(this).attr("data-pos-tax");
+		$.ajax({
+			url:'assets/po_create_jscript.php',
+			type:'post',
+			cache: false,
+			data:{pos_tax:pos_tax,data_pos_tax:data_pos_tax},
+			success:function(data){
+				get_pos_items();
+			}
+		});
+	});
     function get_pos_items(){
 		var get_pos_items='Get POS Items';
 		$.ajax({
@@ -106,6 +136,19 @@
 			}
 		});
 	}
+	$(document).on('click','.po_part_brand_model_open',function(){
+		//var count_po= 'Count po brands and tables';
+		var data_count_id=$(this).attr("data-id");
+		$.ajax({
+			url:'assets/po_create_jscript.php',
+			type:'post',
+			cache: false,
+			data:{po_part_brand_model_open:data_count_id},
+			success:function(data){
+				$('.po_part_brand_model_table').html(data);
+			}
+		});
+	});
     $(document).on('change','.pos_price', function(){
 		var pos_price=$(this).val();
 		var data_pos_price=$(this).attr("data-pos-price");
@@ -115,6 +158,20 @@
 			cache: false,
 			data:{pos_price:pos_price,data_pos_price:data_pos_price},
 			success:function(data){
+				get_pos_items();
+			}
+		});
+	});
+	$(document).on('click','.pos_save',function(){
+		var pos_save=$('.retailer').val();
+		$.ajax({
+			url:'assets/po_create_jscript.php',
+			type:'post',
+			cache: false,
+			data:{pos_save:pos_save},
+			success:function(data){
+				alert(data);
+				$('.retailer').val('');
 				get_pos_items();
 			}
 		});

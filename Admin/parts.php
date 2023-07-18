@@ -44,7 +44,6 @@
                                     <div class='input'>
                                         <i class="fa-solid fa-copyright"></i>
                                         <select name='vehicle_brand[]' required class="refresh_brand multiple-checkboxes" multiple="multiple">
-                                            <!-- <option value=''>Select Brand</option> -->
                                             <?php  echo get_brand(); ?>
                                         </select>
                                     </div>
@@ -53,9 +52,7 @@
                                     <p>Select Model</p>
                                     <div class='input'>
                                         <i class="fa-sharp fa-regular fa-motorcycle"></i>
-                                        <select name='vehicle_model[]' required class="refresh_model" multiple="multiple">
-                                             <?php get_vehicle(); ?>
-                                        </select>
+                                        <select name='vehicle_model[]' required class="refresh_model" multiple="multiple"></select>
                                     </div>
                                 </div>
                                 <div class='input_container'>
