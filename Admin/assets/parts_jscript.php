@@ -38,8 +38,12 @@
         $ag_vehicle_nos = $_POST['vehicle_model'];
         $ag_vehicle_no = implode(',', $ag_vehicle_nos);
 
-        $ag_part_name = $_POST['part_name'];
-        $ag_part_company = $_POST['part_company_name'];
+        $ag_part_name = $_POST['partname'];
+        $ag_part_company = $_POST['mg_company'];
+        $ag_part_purchase_price=0;
+        $ag_part_selling_price = 0;
+        $ag_part_qty = 0;
+        $ag_part_alert_qty = 0;
         $ag_part_cat = $_POST['part_cat'];
         $ag_part_hsn = $_POST['part_hsn'];
         $ag_part_img = $_FILES['part_img']['tmp_name'];
@@ -54,8 +58,8 @@
         $invimg = date('Y-m-d') . "-" . substr(mt_rand(), 0, 10) . ".png";
         $ag_part_date = date('Y-m-d');
     
-        $add_data = "INSERT INTO ag_part(ag_part_no, ag_part_code, ag_part_name,ag_part_company, ag_part_hsn, ag_part_cat, ag_part_img, ag_part_status, ag_part_date) 
-                    VALUES(:ag_part_no, :ag_part_code, :ag_part_name, :ag_part_company, :ag_part_hsn, :ag_part_cat, :ag_part_img, :ag_part_status, :ag_part_date)";
+        $add_data = "INSERT INTO ag_part(ag_part_no, ag_part_code, ag_part_name,ag_part_company,ag_part_purchase_price,ag_part_selling_price,ag_part_qty,ag_part_alert_qty, ag_part_hsn, ag_part_cat, ag_part_img, ag_part_status, ag_part_date) 
+                    VALUES(:ag_part_no, :ag_part_code, :ag_part_name, :ag_part_company,:ag_part_purchase_price,:ag_part_selling_price,:ag_part_qty,:ag_part_alert_qty, :ag_part_hsn, :ag_part_cat, :ag_part_img, :ag_part_status, :ag_part_date)";
         
         $data_add = $con->prepare($add_data, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $data_add->bindParam(':ag_part_no', $ag_part_no);
@@ -64,6 +68,10 @@
        // $data_add->bindParam(':ag_vehicle_no', $ag_vehicle_no);
         $data_add->bindParam(':ag_part_name', $ag_part_name);
         $data_add->bindParam(':ag_part_company', $ag_part_company);
+        $data_add->bindParam(':ag_part_purchase_price', $ag_part_purchase_price);
+        $data_add->bindParam(':ag_part_selling_price', $ag_part_selling_price);
+        $data_add->bindParam(':ag_part_qty', $ag_part_qty);
+        $data_add->bindParam(':ag_part_alert_qty', $ag_part_alert_qty);
         $data_add->bindParam(':ag_part_cat', $ag_part_cat);
         $data_add->bindParam(':ag_part_hsn', $ag_part_hsn);
         $data_add->bindParam(':ag_part_img', $invimg);
@@ -247,10 +255,65 @@
     
         echo json_encode($msg);
     }
+    if(isset($_POST['partname_add'])){
+        $ag_partname_no=substr(mt_rand(),0,10);
+        $ag_partname_name=check_data($_POST['partname_name']);
+          
+        $add_data="insert into ag_partname(ag_partname_no,ag_partname_name)
+        values(:ag_partname_no,:ag_partname_name)";
+        $data_add=$con->prepare($add_data,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $data_add->bindParam(':ag_partname_no',$ag_partname_no);
+        $data_add->bindParam(':ag_partname_name',$ag_partname_name);
+       
+        
+        if($data_add->execute()){
+            $msg="Data Added Successfully";
+        }else{
+            $msg="Something Wrong!!";
+        }
+        echo json_encode($msg);
+    }
+    if(isset($_POST['mg_company_add'])){
+        $ag_mg_company_no=substr(mt_rand(),0,10);
+        $mg_company_get = $con->prepare("select * from ag_mg_company order by 1 desc limit 1");
+        $mg_company_get->setFetchMode(PDO::FETCH_ASSOC);
+        $mg_company_get->execute();
+        $count_mg_company = $mg_company_get->rowCount();
+        if ($count_mg_company == 0) {
+            $ag_mg_company_code = "AGC_01";
+        } else {
+            $rw_mg_company = $mg_company_get->fetch();
+            $code = $rw_mg_company['ag_mg_company_code'];
+            $ex = explode('_', $code);
+            $ag_mg_company_code = "AGC_" . ($ex[1] + 1);
+        }
+        $ag_mg_company_name=check_data($_POST['mg_company_name']);
+          
+        $add_data="insert into ag_mg_company(ag_mg_company_no,ag_mg_company_code,ag_mg_company_name)
+        values(:ag_mg_company_no,:ag_mg_company_code,:ag_mg_company_name)";
+        $data_add=$con->prepare($add_data,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $data_add->bindParam(':ag_mg_company_no',$ag_mg_company_no);
+        $data_add->bindParam(':ag_mg_company_code',$ag_mg_company_code);
+        $data_add->bindParam(':ag_mg_company_name',$ag_mg_company_name);
+       
+        
+        if($data_add->execute()){
+            $msg="Data Added Successfully";
+        }else{
+            $msg="Something Wrong!!";
+        }
+        echo json_encode($msg);
+    }
     if(isset($_POST['get_parts'])){
         $by_name=check_data($_POST['by_name']);
-        //$part_get=$con->prepare("select pt.*,vh.ag_vehicle_model_name,bn.ag_brand_name from ag_part pt left join ag_vehicle vh on pt.ag_vehicle_no=vh.ag_vehicle_no left join ag_brand bn on bn.ag_brand_no=pt.ag_brand_no where ag_part_code like'%$by_name%' || ag_part_name like'%$by_name%' || ag_brand_name like'%$by_name%' || ag_vehicle_model_name like'%$by_name%' || ag_part_cat like'%$by_name%'");
-        $part_get=$con->prepare("select * from ag_part where ag_part_code like'%$by_name%' || ag_part_name like'%$by_name%' || ag_part_cat like'%$by_name%'");
+        $by_brand=check_data($_POST['by_brand']);
+        $by_model=check_data($_POST['by_model']);
+        if($by_brand==""){
+            $vehicle="";
+        }else{
+            $vehicle=" and ag_brand_no='$by_brand' and ag_vehicle_no='$by_model'";
+        }
+        $part_get=$con->prepare("select * from ag_part where ag_part_name like'%$by_name%' or ag_part_code like'%$by_name%' or ag_part_company like'%$by_name%' or ag_part_cat like'%$by_name%'");
         $part_get->setFetchMode(PDO::FETCH_ASSOC);
         $part_get->execute();
         $count_part=$part_get->rowCount();
@@ -260,15 +323,16 @@
             $i=1;
             while($rw_part=$part_get->fetch()):
                 $part_id=$rw_part['ag_part_id'];
-                $get_brand="select pr.*,bn.ag_brand_name,vh.ag_vehicle_model_name from ag_part_repo pr left join ag_brand bn on pr.ag_brand_no=bn.ag_brand_no left join ag_vehicle vh on pr.ag_vehicle_no=vh.ag_vehicle_no where pr.ag_part_id='$part_id'";
+                $get_brand="select * from ag_part_repo where ag_part_id='$part_id'$vehicle";
                 $brand_get=$con->prepare($get_brand);
                 $brand_get->setFetchMode(PDO::FETCH_ASSOC);
                 $brand_get->execute();
                 $count_brand=$brand_get->rowCount();
-            
+                if($count_brand == 0){}else{
                 echo"<tr>
                         <td>".$i++."</td>
                         <td>".$rw_part['ag_part_code']."</td>
+                        <td>".$rw_part['ag_part_name']."</td>
                         <td>
                             <details class='details_open' style='display:inline-block'>
                                 <summary class='pop_up_open pop_up_summary part_brand_model_open' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_id'])."' style='text-align:center'><i class='fa-solid fa-pen-to-square'></i> $count_brand</summary>
@@ -283,7 +347,7 @@
                             </details>
                         </td>
                         <td>".$rw_part['ag_part_cat']."</td>
-                        <td>".$rw_part['ag_part_name']."</td>
+                        <td>".$rw_part['ag_part_company']."</td>
                         <td>".$rw_part['ag_part_hsn']."</td>
                         <td><img src= 'images/part/".$rw_part['ag_part_img']."' style='width:40px;height:40px'></td>
                         <td>".date('d-m-Y',strtotime($rw_part['ag_part_date']))."</td>
@@ -301,6 +365,7 @@
                             </details>
                         </td>
                     </tr>";
+                }
             endwhile;
         }
     }
@@ -498,6 +563,20 @@
                     <input type='text' name='part_company_name' value='".$rw_part['ag_part_company']."' placeholder='Part Company Name' required />
                 </div>
                 </div>
+                <div class='input_container'>
+                                    <p>Enter Part Alert Quantity</p>
+                                    <div class='input'>
+                                        <i class='fa-solid fa-screwdriver-wrench'></i>
+                                        <input type='text' name='part_alert_qty' placeholder='Part Alert Quantity' required />
+                                    </div>
+                                </div>
+                                <div class='input_container'>
+                                    <p>Enter Part Selling Price</p>
+                                    <div class='input'>
+                                        <i class='fa-solid fa-screwdriver-wrench'></i>
+                                        <input type='text' name='part_selling_price' placeholder='Part Part Selling Price' required />
+                                    </div>
+                                </div>
             <input type='hidden' name='up_parts' value='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."' />
             <div class='input_container'>
                 <p>Enter HSN</p>
@@ -540,6 +619,8 @@
         // $ag_brand_no=check_data($_POST['part_brand']);
         $ag_part_name=check_data($_POST['part_name']);
         $ag_part_company=check_data($_POST['part_company_name']);
+        $ag_part_alert_qty = $_POST['part_alert_qty'];
+        $ag_part_selling_price = $_POST['part_selling_price'];
         $ag_part_cat=$_POST['part_cat'];
         
         $ag_part_hsn=check_data($_POST['part_hsn']);
@@ -559,14 +640,15 @@
         $rwinv=$invgt->fetch();
         
         if(empty($_FILES['part_img']['tmp_name'])){
-            $up_part="update ag_part set ag_part_name=:ag_part_name,ag_part_company=:ag_part_company,ag_part_cat=:ag_part_cat,ag_part_hsn=:ag_part_hsn,ag_part_status=:ag_part_status where ag_part_no=:ag_part_no";
+            $up_part="update ag_part set ag_part_name=:ag_part_name,ag_part_company=:ag_part_company,ag_part_alert_qty=:ag_part_alert_qty,ag_part_selling_price=:ag_part_selling_price,ag_part_cat=:ag_part_cat,ag_part_hsn=:ag_part_hsn,ag_part_status=:ag_part_status where ag_part_no=:ag_part_no";
             $part_up=$con->prepare($up_part);
             $part_up->bindParam(':ag_part_no',$ag_part_no);
             // $part_up->bindParam(':ag_brand_no',$ag_brand_no);
             // $part_up->bindParam(':ag_vehicle_no',$ag_vehicle_no);
             $part_up->bindParam(':ag_part_name',$ag_part_name);
             $part_up->bindParam(':ag_part_company',$ag_part_company);
-           
+            $part_up->bindParam(':ag_part_alert_qty', $ag_part_alert_qty);
+            $part_up->bindParam(':ag_part_selling_price', $ag_part_selling_price);
             $part_up->bindParam(':ag_part_cat',$ag_part_cat);
             $part_up->bindParam(':ag_part_hsn',$ag_part_hsn);
             $part_up->bindParam(':ag_part_status',$ag_part_status);
@@ -588,14 +670,14 @@
                     echo json_encode($msg);
                 }else{
                     $invimg=date('Y-m-d')."-".substr(mt_rand(),0,10).".png";
-                    $up_part="update ag_part set ag_part_name=:ag_part_name,ag_part_purchase_price=:ag_part_purchase_price,ag_part_sale_price=:ag_part_sale_price,ag_part_qty=:ag_part_qty,ag_part_cat=:ag_part_cat,ag_part_hsn=:ag_part_hsn,ag_part_img=:ag_part_img,ag_part_status=:ag_part_status where ag_part_no=:ag_part_no";
+                    $up_part="update ag_part set ag_part_name=:ag_part_name,ag_part_company=:ag_part_company,ag_part_alert_qty=:ag_part_alert_qty,ag_part_selling_price=:ag_part_selling_price,ag_part_cat=:ag_part_cat,ag_part_hsn=:ag_part_hsn,ag_part_img=:ag_part_img,ag_part_status=:ag_part_status where ag_part_no=:ag_part_no";
                     $part_up=$con->prepare($up_part);
                     $part_up->bindParam(':ag_part_no',$ag_part_no);
                    // $part_up->bindParam(':ag_brand_no',$ag_brand_no);
                     $part_up->bindParam(':ag_part_name',$ag_part_name);
-                    $part_up->bindParam(':ag_part_purchase_price',$ag_part_purchase_price);
-                    $part_up->bindParam(':ag_part_sale_price',$ag_part_sale_price);
-                    $part_up->bindParam(':ag_part_qty',$ag_part_qty);
+                    $part_up->bindParam(':ag_part_company',$ag_part_company);
+                    $part_up->bindParam(':ag_part_alert_qty', $ag_part_alert_qty);
+                    $part_up->bindParam(':ag_part_selling_price', $ag_part_selling_price);
                     $part_up->bindParam(':ag_part_cat',$ag_part_cat);
                     $part_up->bindParam(':ag_part_hsn',$ag_part_hsn);
                     $part_up->bindParam(':ag_part_img',$invimg);
@@ -644,7 +726,17 @@
         while ($rw_vehicle = $vehicle_get->fetch()) {
           echo "<option value='" . $rw_vehicle['ag_vehicle_no'] . "'>" . $rw_vehicle['ag_vehicle_model_name'] . " (" . $rw_vehicle['ag_vehicle_mg_year'] . ")</option>";
         }
-      }
+    }
+    if(isset($_POST['change_search_brand'])) {
+        $ag_brand_no = $_POST['change_search_brand'];
+        $get_model="select * from ag_vehicle where ag_brand_no='$ag_brand_no'";
+        $model_get=$con->prepare($get_model);
+        $model_get->setFetchMode(PDO::FETCH_ASSOC);
+        $model_get->execute();
+        while($rw_model=$model_get->fetch()):
+            echo"<option value='".$rw_model['ag_vehicle_no']."'>".$rw_model['ag_vehicle_model_name'].".(".$rw_model['ag_vehicle_mg_year'].")</option>";
+        endwhile;
+    }
     if(isset($_POST['refresh_brand'])){
         echo"<option value=''>Select Brand</option>";
         echo get_brand();
@@ -652,5 +744,13 @@
     if(isset($_POST['refresh_model'])){
         echo"<option value=''>Select model</option>";
         echo get_vehicle();
+    }
+    if(isset($_POST['refresh_partname'])){
+        echo"<option value=''>Select Part Name</option>";
+        echo get_partname();
+    }
+    if(isset($_POST['refresh_mg_company'])){
+        echo"<option value=''>Select Menufecture Comapny</option>";
+        echo get_mg_company();
     }
 ?>

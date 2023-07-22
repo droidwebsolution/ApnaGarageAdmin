@@ -53,8 +53,14 @@
             </li>
             <li>
                 <a href="po_create.php">
-                    <span class="icon"><i class="fa-solid fa-person"></i></span>
+                    <span class="icon"><i class="fa-solid fa-book-open"></i></span>
                     <span class="item">Create PO</span>
+                </a>
+            </li>
+            <li>
+                <a href="po.php">
+                    <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                    <span class="item">All PO</span>
                 </a>
             </li>
             <li>
@@ -64,9 +70,21 @@
                 </a>
             </li>
             <li>
-                <a href="tabs.php">
-                    <span class="icon"><i class="fa-solid fa-person"></i></span>
-                    <span class="item">Add tabs</span>
+                <a href="mg-company.php">
+                    <span class="icon"><i class="fa-solid fa-copyright"></i></span>
+                    <span class="item">Menufecture Company</span>
+                </a>
+            </li>
+            <li>
+                <a href="partname.php">
+                    <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                    <span class="item">Add Part Name </span>
+                </a>
+            </li>
+            <li>
+                <a href="po.php">
+                    <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                    <span class="item">Add PO</span>
                 </a>
             </li>
         </ul>

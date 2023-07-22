@@ -10,7 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Apna garage | Retailer</title>
+        <title>Apna garage | PO</title>
         <link rel='stylesheet' href='css/style.css' />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,11 +27,16 @@
         ?>
         <div id='container'>
             <div class='search_filter'>
-                <input type='text' class='search_input pos_search' onkeyup="get_po_part()" placeholder='Search By Part Name' />
-					<select name='retailer' class='search_input retailer'>
-						<option value="">Select Retailer</option>
-						<?php echo get_retailer(); ?>
-					</select>
+                <input type='text' class='search_input pos_search' onkeyup="get_po_part()" placeholder='Search By Part Code, Name, Category' title='Search By Part Code, Name, Category'/>
+                <select class='search_input by_brand refresh_serach_brand' onchange='get_po_part()'>
+                    <option value=''>Search By Brand</option>
+                    <?php echo get_brand(); ?>
+                </select>
+                <select class='search_input by_model refresh_serach_model' onchange='get_po_part()'>
+                    <option value=''>Search By Model</option>
+                    <?php echo get_vehicle(); ?>
+                </select>
+				
             </div>
             <div class='pos_left'>
                 <div class='table_container'>
@@ -41,6 +46,7 @@
                                 <th>Sr No.</th>
                                 <th>Part Code</th>
                                 <th>Part Name</th>
+								<th>Brand & Model</th>
 								<th>Category</th>
                             </tr>
                         </thead>
@@ -50,6 +56,7 @@
             </div>
             <div class='pos_right'>
                 <div class="table_container pos_table"></div>
+				<div class="payment_container"></div>
             </div>
         </div>
     </body>
@@ -61,10 +68,12 @@
     function get_po_part(){
 		var get_po_part='Get PO Parts';
 		var pos_search=$('.pos_search').val();
+		var by_brand = $('.by_brand').val();
+        var by_model = $('.by_model').val();
 		$.ajax({
 			method:'post',
 			url:'assets/po_create_jscript.php',
-			data:{get_po_part:get_po_part,pos_search:pos_search},
+			data:{get_po_part:get_po_part,pos_search:pos_search,by_brand:by_brand,by_model:by_model},
 			success:function(data){
 				$('.get_po_part').html(data);
 			}
@@ -89,11 +98,25 @@
     $(document).on('change','.pos_qty', function(){
 		var pos_qty=$(this).val();
 		var data_pos_qty=$(this).attr("data-pos-qty");
+		var data_part_qty=$(this).attr("data-part-qty");
 		$.ajax({
 			url:'assets/po_create_jscript.php',
 			type:'post',
 			cache: false,
-			data:{pos_qty:pos_qty,data_pos_qty:data_pos_qty},
+			data:{pos_qty:pos_qty,data_pos_qty:data_pos_qty,data_part_qty:data_part_qty},
+			success:function(data){
+				get_pos_items();
+			}
+		});
+	});
+	$(document).on('change','.pos_sale_price', function(){
+		var pos_sale_price=$(this).val();
+		var data_part_sell=$(this).attr("data-part-sell-price");
+		$.ajax({
+			url:'assets/po_create_jscript.php',
+			type:'post',
+			cache: false,
+			data:{pos_sale_price:pos_sale_price,data_part_sell:data_part_sell},
 			success:function(data){
 				get_pos_items();
 			}
@@ -162,18 +185,36 @@
 			}
 		});
 	});
-	$(document).on('click','.pos_save',function(){
-		var pos_save=$('.retailer').val();
+	$(document).on('submit','#save_pos',function(e){
+		e.preventDefault();
 		$.ajax({
 			url:'assets/po_create_jscript.php',
 			type:'post',
 			cache: false,
-			data:{pos_save:pos_save},
+			processData:false,
+			contentType:false,
+			dataType:'json',
+			data:new FormData(this),
+			beforeSend:function(){
+				$('.save_pos').attr('disabled','disabled');
+			},
 			success:function(data){
 				alert(data);
-				$('.retailer').val('');
+				$('.save_pos').removeAttr('disabled');
+                $('#save_pos').trigger('reset');
 				get_pos_items();
 			}
 		});
 	});
+	$(document).on('change','.refresh_serach_brand',function(){
+        var change_search_brand=$(this).val();
+        $.ajax({
+            url:'assets/po_create_jscript.php',
+            method:'post',
+            data:{change_search_brand:change_search_brand},
+            success:function(data){
+                $('.refresh_serach_model').html(data);
+            }
+        });
+    }); 
 </script>

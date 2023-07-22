@@ -35,7 +35,26 @@
             echo"<option value='".$rw_brand['ag_brand_no']."'>".$rw_brand['ag_brand_name']."</option>";
         endwhile;
     }
-   
+    function get_mg_company(){
+        global $con;
+        $get_mg_company="select * from ag_mg_company";
+        $mg_company_get=$con->prepare($get_mg_company,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $mg_company_get->setFetchMode(PDO::FETCH_ASSOC);
+        $mg_company_get->execute();
+        while($rw_mg_company=$mg_company_get->fetch()):
+            echo"<option value='". $rw_mg_company['ag_mg_company_no']."'>".$rw_mg_company['ag_mg_company_name']."</option>";
+        endwhile;
+    }
+    function get_partname(){
+        global $con;
+        $get_partname="select * from ag_partname";
+        $partname_get=$con->prepare($get_partname,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $partname_get->setFetchMode(PDO::FETCH_ASSOC);
+        $partname_get->execute();
+        while($rw_partname=$partname_get->fetch()):
+            echo"<option value='". $rw_partname['ag_partname_no']."'>".$rw_partname['ag_partname_name']."</option>";
+        endwhile;
+    }
     function get_state(){
         global $con;
         $get_state="select * from ag_state";

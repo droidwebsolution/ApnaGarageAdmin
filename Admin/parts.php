@@ -70,14 +70,20 @@
                                     <p>Enter Part Name</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-screwdriver-wrench"></i>
-                                        <input type='text' name='part_name' placeholder="Part Name eg.foot rest" required />
+                                        <select name='partname' required  class="refresh_partname">
+                                            <option value="">Select part Name</option>
+                                            <?php echo get_partname(); ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class='input_container'>
-                                    <p>Enter Part Company Name</p>
+                                    <p>Enter Menufecture Company Name</p>
                                     <div class='input'>
-                                        <i class="fa-solid fa-screwdriver-wrench"></i>
-                                        <input type='text' name='part_company_name' placeholder="Part Company Name" required />
+                                        <i class="fa-solid fa-copyright"></i>
+                                        <select name='mg_company' required class="refresh_mg_company">
+                                            <option value="">Select Menufecture Company</option>
+                                            <?php echo get_mg_company(); ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <input type='hidden' name='part_add' />
@@ -265,7 +271,60 @@
                         </form>
                     </div>
                 </details>
-                <input type='text' class='search_input by_name' title='Search By Part Code, Name, Brand, Model & Category' onkeyup='get_parts()' placeholder='Search By Part Code, Name, Brand, Model & Category' />
+                <details class='details_open' style='display:inline-block'>
+                    <summary class='pop_up_open pop_up_summary' style='background:rgb(0,0,0,0.5)'><i class="fa-solid fa-circle-plus"></i> Add Part Name</summary>
+                    <div class='pop_up'>
+                        <form class='form small_width_form' id='add_partname'>
+                            <h2>Add Part Name <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                            <div class='form_container'>
+                                
+                                <p>Enter Part Name</p>
+                                <div class='input'>
+                                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                                    <input type='text' name='partname_name' placeholder='* Enter Manufecture Company' title='Enter Manufecture Company' required />
+                                </div>
+                                <input type='hidden' name='partname_add' /> 
+                               
+                                <center>
+                                    <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
+                                    <button class='pop_up_submit add_partname' type='submit' name='add_partname'><i class='fa-solid fa-save'></i> Save</button>
+                                    <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
+                                </center>
+                            </div>
+                        </form>
+                    </div>
+                </details>
+                <details class='details_open' style='display:inline-block'>
+                    <summary class='pop_up_open pop_up_summary' style='background:rgb(0,0,0,0.5);width:220px;'><i class="fa-solid fa-circle-plus"></i> Add Menufecture Company</summary>
+                    <div class='pop_up'>
+                        <form class='form small_width_form' id='add_mg_company'>
+                            <h2>Add Menufecture Comapny <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                            <div class='form_container'>
+                                <p>Enter Manufecture Company</p>
+                                <div class='input'>
+                                    <i class="fa-solid fa-copyright"></i>
+                                    <input type='text' name='mg_company_name' placeholder='* Only Characters Allowed' title='Enter Manufecture Company' required />
+                                </div>
+                                <input type='hidden' name='mg_company_add' /> 
+                               
+                                <center>
+                                    <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> Reset</button>
+                                    <button class='pop_up_submit add_mg_company' type='submit' name='add_mg_company'><i class='fa-solid fa-save'></i> Save</button>
+                                    <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> Cancel</button>
+                                </center>
+                            </div>
+                        </form>
+                    </div>
+                </details>
+                <input type='text' class='search_input by_name' title='Search By Part Code, Name, Company & Category' onkeyup='get_parts()' placeholder='Search By Part Code, Name, Brand, Model & Category' />
+                <select class='search_input by_brand refresh_serach_brand' onchange='get_parts()'>
+                    <option value=''>Search By Brand</option>
+                    <?php echo get_brand(); ?>
+                </select>
+                <select class='search_input by_model refresh_serach_model' onchange='get_parts()'>
+                    <option value=''>Search By Model</option>
+                    <?php echo get_vehicle(); ?>
+                </select>
             </div>
             <div class='table_container'>
                 <table class='item_table'  cellspacing='0'>
@@ -273,9 +332,10 @@
                         <tr>
                             <th>Sr No.</th>
                             <th>Part Code</th>
+                            <th>Part Name</th>
                             <th>Brands & Models</th>
                             <th>Category</th>
-                            <th>Part Name</th>
+                            <th>company Name</th>
                             <th>Part HSN</th>
                             <th>Image</th>
                             <th>Added Date</th>
@@ -327,10 +387,12 @@
     function get_parts() {
         var get_parts = "Get Parts";
         var by_name = $('.by_name').val();
+        var by_brand = $('.by_brand').val();
+        var by_model = $('.by_model').val();
         $.ajax({
             url: 'assets/parts_jscript.php',
             method: 'post',
-            data: {get_parts:get_parts,by_name:by_name},
+            data: {get_parts:get_parts,by_name:by_name,by_brand:by_brand,by_model:by_model},
             success: function(data) {
                 $('.get_parts_table').html(data);
             }
@@ -399,6 +461,17 @@
             data:{change_brand:change_brand},
             success:function(data){
                 $('.refresh_model').html(data);
+            }
+        });
+    });
+    $(document).on('change','.refresh_serach_brand',function(){
+        var change_search_brand=$(this).val();
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{change_search_brand:change_search_brand},
+            success:function(data){
+                $('.refresh_serach_model').html(data);
             }
         });
     }); 
@@ -560,6 +633,72 @@
             method:'post',
             data:{part_brand_model_delete:part_brand_model_delete,status:status},
             success:function(data){}
+        });
+    });
+    $(document).on('submit','#add_partname',function(e){
+        e.preventDefault();
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            cache:false,
+            contentType:false,
+            processData:false,
+            dataType:'json',
+            beforeSend:function(){
+                $('.add_partname').attr('disabled','disabled');
+            },
+            data:new FormData(this),
+            success:function(data){
+                alert(data);
+                //$('.details_open').removeAttr("open");
+                $('.add_partname').removeAttr('disabled');
+                $('.form').find('input').val('');
+                get_partname();
+            }
+        });
+    });
+    $(document).on('submit','#add_mg_company',function(e){
+        e.preventDefault();
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            cache:false,
+            contentType:false,
+            processData:false,
+            dataType:'json',
+            beforeSend:function(){
+                $('.add_mg_company').attr('disabled','disabled');
+            },
+            data:new FormData(this),
+            success:function(data){
+                alert(data);
+                //$('.details_open').removeAttr("open");
+                $('.add_mg_company').removeAttr('disabled');
+                $('.form').find('input').val('');
+                get_mg_company();
+            }
+        });
+    });
+    $(document).on('click', '.refresh_add', function(){
+        var refresh_partname= "Refresh PartName";
+        $.ajax({
+            url: 'assets/parts_jscript.php',
+            method: 'post',
+            data: { refresh_partname: refresh_partname },
+            success: function(data){
+                $('.refresh_partname').html(data);
+            }
+        });
+    });
+    $(document).on('click', '.refresh_add', function(){
+        var refresh_mg_company= "Refresh mg_company";
+        $.ajax({
+            url: 'assets/parts_jscript.php',
+            method: 'post',
+            data: { refresh_mg_company: refresh_mg_company },
+            success: function(data){
+                $('.refresh_mg_company').html(data);
+            }
         });
     });
 </script>
