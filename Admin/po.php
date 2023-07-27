@@ -31,15 +31,16 @@
                     <thead>
                         <tr>
                             <th>Sr No.</th>
+                            <th>Date</th>
                             <th>Invoice No.</th>
                             <th>Retailer Name</th>
-                            <th>Payment Mode</th>
                             <th>Payment Type</th>
                             <th>Receipt No</th>
-                            <th>Amount Paid</th>
                             <th>No Of Parts</th>
-                            <th>Sub Total</th>
                             <th style='text-align:center'>View Invoice</th>
+                            <th>Subtotal</th>
+                            <th>Previous Balance</th>
+                            <th style='min-width:120px; text-align:right'>Net Total</th>
                         </tr>
                     </thead>
                     <tbody class='get_po_table'></tbody>

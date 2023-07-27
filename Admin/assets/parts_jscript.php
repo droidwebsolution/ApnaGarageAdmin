@@ -38,12 +38,20 @@
         $ag_vehicle_nos = $_POST['vehicle_model'];
         $ag_vehicle_no = implode(',', $ag_vehicle_nos);
 
-        $ag_part_name = $_POST['partname'];
+        $ag_partname_no = $_POST['partname'];
+        $partname_get="select * from ag_partname where ag_partname_no=:ag_partname_no";
+        $get_partname=$con->prepare($partname_get);
+        $get_partname->bindParam(':ag_partname_no', $ag_partname_no);
+        $get_partname->setFetchMode(PDO::FETCH_ASSOC);
+        $get_partname->execute();
+        $rw_partname = $get_partname->fetch();
+
+        $ag_part_name = $rw_partname['ag_partname_name'];
         $ag_part_company = $_POST['mg_company'];
         $ag_part_purchase_price=0;
         $ag_part_selling_price = 0;
         $ag_part_qty = 0;
-        $ag_part_alert_qty = 0;
+        $ag_part_alert_qty =$_POST['part_alert_qty'];
         $ag_part_cat = $_POST['part_cat'];
         $ag_part_hsn = $_POST['part_hsn'];
         $ag_part_img = $_FILES['part_img']['tmp_name'];
@@ -323,12 +331,18 @@
             $i=1;
             while($rw_part=$part_get->fetch()):
                 $part_id=$rw_part['ag_part_id'];
+                $ag_part_no=$rw_part['ag_part_no'];
                 $get_brand="select * from ag_part_repo where ag_part_id='$part_id'$vehicle";
                 $brand_get=$con->prepare($get_brand);
                 $brand_get->setFetchMode(PDO::FETCH_ASSOC);
                 $brand_get->execute();
                 $count_brand=$brand_get->rowCount();
                 if($count_brand == 0){}else{
+                    $get_hold_stock="select * from ag_part_hold_stock where ag_part_no='$ag_part_no' and ag_hold_status=1";
+                    $hold_stock_get=$con->prepare($get_hold_stock);
+                    $hold_stock_get->setFetchMode(PDO::FETCH_ASSOC);
+                    $hold_stock_get->execute();
+                    $hold_stock=$hold_stock_get->rowCount();
                 echo"<tr>
                         <td>".$i++."</td>
                         <td>".$rw_part['ag_part_code']."</td>
@@ -346,6 +360,27 @@
                                 </div>
                             </details>
                         </td>
+                        <td>".number_format($rw_part['ag_part_purchase_price'],2)."</td>
+                        <td>".number_format($rw_part['ag_part_selling_price'],2)."</td>
+                        <td>".$rw_part['ag_part_qty']."</td>
+                        <td>".$rw_part['ag_part_alert_qty']."</td>
+                        <td>";
+                        if($hold_stock == 0){
+                            echo "--";
+                        }else{
+                            echo"<details class='details_open' style='display:inline-block'>
+                                <summary class='pop_up_open pop_up_summary part_hold_stock_open' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."' style='text-align:center'><i class='fa-solid fa-pen-to-square'></i> $hold_stock</summary>
+                                <div class='pop_up'>
+                                    <div class='form min_width_form'>
+                                        <h2>".$rw_part['ag_part_name']." Hold Stock Details <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                                        <div class='form_container'>
+                                            <div class='table_container part_hold_stock_table'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>";
+                        }
+                        echo"</td>
                         <td>".$rw_part['ag_part_cat']."</td>
                         <td>".$rw_part['ag_part_company']."</td>
                         <td>".$rw_part['ag_part_hsn']."</td>
@@ -752,5 +787,68 @@
     if(isset($_POST['refresh_mg_company'])){
         echo"<option value=''>Select Menufecture Comapny</option>";
         echo get_mg_company();
+    }
+    if(isset($_POST['part_hold_stock_open'])){
+        $ag_part_no=encrypt_decrypt('decrypt', $_POST['part_hold_stock_open']);
+        $get_stock=$con->prepare("select * from ag_part_hold_stock where ag_part_no='$ag_part_no' and ag_hold_status=1");
+        $get_stock->setFetchMode(PDO::FETCH_ASSOC);
+        $get_stock->execute();
+        echo"<table class='item_table'>
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Old Purchase Price</th>
+                        <th>New Purchase Price</th>
+                        <th>Old Sale Price</th>
+                        <th>New Sale Price</th>
+                        <th>Hold Stock</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>";
+        $i=1;
+        while($rw_stock=$get_stock->fetch()):
+            if($rw_stock['ag_hold_status'] == 1){
+                $action="<button class='stock_push pop_up_stock_push ' data-id='".$rw_stock['ag_hold_id']."'>Stock Push</button>";
+            }else{
+                $action="--";
+            }
+            echo"<tr>
+                <td>".$i++."</td>
+                <td>".$rw_stock['ag_old_pp']."</td>
+                <td>".$rw_stock['ag_new_pp']."</td>
+                <td>".$rw_stock['ag_old_sp']."</td>
+                <td>".$rw_stock['ag_new_sp']."</td>
+                <td>".$rw_stock['ag_hold_qty']."</td>
+                <td>$action</td>
+            </tr>";
+        endwhile;
+        echo"</tbody>
+        </table>";
+    }
+    if(isset($_POST['stock_push'])){
+        $ag_hold_id=$_POST['stock_push'];
+
+        $get_stock="select * from ag_part_hold_stock where ag_hold_id='$ag_hold_id'";
+        $stock_get=$con->prepare($get_stock);
+        $stock_get->setFetchMode(PDO::FETCH_ASSOC);
+        $stock_get->execute();
+        $rw_stock=$stock_get->fetch();
+        $ag_part_purchase_price=$rw_stock['ag_new_pp'];
+        $ag_part_selling_price=$rw_stock['ag_new_sp'];
+        $ag_hold_qty=$rw_stock['ag_hold_qty'];
+        $ag_part_no=$rw_stock['ag_part_no'];
+
+        $up_part="update ag_part set ag_part_purchase_price='$ag_part_purchase_price',ag_part_selling_price='$ag_part_selling_price',ag_part_qty=ag_part_qty+'$ag_hold_qty' where ag_part_no='$ag_part_no'";
+        $part_up=$con->prepare($up_part);
+        if($part_up->execute()){
+            $up_stock="update ag_part_hold_stock set ag_hold_status=2 where ag_hold_id='$ag_hold_id'";
+            $stock_up=$con->prepare($up_stock);
+            $stock_up->execute();
+            $msg="Hold Stock has Been Updated Successfully";
+        }else{
+            $msg="Something Went Wrong Please Try Again";
+        }
+        echo $msg;
     }
 ?>

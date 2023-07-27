@@ -59,7 +59,7 @@
             </li>
             <li>
                 <a href="po.php">
-                    <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                    <span class="icon"><i class="fa-solid fa-book-open"></i></span>
                     <span class="item">All PO</span>
                 </a>
             </li>
@@ -71,8 +71,8 @@
             </li>
             <li>
                 <a href="mg-company.php">
-                    <span class="icon"><i class="fa-solid fa-copyright"></i></span>
-                    <span class="item">Menufecture Company</span>
+                    <span class="icon"><i class="fa-solid fa-building"></i></span>
+                    <span class="item">Menufacture Company</span>
                 </a>
             </li>
             <li>
@@ -82,9 +82,15 @@
                 </a>
             </li>
             <li>
-                <a href="po.php">
-                    <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
-                    <span class="item">Add PO</span>
+                <a href="so_create.php">
+                     <span class="icon"><i class="fa-solid fa-book-open"></i></span>
+                    <span class="item">Sales Order create</span>
+                </a>
+            </li>
+            <li>
+                <a href="customer.php">
+                    <span class="icon"><i class="fa-solid fa-person"></i></span>
+                    <span class="item">Customers</span>
                 </a>
             </li>
         </ul>

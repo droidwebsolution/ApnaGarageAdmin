@@ -107,6 +107,16 @@
             echo"<option value='".$rw_retailer['ag_retailer_no']."'>".$rw_retailer['ag_retailer_company_name']."</option>";
         endwhile;
     }
+    function get_customer(){
+        global $con;
+        $get_customer="select * from ag_customer";
+        $customer_get=$con->prepare($get_customer,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $customer_get->setFetchMode(PDO::FETCH_ASSOC);
+        $customer_get->execute();
+        while($rw_customer=$customer_get->fetch()):
+            echo"<option value='".$rw_customer['ag_customer_no']."'>".$rw_customer['ag_customer_name']."</option>";
+        endwhile;
+    }
     function login(){
 		global $con;
 		if(isset($_POST['user_login'])){

@@ -95,6 +95,13 @@
                                     </div>
                                 </div>
                                 <div class='input_container'>
+                                    <p>Enter Alert Qty</p>
+                                    <div class='input'>
+                                        <i class="fa-brands fa-digital-ocean"></i>
+                                        <input type='text' name='part_alert_qty' placeholder="Enter Alert Qty" required/>
+                                    </div>
+                                </div>
+                                <div class='input_container'>
                                     <p>Choose Part Image</p>
                                     <div class='input'>
                                         <i class="fa-solid fa-image"></i>
@@ -122,7 +129,7 @@
                     </div>
                 </details>
                 <details class='details_open' style='display:inline-block'>
-                    <summary class='pop_up_open pop_up_summary' style='background:rgb(0,0,0,0.5)' ><i class="fa-solid fa-circle-plus"></i> Add Brand</summary>
+                    <summary class='pop_up_open pop_up_summary' style='background:#ef7d19;color:#000' ><i class="fa-solid fa-circle-plus"></i> Add Brand</summary>
                     <div class='pop_up'>
                         <form class='form small_width_form' id='add_brand'>
                             <h2>Add Brand <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
@@ -166,7 +173,7 @@
                     </div>
                 </details>
                 <details class='details_open' style='display:inline-block'>
-                    <summary class='pop_up_open pop_up_summary refresh_add' style='background:rgb(0,0,0,0.5)' onclick="get_vehicle_part()"><i class="fa-solid fa-circle-plus"></i> Add Vehicle</summary>
+                    <summary class='pop_up_open pop_up_summary refresh_add' style='background:#ef7d19;color:#000' onclick="get_vehicle_part()"><i class="fa-solid fa-circle-plus"></i> Add Vehicle</summary>
                     <div class='pop_up'>
                         <form class='form min_width_form' id='add_vehicle' enctype='multipart/form-data'>
                             <h2>Add Vehicle <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
@@ -272,7 +279,7 @@
                     </div>
                 </details>
                 <details class='details_open' style='display:inline-block'>
-                    <summary class='pop_up_open pop_up_summary' style='background:rgb(0,0,0,0.5)'><i class="fa-solid fa-circle-plus"></i> Add Part Name</summary>
+                    <summary class='pop_up_open pop_up_summary' style='background:#ef7d19;color:#000'><i class="fa-solid fa-circle-plus"></i> Add Part Name</summary>
                     <div class='pop_up'>
                         <form class='form small_width_form' id='add_partname'>
                             <h2>Add Part Name <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
@@ -295,7 +302,7 @@
                     </div>
                 </details>
                 <details class='details_open' style='display:inline-block'>
-                    <summary class='pop_up_open pop_up_summary' style='background:rgb(0,0,0,0.5);width:220px;'><i class="fa-solid fa-circle-plus"></i> Add Menufecture Company</summary>
+                    <summary class='pop_up_open pop_up_summary' style='background:#ef7d19;color:#000;width:220px;'><i class="fa-solid fa-circle-plus"></i> Add Menufecture Company</summary>
                     <div class='pop_up'>
                         <form class='form small_width_form' id='add_mg_company'>
                             <h2>Add Menufecture Comapny <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
@@ -334,8 +341,13 @@
                             <th>Part Code</th>
                             <th>Part Name</th>
                             <th>Brands & Models</th>
+                            <th>Purchase Price</th>
+                            <th>Sale Price</th>
+                            <th>Stock</th>
+                            <th>Alert Stock</th>
+                            <th>Hold Stock</th>
                             <th>Category</th>
-                            <th>company Name</th>
+                            <th>Company Name</th>
                             <th>Part HSN</th>
                             <th>Image</th>
                             <th>Added Date</th>
@@ -701,4 +713,29 @@
             }
         });
     });
+    $(document).on('click','.part_hold_stock_open',function(){
+        var part_hold_stock_open=$(this).attr("data-id");
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{part_hold_stock_open:part_hold_stock_open},
+            success:function(data){
+                $('.part_hold_stock_table').html(data);
+            }
+        });
+    });
+    $(document).on('click','.stock_push',function(){
+        var stock_push=$(this).attr("data-id");
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{stock_push:stock_push},
+            success:function(data){
+                alert(data);
+                $('details').removeAttr('open');
+                get_parts();
+            }
+        });
+    });
+   
 </script>
