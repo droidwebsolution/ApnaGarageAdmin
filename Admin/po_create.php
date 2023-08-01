@@ -357,15 +357,15 @@
 			}
 		});
 	});
-    $(document).on('change','.pos_part_qty', function(){
-		var pos_part_qty=$(this).val();
+    $(document).on('change','.pos_alert_qty', function(){
+		var pos_alert_qty=$(this).val();
 		//var data_pos_qty=$(this).attr("data-pos-qty");
 		var data_part_qty=$(this).attr("data-part-qty");
 		$.ajax({
 			url:'assets/po_create_jscript.php',
 			type:'post',
 			cache: false,
-			data:{pos_part_qty:pos_part_qty,data_part_qty:data_part_qty},
+			data:{pos_alert_qty:pos_alert_qty,data_part_qty:data_part_qty},
 			success:function(data){
 				get_pos_items();
 			}

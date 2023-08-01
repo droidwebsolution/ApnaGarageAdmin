@@ -134,7 +134,7 @@
                     </div>
                 </details>
                 <details class='details_open' style='display:inline-block'>
-                    <summary class='pop_up_open pop_up_summary' style='background:rgb(0,0,0,0.5)'><i class="fa-solid fa-circle-plus"></i> Add Brand</summary>
+                    <summary class='pop_up_open pop_up_summary' style='background:#ef7d19;color:#000'><i class="fa-solid fa-circle-plus"></i> Add Brand</summary>
                     <div class='pop_up'>
                         <form class='form small_width_form' id='add_brand'>
                             <h2>Add Brand <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>

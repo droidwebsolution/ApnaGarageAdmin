@@ -353,6 +353,8 @@
                             <th>Added Date</th>
                             <th>Status</th>
                             <th style='text-align:center'>Edit</th>
+                            <th style='text-align:center'>Purchase Report</th>
+                            <th style='text-align:center'>Sells Report</th>
                         </tr>
                     </thead>
                     <tbody class='get_parts_table'></tbody>
@@ -462,6 +464,28 @@
             data:{part_up_open:part_up_open},
             success:function(data){
                 $('.part_open_table').html(data);
+            }
+        });
+    });
+    $(document).on('click','.po_open',function(){
+        var part_po_open=$(this).attr("data-id");
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{part_po_open:part_po_open},
+            success:function(data){
+                $('.part_po_table').html(data);
+            }
+        });
+    });
+    $(document).on('click','.so_open',function(){
+        var part_so_open=$(this).attr("data-id");
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{part_so_open:part_so_open},
+            success:function(data){
+                $('.part_so_table').html(data);
             }
         });
     });

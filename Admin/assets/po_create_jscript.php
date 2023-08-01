@@ -217,7 +217,7 @@
                 endwhile;
                 echo"<tr>
                         <td colspan='9' style='text-align:right'><br />
-                            <b>Basic Total: <span id='grand_total'>".number_format($stotal,2)."</span><br /><br />
+                            <b>Basic Total: <span id='grand_total'>".number_format(round($stotal),2)."</span><br /><br />
                             Previous Balance: <span id='pending_payment'>0.00</span><br /><br />
                             Net Payment: <span id='net_payment'>".number_format($stotal,2)."</span><br /><br />
                             We Pay: <input id='cust_pay' type='number' style='width:60px; text-align:right' value='".number_format($stotal,2)."' name='po_pending_amt' /><br /><br /></b>

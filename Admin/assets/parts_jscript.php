@@ -399,6 +399,32 @@
                                 <div class='pop_up part_open_table'></div>
                             </details>
                         </td>
+                        <td style='text-align:center'>
+                            <details class='details_open' style='display:inline-block'>
+                                <summary class='pop_up_open pop_up_summary po_open' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."'><i class='fa-solid fa-eye'></i> PO</summary>
+                                <div class='pop_up'>
+                                    <div class='form xl_width_form'>
+                                        <h2>".$rw_part['ag_part_name']." Purchase Reports <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                                        <div class='form_container'>
+                                            <div class='table_container part_po_table'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+                        </td>
+                        <td style='text-align:center'>
+                            <details class='details_open' style='display:inline-block'>
+                                <summary class='pop_up_open pop_up_summary so_open' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."'><i class='fa-solid fa-eye'></i> SO</summary>
+                                <div class='pop_up'>
+                                    <div class='form xl_width_form'>
+                                        <h2>".$rw_part['ag_part_name']." Sells Reports <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                                        <div class='form_container'>
+                                            <div class='table_container part_so_table'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+                        </td>
                     </tr>";
                 }
             endwhile;
@@ -647,6 +673,64 @@
                 </center>
         </div>
         </form>";
+    }
+    if(isset($_POST['part_po_open'])){
+        $ag_part_no=encrypt_decrypt('decrypt', $_POST['part_po_open']);
+        $get_part=$con->prepare("select po.*,r.ag_retailer_company_name from ag_po_cart po left join ag_retailer r on po.ag_retailer_no=r.ag_retailer_no where ag_part_no='$ag_part_no'");
+        $get_part->setFetchMode(PDO::FETCH_ASSOC);
+        $get_part->execute();
+        echo"<table class='item_table'>
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Part Name</th>
+                        <th>Date</th>
+                        <th>Purchase</th>
+                        <th>Retailer</th>
+                    </tr>
+                </thead>
+                <tbody>";
+        $i=1;
+        while($rw_part=$get_part->fetch()):
+            echo"<tr>
+                <td>".$i++."</td>
+                <td>".$rw_part['ag_part_name']."</td>
+                <td>".$rw_part['ag_po_date']."</td>
+                <td>".$rw_part['ag_po_qty']."</td>
+                <td>".$rw_part['ag_retailer_company_name']."</td>
+            </tr>";
+        endwhile;
+        echo"</tbody>
+        </table>";
+    }
+    if(isset($_POST['part_so_open'])){
+        $ag_part_no=encrypt_decrypt('decrypt', $_POST['part_so_open']);
+        $get_part=$con->prepare("select so.*,cust.ag_customer_name from ag_sells_order_cart so left join ag_customer cust on so.ag_customer_no=cust.ag_customer_no where ag_part_no='$ag_part_no'");
+        $get_part->setFetchMode(PDO::FETCH_ASSOC);
+        $get_part->execute();
+        echo"<table class='item_table'>
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Part Name</th>
+                        <th>Date</th>
+                        <th>Sells</th>
+                        <th>Customer</th>
+                    </tr>
+                </thead>
+                <tbody>";
+        $i=1;
+        while($rw_part=$get_part->fetch()):
+            echo"<tr>
+                <td>".$i++."</td>
+                <td>".$rw_part['ag_part_name']."</td>
+                <td>".$rw_part['ag_sells_date']."</td>
+                <td>".$rw_part['ag_sells_qty']."</td>
+                <td>".$rw_part['ag_customer_name']."</td>
+            </tr>";
+        endwhile;
+        echo"</tbody>
+        </table>";
     }
     if(isset($_POST['up_parts'])){
         $ag_part_no=encrypt_decrypt('decrypt', $_POST['up_parts']);
