@@ -328,7 +328,7 @@
         if($count_part == 0){
             echo"<tr><td>No Records Found</td></tr>";
         }else{
-            $i=1;
+            $i=1;$total=0;
             while($rw_part=$part_get->fetch()):
                 $part_id=$rw_part['ag_part_id'];
                 $ag_part_no=$rw_part['ag_part_no'];
@@ -343,6 +343,11 @@
                     $hold_stock_get->setFetchMode(PDO::FETCH_ASSOC);
                     $hold_stock_get->execute();
                     $hold_stock=$hold_stock_get->rowCount();
+                    $hs=0;
+                    while($rw_hstock=$hold_stock_get->fetch()):
+                        $total_hold_stock=$hold_stock * $rw_hstock['ag_new_pp'];
+                        $hs+=$total_hold_stock;
+                    endwhile;
                 echo"<tr>
                         <td>".$i++."</td>
                         <td>".$rw_part['ag_part_code']."</td>
@@ -362,7 +367,9 @@
                         </td>
                         <td>".number_format($rw_part['ag_part_purchase_price'],2)."</td>
                         <td>".number_format($rw_part['ag_part_selling_price'],2)."</td>
-                        <td>".$rw_part['ag_part_qty']."</td>
+                        <td>".$rw_part['ag_part_qty']."</td>";
+                        $total_available_stock=$rw_part['ag_part_qty']*$rw_part['ag_part_purchase_price'];
+                       echo"<td>$total_available_stock</td>
                         <td>".$rw_part['ag_part_alert_qty']."</td>
                         <td>";
                         if($hold_stock == 0){
@@ -380,7 +387,10 @@
                                 </div>
                             </details>";
                         }
+                        $total_stock_value=$total_available_stock+$hs;
                         echo"</td>
+                        <td>$hs</td>
+                        <td>$total_stock_value</td>
                         <td>".$rw_part['ag_part_cat']."</td>
                         <td>".$rw_part['ag_part_company']."</td>
                         <td>".$rw_part['ag_part_hsn']."</td>
@@ -401,12 +411,13 @@
                         </td>
                         <td style='text-align:center'>
                             <details class='details_open' style='display:inline-block'>
-                                <summary class='pop_up_open pop_up_summary po_open' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."'><i class='fa-solid fa-eye'></i> PO</summary>
+                                <summary class='pop_up_open pop_up_summary po_open' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."'><i class='fa-solid fa-eye'></i> PR</summary>
                                 <div class='pop_up'>
                                     <div class='form xl_width_form'>
                                         <h2>".$rw_part['ag_part_name']." Purchase Reports <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                                         <div class='form_container'>
-                                            <div class='table_container part_po_table'></div>
+                                        <input type='date' class='search_input pr_from_date' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."' />
+                                        <div class='table_container part_po_table'></div>
                                         </div>
                                     </div>
                                 </div>
@@ -414,20 +425,28 @@
                         </td>
                         <td style='text-align:center'>
                             <details class='details_open' style='display:inline-block'>
-                                <summary class='pop_up_open pop_up_summary so_open' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."'><i class='fa-solid fa-eye'></i> SO</summary>
+                                <summary class='pop_up_open pop_up_summary so_open' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."'><i class='fa-solid fa-eye'></i> SR</summary>
                                 <div class='pop_up'>
                                     <div class='form xl_width_form'>
-                                        <h2>".$rw_part['ag_part_name']." Sells Reports <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                                        <h2>".$rw_part['ag_part_name']." Sales Reports <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
                                         <div class='form_container'>
-                                            <div class='table_container part_so_table'></div>
+                                        <input type='date' class='search_input sr_from_date' data-id='".encrypt_decrypt('encrypt', $rw_part['ag_part_no'])."' />
+                                        <div class='table_container part_so_table'></div>
                                         </div>
                                     </div>
                                 </div>
                             </details>
                         </td>
                     </tr>";
+                    $total+=$total_stock_value;
                 }
             endwhile;
+            echo"<tr>
+                <td colspan='11'></td>
+                <td><b>Total:$total</b></td>
+                <td colspan='9'></td>
+
+            </tr>";
         }
     }
     if(isset($_POST['part_brand_model_open'])){
@@ -676,60 +695,75 @@
     }
     if(isset($_POST['part_po_open'])){
         $ag_part_no=encrypt_decrypt('decrypt', $_POST['part_po_open']);
-        $get_part=$con->prepare("select po.*,r.ag_retailer_company_name from ag_po_cart po left join ag_retailer r on po.ag_retailer_no=r.ag_retailer_no where ag_part_no='$ag_part_no'");
+        $pr_from_date=$_POST['pr_from_date'];
+        $get_part=$con->prepare("select po.*,r.ag_retailer_company_name from ag_po_cart po left join ag_retailer r on po.ag_retailer_no=r.ag_retailer_no where ag_part_no='$ag_part_no' and ag_po_date like'%$pr_from_date%'");
         $get_part->setFetchMode(PDO::FETCH_ASSOC);
         $get_part->execute();
         echo"<table class='item_table'>
                 <thead>
                     <tr>
                         <th>Sr No.</th>
-                        <th>Part Name</th>
-                        <th>Date</th>
-                        <th>Purchase</th>
                         <th>Retailer</th>
+                        <th>Date</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th style='text-align:right'>Total Expense</th>
                     </tr>
                 </thead>
                 <tbody>";
-        $i=1;
+        $i=1;$sub_total=0;
         while($rw_part=$get_part->fetch()):
+            $total=$rw_part['ag_po_price']*$rw_part['ag_po_qty'];
             echo"<tr>
                 <td>".$i++."</td>
-                <td>".$rw_part['ag_part_name']."</td>
+                <td>".$rw_part['ag_retailer_company_name']."</td>
                 <td>".$rw_part['ag_po_date']."</td>
                 <td>".$rw_part['ag_po_qty']."</td>
-                <td>".$rw_part['ag_retailer_company_name']."</td>
+                <td>".$rw_part['ag_po_price']."</td>
+                <td style='text-align:right'>$total</td>
             </tr>";
+            $sub_total+=$total;
         endwhile;
-        echo"</tbody>
+        echo"<tr>
+                <td colspan='6' style='text-align:right'><b>$sub_total</b></td>
+            </tr>
+        </tbody>
         </table>";
     }
     if(isset($_POST['part_so_open'])){
         $ag_part_no=encrypt_decrypt('decrypt', $_POST['part_so_open']);
-        $get_part=$con->prepare("select so.*,cust.ag_customer_name from ag_sells_order_cart so left join ag_customer cust on so.ag_customer_no=cust.ag_customer_no where ag_part_no='$ag_part_no'");
+        $sr_from_date=$_POST['sr_from_date'];
+        $get_part=$con->prepare("select so.*,cust.ag_customer_name from ag_sells_order_cart so left join ag_customer cust on so.ag_customer_no=cust.ag_customer_no where so.ag_sells_status=1 and so.ag_part_no='$ag_part_no' and so.ag_sells_date like'%$sr_from_date%'");
         $get_part->setFetchMode(PDO::FETCH_ASSOC);
         $get_part->execute();
         echo"<table class='item_table'>
                 <thead>
                     <tr>
                         <th>Sr No.</th>
-                        <th>Part Name</th>
                         <th>Date</th>
                         <th>Sells</th>
                         <th>Customer</th>
+                        <th>Sell Price</th>
+                        <th style='text-align:right'>Total Amount</th>
                     </tr>
                 </thead>
                 <tbody>";
-        $i=1;
+        $i=1;$sub_total=0;
         while($rw_part=$get_part->fetch()):
+            $total=$rw_part['ag_sells_price']*$rw_part['ag_sells_qty'];
             echo"<tr>
                 <td>".$i++."</td>
-                <td>".$rw_part['ag_part_name']."</td>
                 <td>".$rw_part['ag_sells_date']."</td>
                 <td>".$rw_part['ag_sells_qty']."</td>
                 <td>".$rw_part['ag_customer_name']."</td>
+                <td>".$rw_part['ag_sells_price']."</td>
+                <td style='text-align:right'>$total</td>
             </tr>";
         endwhile;
-        echo"</tbody>
+        echo"<tr>
+                <td colspan='6' style='text-align:right'><b>$sub_total</b></td>
+            </tr>
+        </tbody>
         </table>";
     }
     if(isset($_POST['up_parts'])){

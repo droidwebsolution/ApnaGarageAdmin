@@ -183,7 +183,9 @@
                             <th>State</th>
                             <th>City</th>
                             <th>Registration Date</th>
+                            <th style='text-align:center'>Remaing To Pay</th>
                             <th style='text-align:center'>Action</th>
+                            <th style='text-align:center'>History</th>
                         </tr>
                     </thead>
                     <tbody class='get_retailer_table'></tbody>
@@ -240,6 +242,17 @@
             }
         });
     });
+    $(document).on('click','.retailer_history_open',function(){
+        var retailer_history_table=$(this).attr("data-id");
+        $.ajax({
+            url:'assets/retailer_jscript.php',
+            method:'post',
+            data:{retailer_history_table:retailer_history_table},
+            success:function(data){
+                $('.retailer_history_table').html(data);
+            }
+        });
+    });
     $(document).on('submit','#retailer_up',function(e){
         e.preventDefault();
         $.ajax({
@@ -271,5 +284,27 @@
                 $('.r_city').html(data);
             }
         });
-    });   
+    });
+    $(document).on('submit','#add_pending_amount',function(e){
+        e.preventDefault();
+        $.ajax({
+            url:'assets/retailer_jscript.php',
+            method:'post',
+            cache:false,
+            contentType:false,
+            processData:false,
+            dataType:'json',
+            beforeSend:function(){
+                $('.add_pending_amount').attr('disabled','disabled');
+            },
+            data:new FormData(this),
+            success:function(data){
+                alert(data);
+               // $('.details_open').removeAttr("open");
+                $('.add_pending_amount').removeAttr('disabled');
+                $('.form').find('input').val('');
+                get_retailer();
+            }
+        });
+    });
 </script>

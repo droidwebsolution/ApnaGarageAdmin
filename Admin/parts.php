@@ -344,8 +344,11 @@
                             <th>Purchase Price</th>
                             <th>Sale Price</th>
                             <th>Stock</th>
+                            <th>Available Stock Value</th>
                             <th>Alert Stock</th>
                             <th>Hold Stock</th>
+                            <th>Hold Stock value</th>
+                            <th>Total Stock value</th>
                             <th>Category</th>
                             <th>Company Name</th>
                             <th>Part HSN</th>
@@ -469,10 +472,23 @@
     });
     $(document).on('click','.po_open',function(){
         var part_po_open=$(this).attr("data-id");
+        var pr_from_date=$('.pr_from_date').val();
         $.ajax({
             url:'assets/parts_jscript.php',
             method:'post',
-            data:{part_po_open:part_po_open},
+            data:{part_po_open:part_po_open,pr_from_date:pr_from_date},
+            success:function(data){
+                $('.part_po_table').html(data);
+            }
+        });
+    });
+    $(document).on('change','.pr_from_date',function(){
+        var part_po_open=$(this).attr("data-id");
+        var pr_from_date=$('.pr_from_date').val();
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{part_po_open:part_po_open,pr_from_date:pr_from_date},
             success:function(data){
                 $('.part_po_table').html(data);
             }
@@ -480,10 +496,23 @@
     });
     $(document).on('click','.so_open',function(){
         var part_so_open=$(this).attr("data-id");
+        var sr_from_date=$('.sr_from_date').val();
         $.ajax({
             url:'assets/parts_jscript.php',
             method:'post',
-            data:{part_so_open:part_so_open},
+            data:{part_so_open:part_so_open,sr_from_date:sr_from_date},
+            success:function(data){
+                $('.part_so_table').html(data);
+            }
+        });
+    });
+    $(document).on('change','.sr_from_date',function(){
+        var part_so_open=$(this).attr("data-id");
+        var sr_from_date=$('.sr_from_date').val();
+        $.ajax({
+            url:'assets/parts_jscript.php',
+            method:'post',
+            data:{part_so_open:part_so_open,sr_from_date:sr_from_date},
             success:function(data){
                 $('.part_so_table').html(data);
             }

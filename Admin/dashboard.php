@@ -22,7 +22,21 @@
             <?php
                 include("addons/header.php");
                 include("addons/sidebar.php");
+                include("addons/apna_garage.php");
+                include("addons/logic.php");
             ?>
+            <div id='container'>
+                <div class="dcard" style='background: #253347;'>
+                    <p>Present Stock Invest Amount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?php  echo get_expense(); ?></p>
+                    <a href="sales_report.php"><i class="fa-solid fa-book"></i></a>
+                </div>     
+                <div class="dcard" style='background: #ef7d19;'>
+                    <p>Total Selling Amount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?php  echo get_selling(); ?></p>
+                </div>     
+                <div class="dcard" style='background: #aaaaff;'>
+                    <p>Total Retailer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?php  echo get_retailer_count(); ?></p>
+                </div>     
+            </div>
     </body>
 </html>
  <script src='js/comman.js'></script>

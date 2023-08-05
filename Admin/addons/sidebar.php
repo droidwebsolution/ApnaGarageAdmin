@@ -6,7 +6,7 @@
         <p>Admin</p>
         <ul>
             <li>
-                <a href="index.php">
+                <a href="dashboard.php">
                     <span class="icon"><i class="fas fa-desktop"></i></span>
                     <span class="item">My Dashboard</span>
                 </a>
@@ -91,6 +91,18 @@
                 <a href="customer.php">
                     <span class="icon"><i class="fa-solid fa-person"></i></span>
                     <span class="item">Customers</span>
+                </a>
+            </li>
+            <li>
+                <a href="purchase_report.php">
+                    <span class="icon"><i class="fa-solid fa-person"></i></span>
+                    <span class="item">Purchase Report</span>
+                </a>
+            </li>
+            <li>
+                <a href="sales_report.php">
+                    <span class="icon"><i class="fa-solid fa-person"></i></span>
+                    <span class="item">Sales Report</span>
                 </a>
             </li>
         </ul>

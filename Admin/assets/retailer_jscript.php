@@ -93,15 +93,145 @@
                         <td>".$rw_retailer['ag_city_name']."</td>
                         <td>".$rw_retailer['ag_retailer_register_date']."</td>
                      
+                        <td style='text-align:center'>";
+                        if($rw_retailer['ag_retailer_pending_amt']==0){
+                            echo"--";
+                        }else{
+                            echo"<details class='details_open' style='display:inline-block'>
+                                <summary class='pop_up_open pop_up_summary'>".$rw_retailer['ag_retailer_pending_amt']."</summary>
+                                <div class='pop_up'>
+                                    <form class='form small_width_form' id='add_pending_amount'>
+                                        <h2>Pay Remaining Amount <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                                        <div class='form_container'>
+                                            <div class='input_container'>
+                                                <p>Enter Amount You Want to Pay.</p>
+                                                <div class='input'>
+                                                    <i class='fa-solid fa-copyright'></i>
+                                                    <input type='text' name='pending_amount' value='".$rw_retailer['ag_retailer_pending_amt']."' max='".$rw_retailer['ag_retailer_pending_amt']."' required>
+                                                </div> 
+                                                <div class='input'>
+                                                <i class='fa-solid fa-copyright'></i>   
+                                                    <input type='date' name='pay_date' required>
+                                                </div>
+                                                <div class='input'>
+                                                <i class='fa-solid fa-copyright'></i>
+                                                    <select name='pay_type'>
+                                                        <option value=cash'>Cash</option>
+                                                        <option value=online'>Online</option>
+                                                        <option value=cheque'>Cheque</option>
+                                                    </select>
+                                                </div>
+                                                    <input type='hidden' name='pending_amount_add' value='".$rw_retailer['ag_retailer_no']."' />
+                                                </div>
+                                            </div>
+                                            <center>
+                                                <button class='pop_up_submit' type='reset'><i class='fa-solid fa-rotate-right'></i> RESET</button>
+                                                <button class='pop_up_submit add_pending_amount' type='submit' name='add_payment'><i class='fa-solid fa-save'></i> ADD</button>
+                                                <button class='pop_up_submit close_submit' type='button'><i class='fa-solid fa-xmark' title='Close'></i> CANCEL</button>
+                                            </center>
+                                            <div class='table_container'>
+                                            <table class='item_table big_table' cellspacing='0'>
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr No.</th>
+                                                    <th>Pay Date</th>
+                                                    <th>Payment Type</th>
+                                                    <th>Amount To Paid</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>";
+                                            $get_data = "select * from ag_retailer_credit";
+                                            $data_get = $con->prepare($get_data, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                                            $data_get->setFetchMode(PDO::FETCH_ASSOC);
+                                            $data_get->execute();
+                                            $j=1;
+                                            while($rw_data=$data_get->fetch()):
+                                                if($rw_data['ag_pay_type'] == 1){
+                                                    $ag_pay_type="Cash";
+                                                }elseif($rw_data['ag_pay_type'] == 2){
+                                                    $ag_pay_type="Online";
+                                                }else{
+                                                    $ag_pay_type="Cheque";
+                                                }
+                                            echo"<tr>
+                                                    <td>".$j++."</td>
+                                                    <td>".$rw_data['ag_pay_date']."</td>
+                                                    <td>$ag_pay_type</td>
+                                                    <td>".$rw_data['ag_pay_amt']."</td>
+                                                </tr>";
+                                            endwhile;
+                                           
+                                           echo"</tbody>
+                                    </table>
+                                       
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </details>";
+                        }
+                        echo"</td>
                         <td style='text-align:center'>
-                            <details class='details_open' style='display:inline-block'>
-                                <summary class='pop_up_open pop_up_summary retailer_open' data-id='".encrypt_decrypt('encrypt', $rw_retailer['ag_retailer_no'])."'><i class='fa-solid fa-pen-to-square'></i> Edit</summary>
-                                <div class='pop_up retailer_open_table'></div>
-                            </details>
-                        </td>
+                        <details class='details_open' style='display:inline-block'>
+                            <summary class='pop_up_open pop_up_summary retailer_open' data-id='".encrypt_decrypt('encrypt', $rw_retailer['ag_retailer_no'])."'><i class='fa-solid fa-pen-to-square'></i> Edit</summary>
+                            <div class='pop_up retailer_open_table'></div>
+                        </details>
+                    </td>
+                    <td style='text-align:center'>
+                        <details class='details_open' style='display:inline-block'>
+                            <summary class='pop_up_open pop_up_summary retailer_history_open' data-id='".encrypt_decrypt('encrypt', $rw_retailer['ag_retailer_no'])."'><i class='fa-solid fa-eye'></i> View</summary>
+                            <div class='pop_up'>
+                            <div class='form min_width_form'>
+                                        <h2>".$rw_retailer['ag_retailer_company_name']." History <i class='fa-solid fa-xmark close_pop_up' title='Close'></i></h2>
+                                        <div class='form_container'>
+                                        <div class='table_container retailer_history_table'></div>
+                                        </div>
+                                    </div></div>
+                        </details>
+                    </td>
                     </tr>";
             endwhile;
         }
+    }
+    if(isset($_POST['pending_amount_add'])){
+        $ag_retailer_no=$_POST['pending_amount_add'];
+        $ag_rc_no=substr(mt_rand(),0,10);
+        $ag_retailer_pending_amt=$_POST['pending_amount'];
+        $ag_pay_date=$_POST['pay_date'];
+        $ag_pay_type=$_POST['pay_type'];
+        if($ag_pay_type == "cash"){
+            $ag_pay_type=1;
+        }elseif($ag_pay_type == "online"){
+            $ag_pay_type=2;
+        }else{
+            $ag_pay_type=3;
+        }
+        $amount_get=$con->prepare("select * from ag_retailer where ag_retailer_no='$ag_retailer_no'");
+        $amount_get->setFetchMode(PDO::FETCH_ASSOC);
+        $amount_get->execute();
+        $rw_amount=$amount_get->fetch();
+        $ac_retailer_amount=$rw_amount['ag_retailer_pending_amt'];
+        if($ag_retailer_pending_amt > $ac_retailer_amount){
+            $msg="Return Amount Should Be Less Than $ac_retailer_amount";
+        }else{
+            $up_amount=$ac_retailer_amount-$ag_retailer_pending_amt;
+            $up_retailer=$con->prepare("update ag_retailer set ag_retailer_pending_amt='$up_amount' where ag_retailer_no='$ag_retailer_no'");
+            if($up_retailer->execute()){
+                $add_data='insert into ag_retailer_credit(ag_rc_no,ag_retailer_no,ag_pay_amt,ag_pay_date,ag_pay_type)
+                values(:ag_rc_no,:ag_retailer_no,:ag_pay_amt,:ag_pay_date,:ag_pay_type)';
+                $data_add=$con->prepare($add_data,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                $data_add->bindParam(':ag_rc_no',$ag_rc_no);
+                $data_add->bindParam(':ag_retailer_no',$ag_retailer_no);
+                $data_add->bindParam(':ag_pay_amt',$ag_retailer_pending_amt);
+                $data_add->bindParam(':ag_pay_date',$ag_pay_date);
+                $data_add->bindParam(':ag_pay_type',$ag_pay_type);
+                $data_add->execute();
+                $msg="Return Remaining Amount Successfully";
+            }else{
+                $msg="Something Went Wrong Please Try Again Later";
+            }
+        }
+        echo json_encode($msg);
     }
     if(isset($_POST['retailer_open_table'])){
         $ag_retailer_no=encrypt_decrypt('decrypt', $_POST['retailer_open_table']);
@@ -295,5 +425,48 @@
         while($rw_city=$city_get->fetch()):
             echo"<option value='".$rw_city['ag_city_no']."'>".$rw_city['ag_city_name']."</option>";
         endwhile;
+    }
+    if(isset($_POST['retailer_history_table'])){
+        $ag_retailer_no=encrypt_decrypt('decrypt', $_POST['retailer_history_table']);
+        $get_retailer="select * from ag_po_cart_repo where ag_retailer_no=:ag_retailer_no";
+        $retailer_get=$con->prepare($get_retailer,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $retailer_get->bindParam(':ag_retailer_no',$ag_retailer_no);
+        $retailer_get->setFetchMode(PDO::FETCH_ASSOC);
+        $retailer_get->execute();
+        $count_retailer=$retailer_get->rowCount();
+        
+            echo"<table class='item_table big_table' cellspacing='0'>
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>Invoice No</th>
+                                <th>Payment Type</th>
+                                <th>Amount To Paid</th>
+                                <th>Remaing To Pay</th>
+                                <th>We Paid</th>
+                                <th>Invoice Date</th>
+                                <th>Invoice Due Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+                            if($count_retailer == 0){
+                                echo"<tr><td>No Records Found</td></tr>";
+                            }else{$i=1;
+                                while($rw_retailer=$retailer_get->fetch()):
+                            echo"<tr>
+                                <td>".$i++."</td>
+                                <td>".$rw_retailer['ag_po_invoice_no']."</td>
+                                <td>".$rw_retailer['ag_po_payment_type']."</td>
+                                <td>".$rw_retailer['ag_po_amount_paid']."</td>
+                                <td>".$rw_retailer['ag_po_pending_amt']."</td>
+                                <td>".$rw_retailer['ag_po_cust_pay']."</td>
+                                <td>".$rw_retailer['ag_po_invoice_date']."</td>
+                                <td>".$rw_retailer['ag_po_invoice_due_date']."</td>
+                            </tr>";
+                        endwhile;
+                        }
+                       echo"</tbody>
+                </table>";
+                   
     }
 ?>

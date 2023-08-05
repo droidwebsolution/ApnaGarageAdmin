@@ -85,6 +85,66 @@
             echo"<option value='". $rw_part['ag_part_no']."'>".$rw_part['ag_part_name']."</option>";
         endwhile;
     }
+    function get_expense() {
+        global $con;
+        $get_expense = "select * from ag_part";
+        $expense_get = $con->prepare($get_expense, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $expense_get->setFetchMode(PDO::FETCH_ASSOC);
+        $expense_get->execute();
+        
+        $total_part_expense = 0; 
+        
+        while ($rw_expense = $expense_get->fetch()):
+            $ag_part_qty = $rw_expense['ag_part_qty'];
+            $ag_part_purchase_price = $rw_expense['ag_part_purchase_price'];
+            $part_total = $ag_part_qty * $ag_part_purchase_price;
+            $total_part_expense += $part_total; 
+        endwhile;
+        
+        $get_hold = "select * from ag_part_hold_stock where ag_hold_status=1;";
+        $hold_get = $con->prepare($get_hold, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $hold_get->setFetchMode(PDO::FETCH_ASSOC);
+        $hold_get->execute();
+        
+        $total_hold_expense = 0; 
+        
+        while ($rw_hold = $hold_get->fetch()):
+            $ag_new_pp = $rw_hold['ag_new_pp'];
+            $ag_hold_qty = $rw_hold['ag_hold_qty'];
+            $hold_total = $ag_new_pp * $ag_hold_qty;
+            $total_hold_expense += $hold_total; 
+        endwhile;
+        
+        $total_expense = $total_part_expense + $total_hold_expense;
+        echo "$total_expense";
+    }
+    function get_selling(){
+        global $con;
+        $get_sell="select * from ag_sells_order_cart";
+        $sell_get = $con->prepare($get_sell, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sell_get->setFetchMode(PDO::FETCH_ASSOC);
+        $sell_get->execute();
+
+        $total_sell_amount=0;
+
+        while($rw_sell = $sell_get->fetch()):
+         $ag_sells_price=$rw_sell['ag_sells_price'];
+         $ag_sells_qty=$rw_sell['ag_sells_qty'];
+         $sell_total= $ag_sells_price * $ag_sells_qty;
+        endwhile;
+        $total_sell_amount =+ $sell_total;
+        echo $total_sell_amount;
+    }
+    function get_retailer_count(){
+        global $con;
+        $get_retailer="select * from ag_retailer";
+        $retailer_get=$con->prepare($get_retailer,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $retailer_get->setFetchMode(PDO::FETCH_ASSOC);
+        $retailer_get->execute();
+        $count_retailer=$retailer_get->rowCount();
+        echo $count_retailer;
+       
+    }
     function get_vehicle(){
         global $con;
         $get_vehicle="select * from ag_vehicle";
